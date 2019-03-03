@@ -1,0 +1,102 @@
+import wx
+
+
+class Example(wx.Frame):
+
+    def __init__(self, *args, **kw):
+        super(Example, self).__init__(*args, **kw, size=(600,600))
+
+        self.InitUI()
+
+    def InitUI(self):
+        pnl = wx.Panel(self)
+        txt1 = '''Welcome To'''
+
+        txt2 = '''V.O.I.D'''
+        font = wx.Font(10, wx.DEFAULT, wx.ITALIC, wx.NORMAL)
+        heading = wx.StaticText(self, label = txt1, pos = (260, 75), size=(140, -1))
+        font_1 = wx.Font(49, wx.DEFAULT, wx.SLANT, wx.BOLD)
+        heading_1 = wx.StaticText(self, label = txt2, pos = (200, 90), size=(200, -1))
+
+        heading.SetFont(font)
+        heading_1.SetFont(font_1)
+
+        txt3 = '''Press Any Button To Continue'''
+
+        txt4 = '''Virtual Operation In Dissension'''
+
+        self.Bind(wx.EVT_PAINT, self.OnPaint)
+        self.Centre()
+
+        font_2 = wx.Font(19, wx.DEFAULT, wx.SLANT, wx.LIGHT)
+        heading_2 = wx.StaticText(self, label = txt3, pos = (140, 295), size=(170, -1))
+        font_3 = wx.Font(10, wx.DEFAULT, wx.ITALIC, wx.BOLD)
+        heading_3 = wx.StaticText(self, label = txt4, pos = (392, 540), size=(140, -1))
+        
+        heading_2.SetFont(font_2)
+        heading_3.SetFont(font_3)
+
+
+        
+        vbox = wx.BoxSizer(wx.VERTICAL)
+
+        font_7 = wx.Font(13, wx.DEFAULT, wx.NORMAL, wx.BOLD)
+        font_6 = wx.Font(18, wx.DEFAULT, wx.NORMAL, wx.BOLD)
+        font_8 = wx.Font(13, wx.DEFAULT, wx.NORMAL, wx.LIGHT)
+
+
+
+        
+
+
+        
+        pnl.SetSizer(vbox)
+
+        self.SetTitle('V.O.I.D')
+        self.Centre()
+        
+    def OnPaint(self, e):
+        dc = wx.PaintDC(self)
+        dc.DrawLine(210, 165, 400, 165)
+        dc1 = wx.PaintDC(self)
+        dc1.DrawLine(210, 166, 400, 166)
+        dc2 = wx.PaintDC(self)
+        dc2.DrawLine(210, 167, 400, 167)
+        dc3 = wx.PaintDC(self)
+        dc3.DrawLine(210, 168, 400, 168)
+        dc4 = wx.PaintDC(self)
+        dc4.DrawLine(210, 169, 400, 169)
+        dc5 = wx.PaintDC(self)
+        dc5.DrawLine(210, 170, 400, 170)
+        dc_1 = wx.PaintDC(self)
+        dc_1.DrawLine(240, 180, 370, 180)
+        dc_1_1 = wx.PaintDC(self)
+        dc_1_1.DrawLine(240, 179, 370, 179)
+        
+        dc_2 = wx.PaintDC(self)
+        dc_2.DrawLine(155, 290, 460, 290)
+        dc_3 = wx.PaintDC(self)
+        dc_3.DrawLine(155, 330, 460, 330)
+        dc_2 = wx.PaintDC(self)
+        dc_2.DrawLine(155, 289, 460, 289)
+        dc_3 = wx.PaintDC(self)
+        dc_3.DrawLine(155, 331, 460, 331)
+        
+        dc_4 = wx.PaintDC(self)
+        dc_4.DrawLine(180, 275, 425, 275)
+        dc_5 = wx.PaintDC(self)
+        dc_5.DrawLine(180, 345, 425, 345)
+
+
+
+
+def main():
+    
+    app = wx.App()
+    ex = Example(None)
+    ex.Show()
+    app.MainLoop()
+
+
+if __name__ == '__main__':
+    main()
