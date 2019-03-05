@@ -1,7 +1,8 @@
 import wx
 import wx.adv
+from tkinter import *
 
-class Glowne(wx.Panel):
+class Front(wx.Panel):
 
     def __init__(self, parent):
         wx.Panel.__init__(self, parent=parent)
@@ -9,24 +10,79 @@ class Glowne(wx.Panel):
         self.SetSize((600, 600))
 
         tekst = 'VOID'
-        font = wx.Font(18, wx.DEFAULT, wx.NORMAL, wx.NORMAL)
-        wx.StaticText(self, -1, tekst, (300, 10)).SetFont(font)
+        txt = 'Welcome To'
+        txt2 = 'Press The Button To Continue'
+        txt3 = 'Virtual Operation In Dissension' 
+        font = wx.Font(10, wx.DEFAULT, wx.NORMAL, wx.NORMAL)
+        wx.StaticText(self, -1, txt, (340, 75)).SetFont(font)
+        font_2 = wx.Font(49, wx.DEFAULT, wx.SLANT, wx.BOLD)
+        wx.StaticText(self, -1, tekst, (300, 90)).SetFont(font_2)
+        font_3 = wx.Font(19, wx.DEFAULT, wx.SLANT, wx.LIGHT)
+        wx.StaticText(self, -1, txt2, (210, 295)).SetFont(font_3)
+        font_4 = wx.Font(10, wx.DEFAULT, wx.ITALIC, wx.BOLD)
+        wx.StaticText(self, -1, txt3, (582, 520)).SetFont(font_4)
 
-        self.btn = wx.Button(self, -1, "Here", (345, 300))
+        self.btn = wx.Button(self, -1, "Here", (330, 370))
+        
+        self.Bind(wx.EVT_PAINT, self.OnPaint)
+    
+    def OnPaint(self, e):
+        dc1 = wx.PaintDC(self)
+        dc1.DrawLine(300, 166, 460, 166)
+        dc2 = wx.PaintDC(self)
+        dc2.DrawLine(300, 167, 460, 167)
+        dc3 = wx.PaintDC(self)
+        dc3.DrawLine(300, 168, 460, 168)
+        dc4 = wx.PaintDC(self)
+        dc4.DrawLine(300, 169, 460, 169)
+        dc5 = wx.PaintDC(self)
+        dc5.DrawLine(300, 170, 460, 170)
+        dc_1 = wx.PaintDC(self)
+        dc_1.DrawLine(325, 180, 440, 180)
+        dc_1_1 = wx.PaintDC(self)
+        dc_1_1.DrawLine(325, 179, 440, 179)
+        
+        dc_2 = wx.PaintDC(self)
+        dc_2.DrawLine(205, 290, 550, 290)
+        dc_3 = wx.PaintDC(self)
+        dc_3.DrawLine(205, 330, 550, 330)
+        dc_2 = wx.PaintDC(self)
+        dc_2.DrawLine(205, 289, 550, 289)
+        dc_3 = wx.PaintDC(self)
+        dc_3.DrawLine(205, 331, 550, 331)
+        
+        dc_4 = wx.PaintDC(self)
+        dc_4.DrawLine(220, 275, 535, 275)
+        dc_5 = wx.PaintDC(self)
+        dc_5.DrawLine(220, 345, 535, 345)
+        
 
 
-class Glowne1(wx.Panel):
+class Sign(wx.Panel):
 
     def __init__(self, parent):
         wx.Panel.__init__(self, parent)
 
         tekst = 'Sign Up'
-        font = wx.Font(18, wx.DEFAULT, wx.NORMAL, wx.NORMAL)
-        wx.StaticText(self, -1, tekst, (300, 10)).SetFont(font)
+        font = wx.Font(42, wx.DEFAULT, wx.ITALIC, wx.BOLD)
+        wx.StaticText(self, -1, tekst, (280, 60)).SetFont(font)
 
-        self.btn = wx.Button(self, -1, "Register", (345, 100))
-        self.btn1 = wx.Button(self, -1, "Login", (345, 120))
 
+        self.btn = wx.Button(self, -1, "Register", (345, 300), (120, 50))
+        self.btn1 = wx.Button(self, -1, "Login", (345, 360), (120, 50))
+        self.btn2 = wx.Button(self, -1, "Return", (50, 480))
+
+class Login(wx.Panel):
+
+    def __init__(self, parent):
+        wx.Panel.__init__(self, parent)
+
+        tekst = 'Login'
+        font = wx.Font(42, wx.DEFAULT, wx.ITALIC, wx.BOLD)
+        wx.StaticText(self, -1, tekst, (295, 60)).SetFont(font)
+
+        self.btn = wx.Button(self, -1, "Return", (50, 480))
+        
 
 class Program(wx.Frame):
 
@@ -36,13 +92,19 @@ class Program(wx.Frame):
         sizer = wx.BoxSizer()
         self.SetSizer(sizer)
 
-        self.panel_one = Glowne(self)
+        self.panel_one = Front(self)
         sizer.Add(self.panel_one, 1, wx.EXPAND)
         self.panel_one.btn.Bind(wx.EVT_BUTTON, self.show_panel_two)
-        self.panel_two = Glowne1(self)
+        self.panel_two = Sign(self)
         sizer.Add(self.panel_two, 1, wx.EXPAND)
-        self.panel_two.btn.Bind(wx.EVT_BUTTON, self.show_panel_one)
+        self.panel_two.btn2.Bind(wx.EVT_BUTTON, self.show_panel_one)
+        self.panel_two.btn1.Bind(wx.EVT_BUTTON, self. show_panel_three)
         self.panel_two.Hide()
+        self.panel_three = Login(self)
+        sizer.Add(self.panel_three, 1, wx.EXPAND)
+        self.panel_three.btn.Bind(wx.EVT_BUTTON, self.show_panel_two)
+        self.panel_three.Hide()
+        
         self.SetSize((800, 600))
         self.Centre()
 
@@ -63,10 +125,18 @@ class Program(wx.Frame):
     def show_panel_one(self, event):
         self.panel_one.Show()
         self.panel_two.Hide()
+        self.panel_three.Hide()
         self.Layout()
 
     def show_panel_two(self, event):
         self.panel_two.Show()
+        self.panel_one.Hide()
+        self.panel_three.Hide()
+        self.Layout()
+
+    def show_panel_three(self, event):
+        self.panel_three.Show()
+        self.panel_two.Hide()
         self.panel_one.Hide()
         self.Layout()
 
