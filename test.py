@@ -1,6 +1,10 @@
 import wx
 import wx.adv
-from tkinter import *
+import pygame
+import sqlite3
+import time
+import random
+import zipfile
 
 class Front(wx.Panel):
 
@@ -22,7 +26,7 @@ class Front(wx.Panel):
         font_4 = wx.Font(10, wx.DEFAULT, wx.ITALIC, wx.BOLD)
         wx.StaticText(self, -1, txt3, (582, 520)).SetFont(font_4)
 
-        self.btn = wx.Button(self, -1, "Here", (330, 370))
+        self.btn = wx.Button(self, -1, 'Here', (341, 370))
         
         self.Bind(wx.EVT_PAINT, self.OnPaint)
     
@@ -68,26 +72,178 @@ class Sign(wx.Panel):
         wx.StaticText(self, -1, tekst, (280, 60)).SetFont(font)
 
 
-        self.btn = wx.Button(self, -1, "Register", (345, 300), (120, 50))
-        self.btn1 = wx.Button(self, -1, "Login", (345, 360), (120, 50))
-        self.btn2 = wx.Button(self, -1, "Return", (50, 480))
+        self.btn = wx.Button(self, -1, 'Register', (345, 300), (120, 50))
+        self.btn1 = wx.Button(self, -1, 'Login', (345, 360), (120, 50))
+        self.btn2 = wx.Button(self, -1, 'Return', (50, 480))
 
 class Login(wx.Panel):
 
     def __init__(self, parent):
         wx.Panel.__init__(self, parent)
 
-        tekst = 'Login'
+        vbox = wx.BoxSizer(wx.VERTICAL) 
+        hbox1 = wx.BoxSizer(wx.HORIZONTAL)
+        txt = 'Login'
+        
         font = wx.Font(42, wx.DEFAULT, wx.ITALIC, wx.BOLD)
-        wx.StaticText(self, -1, tekst, (295, 60)).SetFont(font)
-
-        self.btn = wx.Button(self, -1, "Return", (50, 480))
+        wx.StaticText(self, -1, txt, (295, 60)).SetFont(font)
         
 
+        font_1 = wx.Font(18, wx.DEFAULT, wx.NORMAL, wx.LIGHT)
+        font_2 = wx.Font(15, wx.DEFAULT, wx.NORMAL, wx.LIGHT)
+        wx.StaticText(self, -1, 'Enter Username:', (195, 220), (120, 80)).SetFont(font_1)
+        wx.StaticText(self, -1, 'Enter Password:', (200, 270), (120, 80)).SetFont(font_1)
+        
+		
+         
+        self.t2 = wx.TextCtrl(self, pos = (380, 270), size = (180, 35), style=wx.TE_PASSWORD)
+        self.t2.SetFont(font_2)
+        self.t3 = wx.TextCtrl(self, pos = (380, 220), size = (180, 35))
+        self.t3.SetFont(font_2)
+        self.t2.SetMaxLength(12)
+        self.t3.SetMaxLength(15)
+		
+        
+        self.t2.Bind(wx.EVT_TEXT_MAXLEN,self.OnMaxLen)
+        self.t3.Bind(wx.EVT_TEXT_MAXLEN,self.OnMaxLen)
+        
+
+        self.btn = wx.Button(self, -1, 'Return', (50, 480))
+        self.btn2 = wx.Button(self, -1, 'Continue', (440, 380), (120, 50))
+        self.btn2.SetFont(font_2)
+
+    def OnMaxLen(self,event):
+        print ('Maximum length reached')
+
+class Register(wx.Panel):
+
+
+
+    def __init__(self, parent):
+        wx.Panel.__init__(self, parent)
+
+        vbox = wx.BoxSizer(wx.VERTICAL) 
+        hbox1 = wx.BoxSizer(wx.HORIZONTAL)
+        add = False
+        txt = 'Register'
+        
+        font = wx.Font(42, wx.DEFAULT, wx.ITALIC, wx.BOLD)
+        wx.StaticText(self, -1, txt, (295, 60)).SetFont(font)
+        
+
+        font_1 = wx.Font(18, wx.DEFAULT, wx.NORMAL, wx.LIGHT)
+        font_2 = wx.Font(15, wx.DEFAULT, wx.NORMAL, wx.LIGHT)
+        wx.StaticText(self, -1, 'Enter Username:', (195, 220), (120, 80)).SetFont(font_1)
+        wx.StaticText(self, -1, 'Enter Password:', (200, 270), (120, 80)).SetFont(font_1)
+        wx.StaticText(self, -1, 'Re-Enter Password:', (162, 310), (120, 80)).SetFont(font_1)
+        
+		
+         
+        
+        self.t2 = wx.TextCtrl(self, pos = (380, 220), size = (180, 35), style=wx.TE_PROCESS_ENTER)
+        self.t2.SetFont(font_2)
+        self.t3 = wx.TextCtrl(self, pos = (380, 270), size = (180, 35), style=wx.TE_PASSWORD | wx.TE_PROCESS_ENTER)
+        self.t3.SetFont(font_2)
+        self.t4 = wx.TextCtrl(self, pos = (380, 310), size = (180, 35), style=wx.TE_PASSWORD | wx.TE_PROCESS_ENTER)
+        self.t4.SetFont(font_2)
+        self.t2.SetMaxLength(15)
+        self.t3.SetMaxLength(12)
+        self.t4.SetMaxLength(12)
+        
+		
+        
+        self.t2.Bind(wx.EVT_TEXT_MAXLEN,self.OnMaxLen)
+        self.t3.Bind(wx.EVT_TEXT_MAXLEN,self.OnMaxLen)
+        self.t4.Bind(wx.EVT_TEXT_MAXLEN,self.OnMaxLen)
+
+        self.t2.Bind(wx.EVT_TEXT_ENTER,self.Enter)
+        self.t3.Bind(wx.EVT_TEXT_ENTER,self.Enter)
+        self.t4.Bind(wx.EVT_TEXT_ENTER,self.Enter)
+        
+
+        self.btn = wx.Button(self, -1, 'Return', (50, 480))
+        self.btn2 = wx.Button(self, -1, 'Continue', (440, 380), (120, 50))
+        self.btn2.SetFont(font_2)
+        self.btn2.Bind(wx.EVT_BUTTON,self.Enter)
+
+    def Enter(self, event):
+        x = str(self.t2.GetValue())
+        y = str(self.t3.GetValue())
+        z = str(self.t4.GetValue())
+        if len(x) < 2 or len(y) < 5:
+            wx.MessageBox('Too Short', 'Info',
+                          wx.OK | wx.ICON_EXCLAMATION)
+        else:
+            if y != z:
+                wx.MessageBox('Passwords Do Not Match', 'Info',
+                          wx.OK | wx.ICON_EXCLAMATION)
+            else:
+                pass
+
+    def OnMaxLen(self,event):
+        
+        wx.MessageBox('Max Length Reached', 'Info',
+            wx.OK | wx.ICON_INFORMATION)
+
+        
+        
+
+
+class MainMenu(wx.Panel):
+
+    def __init__(self, parent):
+
+        wx.Panel.__init__(self, parent)
+        txt = 'Main Menu'
+        
+        font = wx.Font(42, wx.DEFAULT, wx.ITALIC, wx.BOLD)
+        
+        wx.StaticText(self, -1, txt, (225, 60)).SetFont(font)
+        txt2 = '''Game
+Modes'''
+        txt3 = 'Summon'
+        txt4 = 'Options'
+        txt1 = 'Crafting'
+        txt5 = '''Rules/
+Help'''
+        font_2 = wx.Font(15, wx.DEFAULT, wx.NORMAL, wx.LIGHT)
+        
+        self.btn1 = wx.Button(self, -1, txt2, (210, 205), (120, 65))
+        self.btn1.SetFont(font_2)
+        self.btn2 = wx.Button(self, -1, txt3, (430, 205), (120, 65))
+        self.btn2.SetFont(font_2)
+        self.btn3 = wx.Button(self, -1, txt1, (320, 295), (120, 65))
+        self.btn3.SetFont(font_2)
+        self.btn4 = wx.Button(self, -1, txt5, (210, 385), (120, 65))
+        self.btn4.SetFont(font_2)
+        self.btn5 = wx.Button(self, -1, txt4, (430, 385), (120, 65))
+        self.btn5.SetFont(font_2)
+
+        self.btn = wx.Button(self, -1, 'LOG OUT', (50, 480))
+        
+
+class Tech(wx.Panel):
+    def __init__(self, parent):
+        wx.Panel.__init__(self, parent)
+        txt = 'Thanks For Playing'
+        txt1 = 'さようなら'
+        txt2 = 'Sayōnara'
+        font = wx.Font(42, wx.DEFAULT, wx.ITALIC, wx.BOLD)
+        wx.StaticText(self, -1, txt, (175, 120)).SetFont(font)
+        font_1 = wx.Font(28, wx.DEFAULT, wx.NORMAL, wx.NORMAL)
+        wx.StaticText(self, -1, txt1, (325, 340)).SetFont(font_1)
+        font_2 = wx.Font(23, wx.DEFAULT, wx.NORMAL, wx.NORMAL)
+        wx.StaticText(self, -1, txt2, (325, 380)).SetFont(font_2)
+        
+        txt3 = ''' Main Menu
+Return'''
+        self.btn = wx.Button(self, -1, 'LOG OUT', (335, 480))
+        self.btn2 = wx.Button(self, -1, txt3, (530, 465), (90, 50))
+    
 class Program(wx.Frame):
 
     def __init__(self):
-        wx.Frame.__init__(self, None, wx.ID_ANY, 'Program')
+        wx.Frame.__init__(self, None, wx.ID_ANY, 'V.O.I.D')
 
         sizer = wx.BoxSizer()
         self.SetSizer(sizer)
@@ -95,15 +251,39 @@ class Program(wx.Frame):
         self.panel_one = Front(self)
         sizer.Add(self.panel_one, 1, wx.EXPAND)
         self.panel_one.btn.Bind(wx.EVT_BUTTON, self.show_panel_two)
+        
         self.panel_two = Sign(self)
         sizer.Add(self.panel_two, 1, wx.EXPAND)
         self.panel_two.btn2.Bind(wx.EVT_BUTTON, self.show_panel_one)
-        self.panel_two.btn1.Bind(wx.EVT_BUTTON, self. show_panel_three)
+        self.panel_two.btn.Bind(wx.EVT_BUTTON, self.show_panel_four)
+        self.panel_two.btn1.Bind(wx.EVT_BUTTON, self.show_panel_three)
         self.panel_two.Hide()
+        
         self.panel_three = Login(self)
         sizer.Add(self.panel_three, 1, wx.EXPAND)
         self.panel_three.btn.Bind(wx.EVT_BUTTON, self.show_panel_two)
+        self.panel_three.btn2.Bind(wx.EVT_BUTTON, self.show_panel_five1)
         self.panel_three.Hide()
+
+        self.panel_four = Register(self)
+        sizer.Add(self.panel_four, 1, wx.EXPAND)
+        self.panel_four.btn.Bind(wx.EVT_BUTTON, self.show_panel_two)
+        self.panel_four.btn2.Bind(wx.EVT_BUTTON, self.show_panel_five)
+        self.panel_four.Hide()
+
+        self.panel_five = MainMenu(self)
+        sizer.Add(self.panel_five, 1, wx.EXPAND)
+        a=0
+    
+        self.panel_five.btn.Bind(wx.EVT_BUTTON, self.Message)
+        self.panel_five.Hide()
+
+        self.panel_six = Tech(self)
+        sizer.Add(self.panel_six, 1, wx.EXPAND)
+        self.panel_six.btn.Bind(wx.EVT_BUTTON, self.show_panel_one)
+        self.panel_six.btn2.Bind(wx.EVT_BUTTON, self.show_panel_five2)
+        self.panel_six.Hide()
+
         
         self.SetSize((800, 600))
         self.Centre()
@@ -122,24 +302,163 @@ class Program(wx.Frame):
         self.SetMenuBar(menu)
         self.Bind(wx.EVT_MENU, self.OnQuit, item)
 
+    def Clear(self,event):
+        self.panel_four.t2.Clear()
+
+    def Message(self, event):
+        ans = wx.MessageDialog(self, 'Are You Sure You Want To Log Out?', 'Log Out',
+                      wx.YES_NO | wx.ICON_EXCLAMATION)
+        ret = ans.ShowModal()
+        ans.Destroy()
+        if ret == wx.ID_YES:
+            self.panel_five.Show()
+            self.panel_two.Hide()
+            self.panel_one.Hide()
+            self.panel_three.Hide()
+            self.panel_four.Hide()
+            self.panel_six.Hide()
+            self.panel_five.btn.Bind(wx.EVT_BUTTON, self.show_panel_six)
+        else:
+            self.panel_five.Show()
+            self.panel_two.Hide()
+            self.panel_one.Hide()
+            self.panel_three.Hide()
+            self.panel_four.Hide()
+            self.panel_six.Hide()
+
     def show_panel_one(self, event):
         self.panel_one.Show()
         self.panel_two.Hide()
         self.panel_three.Hide()
+        self.panel_four.Hide()
+        self.panel_five.Hide()
+        self.panel_six.Hide()
         self.Layout()
 
     def show_panel_two(self, event):
         self.panel_two.Show()
         self.panel_one.Hide()
         self.panel_three.Hide()
+        self.panel_four.Hide()
+        self.panel_five.Hide()
+        self.panel_six.Hide()
+        self.panel_four.t2.Clear()
+        self.panel_four.t3.Clear()
+        self.panel_four.t4.Clear()
+        self.panel_three.t2.Clear()
+        self.panel_three.t3.Clear()
         self.Layout()
 
     def show_panel_three(self, event):
         self.panel_three.Show()
         self.panel_two.Hide()
         self.panel_one.Hide()
+        self.panel_four.Hide()
+        self.panel_five.Hide()
+        self.panel_six.Hide()
         self.Layout()
 
+    def show_panel_four(self, event):
+        self.panel_four.Show()
+        self.panel_two.Hide()
+        self.panel_one.Hide()
+        self.panel_three.Hide()
+        self.panel_five.Hide()
+        self.panel_six.Hide()
+        self.Layout()
+
+    def show_panel_five(self, event):
+        x = str(self.panel_four.t2.GetValue())
+        mixed = any(letter.islower() for letter in x) and any(letter.isupper() for letter in x) and x.isalnum()
+        y = str(self.panel_four.t3.GetValue())
+        mixed1 = any(letter.islower() for letter in y) and any(letter.isupper() for letter in y) and y.isalnum()
+        z = str(self.panel_four.t4.GetValue())
+
+        if len(x) == 0 or len(y) == 0 or len(z) == 0:
+            wx.MessageBox('Something Needs To Be Entered In These Fields', 'Info',
+                          wx.OK | wx.ICON_EXCLAMATION)
+        elif len(x) < 2 or len(y) < 5:
+            wx.MessageBox('Too Short', 'Info',
+                          wx.OK | wx.ICON_EXCLAMATION)
+        else:
+            if not mixed or not mixed1:
+                wx.MessageBox('Insufficient Login', 'Info',
+                          wx.OK | wx.ICON_EXCLAMATION)
+            else:
+                if y != z:
+                    wx.MessageBox('Passwords Do Not Match', 'Info',
+                          wx.OK | wx.ICON_EXCLAMATION)
+                else:
+                    self.panel_five.Show()
+                    self.panel_two.Hide()
+                    self.panel_one.Hide()
+                    self.panel_three.Hide()
+                    self.panel_four.Hide()
+                    self.panel_six.Hide()
+                    self.panel_four.t2.Clear()
+                    self.panel_four.t3.Clear()
+                    self.panel_four.t4.Clear()
+                    self.panel_three.t2.Clear()
+                    self.panel_three.t3.Clear()
+                    self.Layout()
+
+    def show_panel_five1(self, event):
+        x = str(self.panel_three.t2.GetValue())
+        mixed = any(letter.islower() for letter in x) and any(letter.isupper() for letter in x) and x.isalnum()
+        y = str(self.panel_three.t3.GetValue())
+        mixed1 = any(letter.islower() for letter in y) and any(letter.isupper() for letter in y) and y.isalnum()
+        #z = str(self.panel_four.t4.GetValue())
+
+        if len(x) == 0 or len(y) == 0 or len(z) == 0:
+            wx.MessageBox('Something Needs To Be Entered In These Fields', 'Info',
+                          wx.OK | wx.ICON_EXCLAMATION)
+        elif len(x) < 2 or len(y) < 5:
+            wx.MessageBox('Insufficient Login', 'Info',
+                          wx.OK | wx.ICON_EXCLAMATION)
+        else:
+            if not mixed or not mixed1:
+                wx.MessageBox('Insufficient Login', 'Info',
+                          wx.OK | wx.ICON_EXCLAMATION)
+            else:
+               # if y != z:
+               #     wx.MessageBox('Passwords Do Not Match', 'Info',
+               #               wx.OK | wx.ICON_EXCLAMATION)
+               # else:
+                self.panel_five.Show()
+                self.panel_two.Hide()
+                self.panel_one.Hide()
+                self.panel_three.Hide()
+                self.panel_four.Hide()
+                self.panel_six.Hide()
+                self.panel_four.t2.Clear()
+                self.panel_four.t3.Clear()
+                self.panel_four.t4.Clear()
+                self.panel_three.t2.Clear()
+                self.panel_three.t3.Clear()
+                self.Layout()
+        
+    def show_panel_five2(self, event):
+        self.panel_five.Show()
+        self.panel_two.Hide()
+        self.panel_one.Hide()
+        self.panel_three.Hide()
+        self.panel_four.Hide()
+        self.panel_six.Hide()
+        self.panel_four.t2.Clear()
+        self.panel_four.t3.Clear()
+        self.panel_four.t4.Clear()
+        self.panel_three.t2.Clear()
+        self.panel_three.t3.Clear()
+        self.Layout()
+        
+    def show_panel_six(self, event):
+        self.panel_six.Show()
+        self.panel_two.Hide()
+        self.panel_one.Hide()
+        self.panel_three.Hide()
+        self.panel_four.Hide()
+        self.panel_five.Hide()
+        self.Layout()
     def OnAbout(self, e):
 
         text = '''                             This is the VOID (Virtual Operation In Dissension);
