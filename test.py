@@ -6,18 +6,18 @@ import time
 import random
 import zipfile
 
-class Front(wx.Panel):
+class Front(wx.Panel):            #each page in the interface is a seperate class for easier implementation
 
     def __init__(self, parent):
-        wx.Panel.__init__(self, parent=parent)
+        wx.Panel.__init__(self, parent=parent)     #this initialise the panel so that it can be used and interacted with
 
-        self.SetSize((600, 600))
+        self.SetSize((600, 600))           # this sets the size of the panel
 
         tekst = 'VOID'
         txt = 'Welcome To'
         txt2 = 'Press The Button To Continue'
         txt3 = 'Virtual Operation In Dissension' 
-        font = wx.Font(10, wx.DEFAULT, wx.NORMAL, wx.NORMAL)
+        font = wx.Font(10, wx.DEFAULT, wx.NORMAL, wx.NORMAL)    #these are the font settings for the words that will appear on screen
         wx.StaticText(self, -1, txt, (340, 75)).SetFont(font)
         font_2 = wx.Font(49, wx.DEFAULT, wx.SLANT, wx.BOLD)
         wx.StaticText(self, -1, tekst, (300, 90)).SetFont(font_2)
@@ -26,12 +26,12 @@ class Front(wx.Panel):
         font_4 = wx.Font(10, wx.DEFAULT, wx.ITALIC, wx.BOLD)
         wx.StaticText(self, -1, txt3, (582, 520)).SetFont(font_4)
 
-        self.btn = wx.Button(self, -1, 'Here', (341, 370))
+        self.btn = wx.Button(self, -1, 'Here', (341, 370))      #this is the button that will appear on the first page
         
-        self.Bind(wx.EVT_PAINT, self.OnPaint)
+        self.Bind(wx.EVT_PAINT, self.OnPaint)        #this is to add a function to the page so that items can be painted on to the page
     
     def OnPaint(self, e):
-        dc1 = wx.PaintDC(self)
+        dc1 = wx.PaintDC(self)                      # these all are the lines that will be shown on the front screen
         dc1.DrawLine(300, 166, 460, 166)
         dc2 = wx.PaintDC(self)
         dc2.DrawLine(300, 167, 460, 167)
@@ -62,19 +62,19 @@ class Front(wx.Panel):
         
 
 
-class Sign(wx.Panel):
+class Sign(wx.Panel): # this is the page for signing up
 
     def __init__(self, parent):
         wx.Panel.__init__(self, parent)
 
-        tekst = 'Sign Up'
+        test = 'Sign Up'
         font = wx.Font(42, wx.DEFAULT, wx.ITALIC, wx.BOLD)
-        wx.StaticText(self, -1, tekst, (280, 60)).SetFont(font)
+        wx.StaticText(self, -1, test, (280, 60)).SetFont(font)
 
 
-        self.btn = wx.Button(self, -1, 'Register', (345, 300), (120, 50))
+        self.btn = wx.Button(self, -1, 'Register', (345, 300), (120, 50))    #these are the buttons that will take you to the login & register pages
         self.btn1 = wx.Button(self, -1, 'Login', (345, 360), (120, 50))
-        self.btn2 = wx.Button(self, -1, 'Return', (50, 480))
+        self.btn2 = wx.Button(self, -1, 'Return', (50, 480)) # this button will take you back to the previous page
 
 class Login(wx.Panel):
 
@@ -183,11 +183,7 @@ class Register(wx.Panel):
     def OnMaxLen(self,event):
         
         wx.MessageBox('Max Length Reached', 'Info',
-            wx.OK | wx.ICON_INFORMATION)
-
-        
-        
-
+            wx.OK | wx.ICON_EXCLAMATION)
 
 class MainMenu(wx.Panel):
 
@@ -377,7 +373,7 @@ class Program(wx.Frame):
         if len(x) == 0 or len(y) == 0 or len(z) == 0:
             wx.MessageBox('Something Needs To Be Entered In These Fields', 'Info',
                           wx.OK | wx.ICON_EXCLAMATION)
-        elif len(x) < 2 or len(y) < 5:
+        elif len(x) < 3 or len(y) < 5:
             wx.MessageBox('Too Short', 'Info',
                           wx.OK | wx.ICON_EXCLAMATION)
         else:
@@ -409,10 +405,10 @@ class Program(wx.Frame):
         mixed1 = any(letter.islower() for letter in y) and any(letter.isupper() for letter in y) and y.isalnum()
         #z = str(self.panel_four.t4.GetValue())
 
-        if len(x) == 0 or len(y) == 0 or len(z) == 0:
+        if len(x) == 0 or len(y) == 0: #or len(z) == 0:
             wx.MessageBox('Something Needs To Be Entered In These Fields', 'Info',
                           wx.OK | wx.ICON_EXCLAMATION)
-        elif len(x) < 2 or len(y) < 5:
+        elif len(x) < 3 or len(y) < 5:
             wx.MessageBox('Insufficient Login', 'Info',
                           wx.OK | wx.ICON_EXCLAMATION)
         else:
