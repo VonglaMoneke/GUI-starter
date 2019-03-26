@@ -195,24 +195,25 @@ class MainMenu(wx.Panel):
         font = wx.Font(42, wx.DEFAULT, wx.ITALIC, wx.BOLD)
         
         wx.StaticText(self, -1, txt, (225, 60)).SetFont(font)
-        txt2 = '''Game
+        txt1 = '''Game
 Modes'''
-        txt3 = 'Summon'
-        txt4 = 'Options'
-        txt1 = 'Crafting'
-        txt5 = '''Rules/
+        txt2 = 'Summon'
+        txt3 = 'Crafting'
+        txt4 = '''Rules/
 Help'''
+        txt5 = 'Options'
+        
         font_2 = wx.Font(15, wx.DEFAULT, wx.NORMAL, wx.LIGHT)
         
-        self.btn1 = wx.Button(self, -1, txt2, (210, 205), (120, 65))
+        self.btn1 = wx.Button(self, -1, txt1, (160, 205), (140, 75))
         self.btn1.SetFont(font_2)
-        self.btn2 = wx.Button(self, -1, txt3, (430, 205), (120, 65))
+        self.btn2 = wx.Button(self, -1, txt2, (490, 205), (140, 75))
         self.btn2.SetFont(font_2)
-        self.btn3 = wx.Button(self, -1, txt1, (320, 295), (120, 65))
+        self.btn3 = wx.Button(self, -1, txt3, (325, 265), (140, 75))
         self.btn3.SetFont(font_2)
-        self.btn4 = wx.Button(self, -1, txt5, (210, 385), (120, 65))
+        self.btn4 = wx.Button(self, -1, txt4, (160, 325), (140, 75))
         self.btn4.SetFont(font_2)
-        self.btn5 = wx.Button(self, -1, txt4, (430, 385), (120, 65))
+        self.btn5 = wx.Button(self, -1, txt5, (490, 325), (140, 75))
         self.btn5.SetFont(font_2)
 
         self.btn = wx.Button(self, -1, 'LOG OUT', (50, 480))
@@ -250,7 +251,7 @@ class GameModes(wx.Panel):
 Player'''
         txt2 = '''Multi
 Player'''
-        font_2 = wx.Font(15, wx.DEFAULT, wx.NORMAL, wx.LIGHT)
+        font_2 = wx.Font(17, wx.DEFAULT, wx.NORMAL, wx.LIGHT)
         
         self.btn1 = wx.Button(self, -1, txt1, (230, 205), (110, 225))
         self.btn1.SetFont(font_2)
@@ -285,12 +286,31 @@ AI'''
         self.cb2 = wx.CheckBox(self, label = 'Medium',pos = (340,420), size = (80,60))
         self.cb3 = wx.CheckBox(self, label = 'Hard',pos = (430,420), size = (80,60))
 
+        self.Bind(wx.EVT_CHECKBOX,self.onChecked)
+
         font_3 = wx.Font(11, wx.DEFAULT, wx.NORMAL, wx.BOLD)
         self.cb1.SetFont(font_3)
         self.cb2.SetFont(font_3)
         self.cb3.SetFont(font_3)
 
         self.btn = wx.Button(self, -1, 'Return', (50, 480))
+
+    def onChecked(self, event):
+        cb = self.cb1.GetEventObject()
+        cb2 = self.cb2.GetEventObject()
+        cb3 = self.cb3.GetEventObject()
+        q = cb.GetValue()
+        w = cb2.GetValue()
+        e = cb3.GetValue()
+        if q == True:
+            self.cb2= cb2.SetValue(False)
+            self.cb3 = cb3.SetValue(False)
+        elif w == True:
+            self.cb1 = cb.SetValue(False)
+            self.cb3 = cb3.SetValue(False)
+        elif e == True:
+            self.cb2 = cb2.SetValue(False)
+            self.cb1 = cb.SetValue(False)
 
 class MultiPlayer(wx.Panel):
     
@@ -446,6 +466,88 @@ System'''
 
         self.btn = wx.Button(self, -1, 'Return', (50, 480))
         
+class ExtraInfo(wx.Panel):
+    
+    def __init__(self, parent):
+        
+        wx.Panel.__init__(self, parent)
+        txt = 'Extra Info.'
+        
+        font = wx.Font(42, wx.DEFAULT, wx.ITALIC, wx.BOLD)
+        
+        wx.StaticText(self, -1, txt, (240, 60)).SetFont(font)
+        txt1 = '''Hall
+Of
+Fame'''
+        txt2 = '''Summon
+History'''
+        txt3 = '''Personal
+Info'''
+        font_2 = wx.Font(18, wx.DEFAULT, wx.NORMAL, wx.LIGHT)
+        
+        self.btn1 = wx.Button(self, -1, txt1, (230, 205), (110, 230))
+        self.btn1.SetFont(font_2)
+        self.btn2 = wx.Button(self, -1, txt2, (390, 205), (110, 90))
+        self.btn2.SetFont(font_2)
+        self.btn3 = wx.Button(self, -1, txt3, (390, 305), (110, 125))
+        self.btn3.SetFont(font_2)
+
+        self.btn = wx.Button(self, -1, 'Return', (50, 480))
+
+class PersonalInfo(wx.Panel):
+    
+    def __init__(self, parent):
+        
+        wx.Panel.__init__(self, parent)
+        txt = 'Personal Info'
+        
+        font = wx.Font(42, wx.DEFAULT, wx.ITALIC, wx.BOLD)
+        
+        wx.StaticText(self, -1, txt, (200, 60)).SetFont(font)
+        txt1 = '''Records'''
+        txt2 = '''User
+ID'''
+        txt3 = '''Time
+Played'''
+        font_2 = wx.Font(18, wx.DEFAULT, wx.NORMAL, wx.LIGHT)
+        
+        self.btn1 = wx.Button(self, -1, txt1, (230, 205), (110, 225))
+        self.btn1.SetFont(font_2)
+        self.btn2 = wx.Button(self, -1, txt2, (390, 205), (110, 90))
+        self.btn2.SetFont(font_2)
+        self.btn3 = wx.Button(self, -1, txt3, (390, 305), (110, 125))
+        self.btn3.SetFont(font_2)
+
+        self.btn = wx.Button(self, -1, 'Return', (50, 480))
+
+class HallOfFame(wx.Panel):
+    
+    def __init__(self, parent):
+        
+        wx.Panel.__init__(self, parent)
+        txt = 'Hall Of Fame'
+        
+        font = wx.Font(42, wx.DEFAULT, wx.ITALIC, wx.BOLD)
+        
+        wx.StaticText(self, -1, txt, (210, 60)).SetFont(font)
+        txt1 = '''Stats'''
+        txt2 = '''Character
+Info'''
+        txt3 = '''Ability
+Card
+Info'''
+        font_2 = wx.Font(18, wx.DEFAULT, wx.NORMAL, wx.LIGHT)
+        
+        self.btn1 = wx.Button(self, -1, txt1, (200, 195), (95, 250))
+        self.btn1.SetFont(font_2)
+        self.btn2 = wx.Button(self, -1, txt2, (325, 195), (115, 250))
+        self.btn2.SetFont(font_2)
+        self.btn3 = wx.Button(self, -1, txt3, (475, 195), (95, 250))
+        self.btn3.SetFont(font_2)
+
+        self.btn = wx.Button(self, -1, 'Return', (50, 480))
+
+
 
         
 class Program(wx.Frame):
@@ -537,7 +639,28 @@ class Program(wx.Frame):
         self.panel_XIV = RulesHelp(self)
         sizer.Add(self.panel_XIV, 1, wx.EXPAND)
         self.panel_XIV.btn.Bind(wx.EVT_BUTTON, self.show_panel_five2)
+        self.panel_XIV.btn2.Bind(wx.EVT_BUTTON, self.show_panel_XV)
         self.panel_XIV.Hide()
+
+        self.panel_XV = ExtraInfo(self)
+        sizer.Add(self.panel_XV, 1, wx.EXPAND)
+        self.panel_XV.btn.Bind(wx.EVT_BUTTON, self.show_panel_XIV)
+        self.panel_XV.btn1.Bind(wx.EVT_BUTTON, self.show_panel_XVII)
+        self.panel_XV.btn3.Bind(wx.EVT_BUTTON, self.show_panel_XVI)
+        self.panel_XV.Hide()
+
+        self.panel_XVI = PersonalInfo(self)
+        sizer.Add(self.panel_XVI, 1, wx.EXPAND)
+        self.panel_XVI.btn.Bind(wx.EVT_BUTTON, self.show_panel_XV)
+        self.panel_XVI.Hide()
+
+        self.panel_XVII = HallOfFame(self)
+        sizer.Add(self.panel_XVII, 1, wx.EXPAND)
+        self.panel_XVII.btn.Bind(wx.EVT_BUTTON, self.show_panel_XV)
+        self.panel_XVII.Hide()
+
+
+
         
         self.SetSize((800, 600))
         self.Centre()
@@ -586,6 +709,9 @@ class Program(wx.Frame):
             self.panel_XII.Hide()
             self.panel_XIII.Hide()
             self.panel_XIV.Hide()
+            self.panel_XV.Hide()
+            self.panel_XVI.Hide()
+            self.panel_XVII.Hide()
             self.panel_five.btn.Bind(wx.EVT_BUTTON, self.show_panel_six)
         else:
             self.panel_five.Show()
@@ -602,6 +728,9 @@ class Program(wx.Frame):
             self.panel_XII.Hide()
             self.panel_XIII.Hide()
             self.panel_XIV.Hide()
+            self.panel_XV.Hide()
+            self.panel_XVI.Hide()
+            self.panel_XVII.Hide()
 
     def show_panel_one(self, event):
         self.panel_one.Show()
@@ -618,6 +747,9 @@ class Program(wx.Frame):
         self.panel_XII.Hide()
         self.panel_XIII.Hide()
         self.panel_XIV.Hide()
+        self.panel_XV.Hide()
+        self.panel_XVI.Hide()
+        self.panel_XVII.Hide()
         self.Layout()
 
     def show_panel_two(self, event):
@@ -635,6 +767,9 @@ class Program(wx.Frame):
         self.panel_XII.Hide()
         self.panel_XIII.Hide()
         self.panel_XIV.Hide()
+        self.panel_XV.Hide()
+        self.panel_XVI.Hide()
+        self.panel_XVII.Hide()
         self.panel_four.t2.Clear()
         self.panel_four.t3.Clear()
         self.panel_four.t4.Clear()
@@ -657,6 +792,9 @@ class Program(wx.Frame):
         self.panel_XII.Hide()
         self.panel_XIII.Hide()
         self.panel_XIV.Hide()
+        self.panel_XV.Hide()
+        self.panel_XVI.Hide()
+        self.panel_XVII.Hide()
         self.Layout()
 
     def show_panel_four(self, event):
@@ -674,6 +812,9 @@ class Program(wx.Frame):
         self.panel_XII.Hide()
         self.panel_XIII.Hide()
         self.panel_XIV.Hide()
+        self.panel_XV.Hide()
+        self.panel_XVI.Hide()
+        self.panel_XVII.Hide()
         self.Layout()
 
     def show_panel_five(self, event):
@@ -712,6 +853,9 @@ class Program(wx.Frame):
                     self.panel_XII.Hide()
                     self.panel_XIII.Hide()
                     self.panel_XIV.Hide()
+                    self.panel_XV.Hide()
+                    self.panel_XVI.Hide()
+                    self.panel_XVII.Hide()
                     self.panel_four.t2.Clear()
                     self.panel_four.t3.Clear()
                     self.panel_four.t4.Clear()
@@ -755,6 +899,9 @@ class Program(wx.Frame):
                 self.panel_XII.Hide()
                 self.panel_XIII.Hide()
                 self.panel_XIV.Hide()
+                self.panel_XV.Hide()
+                self.panel_XVI.Hide()
+                self.panel_XVII.Hide()
                 self.panel_four.t2.Clear()
                 self.panel_four.t3.Clear()
                 self.panel_four.t4.Clear()
@@ -777,6 +924,9 @@ class Program(wx.Frame):
         self.panel_XII.Hide()
         self.panel_XIII.Hide()
         self.panel_XIV.Hide()
+        self.panel_XV.Hide()
+        self.panel_XVI.Hide()
+        self.panel_XVII.Hide()
         self.panel_four.t2.Clear()
         self.panel_four.t3.Clear()
         self.panel_four.t4.Clear()
@@ -799,6 +949,9 @@ class Program(wx.Frame):
         self.panel_XII.Hide()
         self.panel_XIII.Hide()
         self.panel_XIV.Hide()
+        self.panel_XV.Hide()
+        self.panel_XVI.Hide()
+        self.panel_XVII.Hide()
         self.Layout()
 
     def show_panel_seven(self, event):
@@ -816,6 +969,9 @@ class Program(wx.Frame):
         self.panel_XII.Hide()
         self.panel_XIII.Hide()
         self.panel_XIV.Hide()
+        self.panel_XV.Hide()
+        self.panel_XVI.Hide()
+        self.panel_XVII.Hide()
         self.Layout()
 
     def show_panel_eight(self, event):
@@ -833,6 +989,9 @@ class Program(wx.Frame):
         self.panel_XII.Hide()
         self.panel_XIII.Hide()
         self.panel_XIV.Hide()
+        self.panel_XV.Hide()
+        self.panel_XVI.Hide()
+        self.panel_XVII.Hide()
         self.Layout()
 
     def show_panel_nine(self, event):
@@ -850,6 +1009,9 @@ class Program(wx.Frame):
         self.panel_XII.Hide()
         self.panel_XIII.Hide()
         self.panel_XIV.Hide()
+        self.panel_XV.Hide()
+        self.panel_XVI.Hide()
+        self.panel_XVII.Hide()
         self.Layout()
 
     def show_panel_X(self, event):
@@ -867,6 +1029,9 @@ class Program(wx.Frame):
         self.panel_XII.Hide()
         self.panel_XIII.Hide()
         self.panel_XIV.Hide()
+        self.panel_XV.Hide()
+        self.panel_XVI.Hide()
+        self.panel_XVII.Hide()
         self.Layout()
 
     def show_panel_XI(self, event):
@@ -884,6 +1049,9 @@ class Program(wx.Frame):
         self.panel_XII.Hide()
         self.panel_XIII.Hide()
         self.panel_XIV.Hide()
+        self.panel_XV.Hide()
+        self.panel_XVI.Hide()
+        self.panel_XVII.Hide()
         self.Layout()
 
     def show_panel_XII(self, event):
@@ -901,6 +1069,9 @@ class Program(wx.Frame):
         self.panel_XI.Hide()
         self.panel_XIII.Hide()
         self.panel_XIV.Hide()
+        self.panel_XV.Hide()
+        self.panel_XVI.Hide()
+        self.panel_XVII.Hide()
         self.Layout()
 
 
@@ -919,6 +1090,9 @@ class Program(wx.Frame):
         self.panel_XI.Hide()
         self.panel_XII.Hide()
         self.panel_XIV.Hide()
+        self.panel_XV.Hide()
+        self.panel_XVI.Hide()
+        self.panel_XVII.Hide()
         self.Layout()
 
     def show_panel_XIV(self, event):
@@ -936,10 +1110,71 @@ class Program(wx.Frame):
         self.panel_XI.Hide()
         self.panel_XII.Hide()
         self.panel_XIII.Hide()
+        self.panel_XV.Hide()
+        self.panel_XVI.Hide()
+        self.panel_XVII.Hide()
         self.Layout()
 
+    def show_panel_XV(self, event):
+        self.panel_XV.Show()
+        self.panel_two.Hide()
+        self.panel_one.Hide()
+        self.panel_three.Hide()
+        self.panel_four.Hide()
+        self.panel_five.Hide()
+        self.panel_six.Hide()
+        self.panel_seven.Hide()
+        self.panel_eight.Hide()
+        self.panel_nine.Hide()
+        self.panel_X.Hide()
+        self.panel_XI.Hide()
+        self.panel_XII.Hide()
+        self.panel_XIII.Hide()
+        self.panel_XIV.Hide()
+        self.panel_XVI.Hide()
+        self.panel_XVII.Hide()
+        self.Layout()
 
+    def show_panel_XVI(self, event):
+        self.panel_XVI.Show()
+        self.panel_two.Hide()
+        self.panel_one.Hide()
+        self.panel_three.Hide()
+        self.panel_four.Hide()
+        self.panel_five.Hide()
+        self.panel_six.Hide()
+        self.panel_seven.Hide()
+        self.panel_eight.Hide()
+        self.panel_nine.Hide()
+        self.panel_X.Hide()
+        self.panel_XI.Hide()
+        self.panel_XII.Hide()
+        self.panel_XIII.Hide()
+        self.panel_XIV.Hide()
+        self.panel_XV.Hide()
+        self.panel_XVII.Hide()
+        self.Layout()
 
+    def show_panel_XVII(self, event):
+        self.panel_XVII.Show()
+        self.panel_two.Hide()
+        self.panel_one.Hide()
+        self.panel_three.Hide()
+        self.panel_four.Hide()
+        self.panel_five.Hide()
+        self.panel_six.Hide()
+        self.panel_seven.Hide()
+        self.panel_eight.Hide()
+        self.panel_nine.Hide()
+        self.panel_X.Hide()
+        self.panel_XI.Hide()
+        self.panel_XII.Hide()
+        self.panel_XIII.Hide()
+        self.panel_XIV.Hide()
+        self.panel_XV.Hide()
+        self.panel_XVI.Hide()
+        self.Layout()
+        
     def OnAbout(self, e):
 
         text = '''                             This is the VOID (Virtual Operation In Dissension);
