@@ -5,6 +5,7 @@ import sqlite3
 import time
 import random
 import zipfile
+import os
 
 class Front(wx.Panel):            #each page in the interface is a seperate class for easier implementation
 
@@ -286,7 +287,9 @@ AI'''
         self.cb2 = wx.CheckBox(self, label = 'Medium',pos = (340,420), size = (80,60))
         self.cb3 = wx.CheckBox(self, label = 'Hard',pos = (430,420), size = (80,60))
 
-        self.Bind(wx.EVT_CHECKBOX,self.onChecked)
+        self.cb1.Bind(wx.EVT_CHECKBOX,self.onChecked)
+        self.cb2.Bind(wx.EVT_CHECKBOX,self.onChecked1)
+        self.cb3.Bind(wx.EVT_CHECKBOX,self.onChecked2)
 
         font_3 = wx.Font(11, wx.DEFAULT, wx.NORMAL, wx.BOLD)
         self.cb1.SetFont(font_3)
@@ -296,21 +299,23 @@ AI'''
         self.btn = wx.Button(self, -1, 'Return', (50, 480))
 
     def onChecked(self, event):
-        cb = self.cb1.GetEventObject()
-        cb2 = self.cb2.GetEventObject()
-        cb3 = self.cb3.GetEventObject()
-        q = cb.GetValue()
-        w = cb2.GetValue()
-        e = cb3.GetValue()
+        cb = event.GetEventObject()
+        q = cb.IsChecked()
         if q == True:
-            self.cb2= cb2.SetValue(False)
-            self.cb3 = cb3.SetValue(False)
-        elif w == True:
-            self.cb1 = cb.SetValue(False)
-            self.cb3 = cb3.SetValue(False)
-        elif e == True:
-            self.cb2 = cb2.SetValue(False)
-            self.cb1 = cb.SetValue(False)
+            self.cb2.SetValue(False)
+            self.cb3.SetValue(False)
+    def onChecked1(self, event):
+        cb = event.GetEventObject()
+        q = cb.IsChecked()
+        if q == True:
+            self.cb1.SetValue(False)
+            self.cb3.SetValue(False)
+    def onChecked2(self, event):
+        cb = event.GetEventObject()
+        q = cb.IsChecked()
+        if q == True:
+            self.cb2.SetValue(False)
+            self.cb1.SetValue(False)
 
 class MultiPlayer(wx.Panel):
     
@@ -378,11 +383,25 @@ class Summon(wx.Panel):
         self.cb1 = wx.CheckBox(self, label = 'Single',pos = (280,370), size = (80,60))
         self.cb2 = wx.CheckBox(self, label = 'Multi',pos = (420,370), size = (80,60))
 
+        self.cb1.Bind(wx.EVT_CHECKBOX,self.onChecked)
+        self.cb2.Bind(wx.EVT_CHECKBOX,self.onChecked1)
+
         font_3 = wx.Font(11, wx.DEFAULT, wx.NORMAL, wx.BOLD)
         self.cb1.SetFont(font_3)
         self.cb2.SetFont(font_3)
 
         self.btn = wx.Button(self, -1, 'Return', (50, 480))
+
+    def onChecked(self, event):
+        cb = event.GetEventObject()
+        q = cb.IsChecked()
+        if q == True:
+            self.cb2.SetValue(False)
+    def onChecked1(self, event):
+        cb = event.GetEventObject()
+        q = cb.IsChecked()
+        if q == True:
+            self.cb1.SetValue(False)
 
 class Craft(wx.Panel):
 
@@ -558,6 +577,26 @@ class Program(wx.Frame):
 
         sizer = wx.BoxSizer()
         self.SetSizer(sizer)
+        songs = []
+
+        def direct():
+            dialog = wx.DirDialog(None, "Choose a directory:",style=wx.DD_DEFAULT_STYLE | wx.DD_NEW_DIR_BUTTON)
+            if dialog.ShowModal() == wx.ID_OK:
+                direct = dialog.GetPath()
+            dialog.Destroy()
+            os.chdir(direct)
+
+            for files in os.listdir(direct):
+                if files.endswith('.mp3'):
+
+
+                    songs.append(files)
+
+            pygame.mixer.init()
+            pygame.mixer.music.load(songs[0])
+            pygame.mixer.music.play()
+
+        direct()
 
         self.panel_one = Front(self)
         sizer.Add(self.panel_one, 1, wx.EXPAND)
@@ -1207,10 +1246,11 @@ https://www.piskelapp.com''')
         wx.adv.AboutBox(info)
 
     def OnQuit(self,e):
+        pygame.mixer.music.stop()
         self.Close()
         
 if __name__ == "__main__":
-    app = wx.App(False)
+    app = wx.App(False)    
     frame = Program()
     frame.Show()
     app.MainLoop()
