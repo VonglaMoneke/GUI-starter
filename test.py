@@ -577,7 +577,12 @@ class Program(wx.Frame):
 
         sizer = wx.BoxSizer()
         self.SetSizer(sizer)
-        songs = []
+        
+        
+        intro = []
+        
+        matches = []
+        
 
         def direct():
             dialog = wx.DirDialog(None, "Choose a directory:",style=wx.DD_DEFAULT_STYLE | wx.DD_NEW_DIR_BUTTON)
@@ -590,10 +595,10 @@ class Program(wx.Frame):
                 if files.endswith('.mp3'):
 
 
-                    songs.append(files)
+                    intro.append(files)
 
             pygame.mixer.init()
-            pygame.mixer.music.load(songs[0])
+            pygame.mixer.music.load(intro[0])
             pygame.mixer.music.play()
 
         direct()
@@ -792,6 +797,7 @@ class Program(wx.Frame):
         self.Layout()
 
     def show_panel_two(self, event):
+        pygame.mixer.music.stop()
         self.panel_two.Show()
         self.panel_one.Hide()
         self.panel_three.Hide()
@@ -814,6 +820,25 @@ class Program(wx.Frame):
         self.panel_four.t4.Clear()
         self.panel_three.t2.Clear()
         self.panel_three.t3.Clear()
+        sign_up = []
+        def direct():
+            dialog = wx.DirDialog(None, "Choose a directory:",style=wx.DD_DEFAULT_STYLE | wx.DD_NEW_DIR_BUTTON)
+            if dialog.ShowModal() == wx.ID_OK:
+                direct = dialog.GetPath()
+            dialog.Destroy()
+            os.chdir(direct)
+
+            for files in os.listdir(direct):
+                if files.endswith('.mp3'):
+
+
+                    sign_up.append(files)
+
+            pygame.mixer.init()
+            pygame.mixer.music.load(sign_up[0])
+            pygame.mixer.music.play()
+
+        direct()
         self.Layout()
 
     def show_panel_three(self, event):
@@ -878,6 +903,7 @@ class Program(wx.Frame):
                     wx.MessageBox('Passwords Do Not Match', 'Info',
                           wx.OK | wx.ICON_EXCLAMATION)
                 else:
+                    pygame.mixer.music.stop()
                     self.panel_five.Show()
                     self.panel_two.Hide()
                     self.panel_one.Hide()
@@ -900,6 +926,26 @@ class Program(wx.Frame):
                     self.panel_four.t4.Clear()
                     self.panel_three.t2.Clear()
                     self.panel_three.t3.Clear()
+                    main_menu = []
+                    def direct():
+                        dialog = wx.DirDialog(None, "Choose a directory:",style=wx.DD_DEFAULT_STYLE | wx.DD_NEW_DIR_BUTTON)
+                        if dialog.ShowModal() == wx.ID_OK:
+                            direct = dialog.GetPath()
+                        dialog.Destroy()
+                        os.chdir(direct)
+
+                        for files in os.listdir(direct):
+                            if files.endswith('.mp3'):
+
+
+                                main_menu.append(files)
+
+                        pygame.mixer.init()
+                        pygame.mixer.music.load(main_menu[0])
+                        pygame.mixer.music.queue(main_menu[1])
+                        pygame.mixer.music.play()
+
+                    direct()
                     self.Layout()
 
     def show_panel_five1(self, event):
@@ -924,6 +970,8 @@ class Program(wx.Frame):
                #     wx.MessageBox('Passwords Do Not Match', 'Info',
                #               wx.OK | wx.ICON_EXCLAMATION)
                # else:
+                pygame.mixer.music.stop()
+                main_menu = []
                 self.panel_five.Show()
                 self.panel_two.Hide()
                 self.panel_one.Hide()
@@ -946,10 +994,30 @@ class Program(wx.Frame):
                 self.panel_four.t4.Clear()
                 self.panel_three.t2.Clear()
                 self.panel_three.t3.Clear()
+                def direct():
+                    dialog = wx.DirDialog(None, "Choose a directory:",style=wx.DD_DEFAULT_STYLE | wx.DD_NEW_DIR_BUTTON)
+                    if dialog.ShowModal() == wx.ID_OK:
+                        direct = dialog.GetPath()
+                    dialog.Destroy()
+                    os.chdir(direct)
+
+                    for files in os.listdir(direct):
+                        if files.endswith('.mp3'):
+
+                            main_menu.append(files)
+
+                    pygame.mixer.init()
+                    pygame.mixer.music.load(main_menu[0])
+                    pygame.mixer.music.queue(main_menu[1])
+                    pygame.mixer.music.play()
+
+                direct()
                 self.Layout()
         
     def show_panel_five2(self, event):
         self.panel_five.Show()
+        pygame.mixer.music.stop()
+        main_menu = []
         self.panel_two.Hide()
         self.panel_one.Hide()
         self.panel_three.Hide()
@@ -971,6 +1039,24 @@ class Program(wx.Frame):
         self.panel_four.t4.Clear()
         self.panel_three.t2.Clear()
         self.panel_three.t3.Clear()
+        def direct():
+            dialog = wx.DirDialog(None, "Choose a directory:",style=wx.DD_DEFAULT_STYLE | wx.DD_NEW_DIR_BUTTON)
+            if dialog.ShowModal() == wx.ID_OK:
+                direct = dialog.GetPath()
+            dialog.Destroy()
+            os.chdir(direct)
+
+            for files in os.listdir(direct):
+                if files.endswith('.mp3'):
+
+                    main_menu.append(files)
+
+            pygame.mixer.init()
+            pygame.mixer.music.load(main_menu[0])
+            pygame.mixer.music.queue(main_menu[1])
+            pygame.mixer.music.play()
+
+        direct()
         self.Layout()
         
     def show_panel_six(self, event):
@@ -1074,6 +1160,7 @@ class Program(wx.Frame):
         self.Layout()
 
     def show_panel_XI(self, event):
+        pygame.mixer.music.stop()
         self.panel_XI.Show()
         self.panel_two.Hide()
         self.panel_one.Hide()
@@ -1091,9 +1178,28 @@ class Program(wx.Frame):
         self.panel_XV.Hide()
         self.panel_XVI.Hide()
         self.panel_XVII.Hide()
+        summon = []
+        def direct():
+            dialog = wx.DirDialog(None, "Choose a directory:",style=wx.DD_DEFAULT_STYLE | wx.DD_NEW_DIR_BUTTON)
+            if dialog.ShowModal() == wx.ID_OK:
+                direct = dialog.GetPath()
+            dialog.Destroy()
+            os.chdir(direct)
+
+            for files in os.listdir(direct):
+                if files.endswith('.mp3'):
+
+                    summon.append(files)
+
+            pygame.mixer.init()
+            pygame.mixer.music.load(summon[0])
+            pygame.mixer.music.play()
+
+        direct()
         self.Layout()
 
     def show_panel_XII(self, event):
+        pygame.mixer.music.stop()
         self.panel_XII.Show()
         self.panel_two.Hide()
         self.panel_one.Hide()
@@ -1111,10 +1217,29 @@ class Program(wx.Frame):
         self.panel_XV.Hide()
         self.panel_XVI.Hide()
         self.panel_XVII.Hide()
+        craft = []
+        def direct():
+            dialog = wx.DirDialog(None, "Choose a directory:",style=wx.DD_DEFAULT_STYLE | wx.DD_NEW_DIR_BUTTON)
+            if dialog.ShowModal() == wx.ID_OK:
+                direct = dialog.GetPath()
+            dialog.Destroy()
+            os.chdir(direct)
+
+            for files in os.listdir(direct):
+                if files.endswith('.mp3'):
+
+                    craft.append(files)
+
+            pygame.mixer.init()
+            pygame.mixer.music.load(craft[0])
+            pygame.mixer.music.play()
+
+        direct()
         self.Layout()
 
 
     def show_panel_XIII(self, event):
+        pygame.mixer.music.stop()
         self.panel_XIII.Show()
         self.panel_two.Hide()
         self.panel_one.Hide()
@@ -1132,6 +1257,24 @@ class Program(wx.Frame):
         self.panel_XV.Hide()
         self.panel_XVI.Hide()
         self.panel_XVII.Hide()
+        main_menu = []
+        def direct():
+            dialog = wx.DirDialog(None, "Choose a directory:",style=wx.DD_DEFAULT_STYLE | wx.DD_NEW_DIR_BUTTON)
+            if dialog.ShowModal() == wx.ID_OK:
+                direct = dialog.GetPath()
+            dialog.Destroy()
+            os.chdir(direct)
+
+            for files in os.listdir(direct):
+                if files.endswith('.mp3'):
+
+                    main_menu.append(files)
+
+            pygame.mixer.init()
+            pygame.mixer.music.load(main_menu[1])
+            pygame.mixer.music.play()
+
+        direct()
         self.Layout()
 
     def show_panel_XIV(self, event):
@@ -1155,6 +1298,7 @@ class Program(wx.Frame):
         self.Layout()
 
     def show_panel_XV(self, event):
+        pygame.mixer.music.stop()
         self.panel_XV.Show()
         self.panel_two.Hide()
         self.panel_one.Hide()
@@ -1172,6 +1316,26 @@ class Program(wx.Frame):
         self.panel_XIV.Hide()
         self.panel_XVI.Hide()
         self.panel_XVII.Hide()
+        story = []
+        def direct():
+            dialog = wx.DirDialog(None, "Choose a directory:",style=wx.DD_DEFAULT_STYLE | wx.DD_NEW_DIR_BUTTON)
+            if dialog.ShowModal() == wx.ID_OK:
+                direct = dialog.GetPath()
+            dialog.Destroy()
+            os.chdir(direct)
+
+            for files in os.listdir(direct):
+                if files.endswith('.mp3'):
+
+                    story.append(files)
+
+            pygame.mixer.init()
+            shuffle(story)
+            pygame.mixer.music.load(story[0])
+            pygame.mixer.music.load(story[1])
+            pygame.mixer.music.play()
+
+        direct()
         self.Layout()
 
     def show_panel_XVI(self, event):
