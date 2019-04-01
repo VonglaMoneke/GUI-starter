@@ -84,10 +84,10 @@ class Login(wx.Panel):
 
         vbox = wx.BoxSizer(wx.VERTICAL) 
         hbox1 = wx.BoxSizer(wx.HORIZONTAL)
-        txt = 'Login'                              #this is the text that will be used as the title for the page
+        txt = 'Login'
         
         font = wx.Font(42, wx.DEFAULT, wx.ITALIC, wx.BOLD)
-        wx.StaticText(self, -1, txt, (295, 60)).SetFont(font)          # the static font allows the text to be added to the page as just a piece of text that does nothing
+        wx.StaticText(self, -1, txt, (295, 60)).SetFont(font)
         
 
         font_1 = wx.Font(18, wx.DEFAULT, wx.NORMAL, wx.LIGHT)
@@ -96,33 +96,36 @@ class Login(wx.Panel):
         wx.StaticText(self, -1, 'Enter Password:', (200, 270), (120, 80)).SetFont(font_1)
         
 		
-        self.t3 = wx.TextCtrl(self, pos = (380, 220), size = (180, 35))    # this adds the etry boxes where the user can input their details
+         
+        self.t2 = wx.TextCtrl(self, pos = (380, 270), size = (180, 35), style=wx.TE_PASSWORD)
+        self.t2.SetFont(font_2)
+        self.t3 = wx.TextCtrl(self, pos = (380, 220), size = (180, 35))
         self.t3.SetFont(font_2)
-        self.t2 = wx.TextCtrl(self, pos = (380, 270), size = (180, 35), style=wx.TE_PASSWORD) #the style=wx.TE_PASSWORD means that whatever is entered
-        self.t2.SetFont(font_2)                                                               #will have the properties of a password so it will be starred out
-        self.t2.SetMaxLength(18)                                             # these set the max length for the username and password
-        self.t3.SetMaxLength(12)
+        self.t2.SetMaxLength(12)
+        self.t3.SetMaxLength(15)
 		
         
-        self.t2.Bind(wx.EVT_TEXT_MAXLEN,self.OnMaxLen)            #these set the events to when the max has been reached
+        self.t2.Bind(wx.EVT_TEXT_MAXLEN,self.OnMaxLen)
         self.t3.Bind(wx.EVT_TEXT_MAXLEN,self.OnMaxLen)
         
 
-        self.btn = wx.Button(self, -1, 'Return', (50, 480))                                # return button
-        self.btn2 = wx.Button(self, -1, 'Continue', (440, 380), (120, 50))       #continue button
+        self.btn = wx.Button(self, -1, 'Return', (50, 480))
+        self.btn2 = wx.Button(self, -1, 'Continue', (440, 380), (120, 50))
         self.btn2.SetFont(font_2)
 
     def OnMaxLen(self,event):
-        wx.MessageBox('Max Length Reached', 'Info',                    #this is a dialog box that pops up when the maximum length has been met.
-            wx.OK | wx.ICON_EXCLAMATION)
+        print ('Maximum length reached')
 
-class Register(wx.Panel):                              # this is the panel for the register screen
+class Register(wx.Panel):
+
+
 
     def __init__(self, parent):
-        wx.Panel.__init__(self, parent)              # this initailises the panel so theat it can be intercated with and seen by the user 
+        wx.Panel.__init__(self, parent)
 
         vbox = wx.BoxSizer(wx.VERTICAL) 
         hbox1 = wx.BoxSizer(wx.HORIZONTAL)
+        add = False
         txt = 'Register'
         
         font = wx.Font(42, wx.DEFAULT, wx.ITALIC, wx.BOLD)
@@ -140,13 +143,13 @@ class Register(wx.Panel):                              # this is the panel for t
         
         self.t2 = wx.TextCtrl(self, pos = (380, 220), size = (180, 35), style=wx.TE_PROCESS_ENTER)
         self.t2.SetFont(font_2)
-        self.t3 = wx.TextCtrl(self, pos = (380, 270), size = (180, 35), style=wx.TE_PASSWORD | wx.TE_PROCESS_ENTER) # the wx.TE_PROCESS_ENTER means that something will
-        self.t3.SetFont(font_2)                                                                                     # happen when you press the enter button
+        self.t3 = wx.TextCtrl(self, pos = (380, 270), size = (180, 35), style=wx.TE_PASSWORD | wx.TE_PROCESS_ENTER)
+        self.t3.SetFont(font_2)
         self.t4 = wx.TextCtrl(self, pos = (380, 310), size = (180, 35), style=wx.TE_PASSWORD | wx.TE_PROCESS_ENTER)
         self.t4.SetFont(font_2)
-        self.t2.SetMaxLength(12)
-        self.t3.SetMaxLength(18)
-        self.t4.SetMaxLength(18)
+        self.t2.SetMaxLength(15)
+        self.t3.SetMaxLength(12)
+        self.t4.SetMaxLength(12)
         
 		
         
@@ -154,26 +157,26 @@ class Register(wx.Panel):                              # this is the panel for t
         self.t3.Bind(wx.EVT_TEXT_MAXLEN,self.OnMaxLen)
         self.t4.Bind(wx.EVT_TEXT_MAXLEN,self.OnMaxLen)
 
-        self.t2.Bind(wx.EVT_TEXT_ENTER,self.Enter)          # this binds the enter button press to an event
-        self.t3.Bind(wx.EVT_TEXT_ENTER,self.Enter)           
+        self.t2.Bind(wx.EVT_TEXT_ENTER,self.Enter)
+        self.t3.Bind(wx.EVT_TEXT_ENTER,self.Enter)
         self.t4.Bind(wx.EVT_TEXT_ENTER,self.Enter)
         
 
         self.btn = wx.Button(self, -1, 'Return', (50, 480))
         self.btn2 = wx.Button(self, -1, 'Continue', (440, 380), (120, 50))
         self.btn2.SetFont(font_2)
-        self.btn2.Bind(wx.EVT_BUTTON,self.Enter)        # I binded the continue button to do the same thing as when you press the enter button
+        self.btn2.Bind(wx.EVT_BUTTON,self.Enter)
 
     def Enter(self, event):
-        x = str(self.t2.GetValue())         # this gets whatever has been entered and makes it a string
+        x = str(self.t2.GetValue())
         y = str(self.t3.GetValue())
         z = str(self.t4.GetValue())
-        if len(x) < 2 or len(y) < 5:          # as it string now the length can be checked, this is the way to validate the username and the password
-            wx.MessageBox('Too Short', 'Info',                  # brings up a dialog box to say that whatever was entered is too short.
+        if len(x) < 2 or len(y) < 5:
+            wx.MessageBox('Too Short', 'Info',
                           wx.OK | wx.ICON_EXCLAMATION)
         else:
-            if y != z:                               # this is for the 2 passwords to see if they match each other
-                wx.MessageBox('Passwords Do Not Match', 'Info',        # brings up a dialog box to say that the 2 passwords don't match
+            if y != z:
+                wx.MessageBox('Passwords Do Not Match', 'Info',
                           wx.OK | wx.ICON_EXCLAMATION)
             else:
                 pass
@@ -183,19 +186,19 @@ class Register(wx.Panel):                              # this is the panel for t
         wx.MessageBox('Max Length Reached', 'Info',
             wx.OK | wx.ICON_EXCLAMATION)
 
-class MainMenu(wx.Panel):           # this is the panel for the main menu
+class MainMenu(wx.Panel):
 
     def __init__(self, parent):
 
-        wx.Panel.__init__(self, parent)    #this initialises the main menu panel
-        txt = 'Main Menu'                 #this is the title
+        wx.Panel.__init__(self, parent)
+        txt = 'Main Menu'
         
-        font = wx.Font(42, wx.DEFAULT, wx.ITALIC, wx.BOLD) #sets the font for the text
+        font = wx.Font(42, wx.DEFAULT, wx.ITALIC, wx.BOLD)
         
         wx.StaticText(self, -1, txt, (225, 60)).SetFont(font)
         txt1 = '''Game
 Modes'''
-        txt2 = 'Summon'                               #these are the text that will be on the buttons
+        txt2 = 'Summon'
         txt3 = 'Crafting'
         txt4 = '''Rules/
 Help'''
@@ -203,7 +206,7 @@ Help'''
         
         font_2 = wx.Font(15, wx.DEFAULT, wx.NORMAL, wx.LIGHT)
         
-        self.btn1 = wx.Button(self, -1, txt1, (160, 205), (140, 75))     #this sets the buttons and their positions on the pages 
+        self.btn1 = wx.Button(self, -1, txt1, (160, 205), (140, 75))
         self.btn1.SetFont(font_2)
         self.btn2 = wx.Button(self, -1, txt2, (490, 205), (140, 75))
         self.btn2.SetFont(font_2)
@@ -214,10 +217,10 @@ Help'''
         self.btn5 = wx.Button(self, -1, txt5, (490, 325), (140, 75))
         self.btn5.SetFont(font_2)
 
-        self.btn = wx.Button(self, -1, 'LOG OUT', (50, 480)) # this is the log out button it is very similar to the return button
+        self.btn = wx.Button(self, -1, 'LOG OUT', (50, 480))
         
 
-class Tech(wx.Panel):  # this is the page is the page that is inbetween the main menu and the intro page, when you log out
+class Tech(wx.Panel):
     def __init__(self, parent):
         wx.Panel.__init__(self, parent)
         txt = 'Thanks For Playing'
@@ -233,9 +236,9 @@ class Tech(wx.Panel):  # this is the page is the page that is inbetween the main
         txt3 = ''' Main Menu
 Return'''
         self.btn = wx.Button(self, -1, 'LOG OUT', (335, 480))
-        self.btn2 = wx.Button(self, -1, txt3, (530, 465), (90, 50))      # this button should take you back to the main menu
+        self.btn2 = wx.Button(self, -1, txt3, (530, 465), (90, 50))
 
-class GameModes(wx.Panel):            
+class GameModes(wx.Panel):
     
     def __init__(self, parent):
         
@@ -266,6 +269,7 @@ class SinglePlayer(wx.Panel):
         txt = 'Single Player'
         
         font = wx.Font(42, wx.DEFAULT, wx.ITALIC, wx.BOLD)
+        
         wx.StaticText(self, -1, txt, (200, 60)).SetFont(font)
         txt1 = '''Story
 Mode'''
@@ -279,11 +283,11 @@ AI'''
         self.btn2 = wx.Button(self, -1, txt2, (390, 205), (110, 205))
         self.btn2.SetFont(font_2)
 
-        self.cb1 = wx.CheckBox(self, label = 'Easy',pos = (250,420), size = (80,60))   # this creates 3 checkboxes on the screen  
-        self.cb2 = wx.CheckBox(self, label = 'Medium',pos = (340,420), size = (80,60)) #these are for the 3 difficulties  
+        self.cb1 = wx.CheckBox(self, label = 'Easy',pos = (250,420), size = (80,60))
+        self.cb2 = wx.CheckBox(self, label = 'Medium',pos = (340,420), size = (80,60))
         self.cb3 = wx.CheckBox(self, label = 'Hard',pos = (430,420), size = (80,60))
 
-        self.cb1.Bind(wx.EVT_CHECKBOX,self.onChecked)      #these binds the checkboxes to different events
+        self.cb1.Bind(wx.EVT_CHECKBOX,self.onChecked)
         self.cb2.Bind(wx.EVT_CHECKBOX,self.onChecked1)
         self.cb3.Bind(wx.EVT_CHECKBOX,self.onChecked2)
 
@@ -294,11 +298,11 @@ AI'''
 
         self.btn = wx.Button(self, -1, 'Return', (50, 480))
 
-    def onChecked(self, event):    # all of these three functions are used to make sure that only one checkbox can be checked at one time
-        cb = event.GetEventObject()     # this gets gets the checkbox in question
-        q = cb.IsChecked()            # this function checks if the checkbox has been cheked
+    def onChecked(self, event):
+        cb = event.GetEventObject()
+        q = cb.IsChecked()
         if q == True:
-            self.cb2.SetValue(False)   # this sets the other two checkboxes to be false so they aren't checked
+            self.cb2.SetValue(False)
             self.cb3.SetValue(False)
     def onChecked1(self, event):
         cb = event.GetEventObject()
@@ -376,7 +380,7 @@ class Summon(wx.Panel):
         self.btn2 = wx.Button(self, -1, txt2, (390, 245), (110, 75))
         self.btn2.SetFont(font_2)
 
-        self.cb1 = wx.CheckBox(self, label = 'Single',pos = (280,370), size = (80,60))  # adds the checkboxes to the page
+        self.cb1 = wx.CheckBox(self, label = 'Single',pos = (280,370), size = (80,60))
         self.cb2 = wx.CheckBox(self, label = 'Multi',pos = (420,370), size = (80,60))
 
         self.cb1.Bind(wx.EVT_CHECKBOX,self.onChecked)
@@ -388,11 +392,11 @@ class Summon(wx.Panel):
 
         self.btn = wx.Button(self, -1, 'Return', (50, 480))
 
-    def onChecked(self, event):      # only one check box at a time
+    def onChecked(self, event):
         cb = event.GetEventObject()
         q = cb.IsChecked()
         if q == True:
-            self.cb2.SetValue(False)    #sets the other checkbox to false
+            self.cb2.SetValue(False)
     def onChecked1(self, event):
         cb = event.GetEventObject()
         q = cb.IsChecked()
@@ -568,34 +572,15 @@ Info'''
 class Program(wx.Frame):
 
     def __init__(self):
-        wx.Frame.__init__(self, None, wx.ID_ANY, 'V.O.I.D', style= wx.MINIMIZE_BOX     # this makes that within the frame only the minimise button can be used
+        wx.Frame.__init__(self, None, wx.ID_ANY, 'V.O.I.D', style= wx.MINIMIZE_BOX
 	| wx.SYSTEM_MENU | wx.CAPTION)
 
         sizer = wx.BoxSizer()
         self.SetSizer(sizer)
-
-        songs = []  # this is the list to hold all the songs used
-
-        global intro
-        intro = []
-        global main_menu
-        main_menu = []
-        global matches
-        matches = []
-        global sign_up
-        sign_up = []
-        global craft
-        craft = []
-        global summon
-        summon = []
-        global story
-        story = []
-        
-
-        pygame.init()
+        songs = []
 
         def direct():
-            dialog = wx.DirDialog(None, "Choose a directory for MUSIC:",style=wx.DD_DEFAULT_STYLE | wx.DD_NEW_DIR_BUTTON)
+            dialog = wx.DirDialog(None, "Choose a directory:",style=wx.DD_DEFAULT_STYLE | wx.DD_NEW_DIR_BUTTON)
             if dialog.ShowModal() == wx.ID_OK:
                 direct = dialog.GetPath()
             dialog.Destroy()
@@ -604,36 +589,14 @@ class Program(wx.Frame):
             for files in os.listdir(direct):
                 if files.endswith('.mp3'):
 
+
                     songs.append(files)
 
+            pygame.mixer.init()
+            pygame.mixer.music.load(songs[0])
+            pygame.mixer.music.play()
+
         direct()
-
-        x = 0
-        while x != 30:
-            if x == 2 or x==4:
-                main_menu.append(songs[x])
-            elif x == 14:
-                story.append(songs[x])
-            elif x == 11:
-                summon.append(songs[x])
-            elif x == 15:
-                intro.append(songs[x])
-            elif x == 13:
-                sign_up.append(songs[x])
-                story.append(songs[x])
-            elif x == 19:
-                craft.append(songs[x])
-            else:
-                matches.append(songs[x])
-            x = x+1
-
-        myorder = [1,0]
-        main_menu = [main_menu[i] for i in myorder]
-        story = [story[i] for i in myorder]
-
-        pygame.mixer.init()
-        pygame.mixer.music.load(matches[0])
-        pygame.mixer.music.play()
 
         self.panel_one = Front(self)
         sizer.Add(self.panel_one, 1, wx.EXPAND)
@@ -648,13 +611,13 @@ class Program(wx.Frame):
         
         self.panel_three = Login(self)
         sizer.Add(self.panel_three, 1, wx.EXPAND)
-        self.panel_three.btn.Bind(wx.EVT_BUTTON, self.show_panel_two1)
+        self.panel_three.btn.Bind(wx.EVT_BUTTON, self.show_panel_two)
         self.panel_three.btn2.Bind(wx.EVT_BUTTON, self.show_panel_five1)
         self.panel_three.Hide()
 
         self.panel_four = Register(self)
         sizer.Add(self.panel_four, 1, wx.EXPAND)
-        self.panel_four.btn.Bind(wx.EVT_BUTTON, self.show_panel_two1)
+        self.panel_four.btn.Bind(wx.EVT_BUTTON, self.show_panel_two)
         self.panel_four.btn2.Bind(wx.EVT_BUTTON, self.show_panel_five)
         self.panel_four.Hide()
 
@@ -676,7 +639,7 @@ class Program(wx.Frame):
 
         self.panel_seven = GameModes(self)
         sizer.Add(self.panel_seven, 1, wx.EXPAND)
-        self.panel_seven.btn.Bind(wx.EVT_BUTTON, self.show_panel_five3)
+        self.panel_seven.btn.Bind(wx.EVT_BUTTON, self.show_panel_five2)
         self.panel_seven.btn1.Bind(wx.EVT_BUTTON, self.show_panel_eight)
         self.panel_seven.btn2.Bind(wx.EVT_BUTTON, self.show_panel_nine)
         self.panel_seven.Hide()
@@ -714,7 +677,7 @@ class Program(wx.Frame):
 
         self.panel_XIV = RulesHelp(self)
         sizer.Add(self.panel_XIV, 1, wx.EXPAND)
-        self.panel_XIV.btn.Bind(wx.EVT_BUTTON, self.show_panel_five3)
+        self.panel_XIV.btn.Bind(wx.EVT_BUTTON, self.show_panel_five2)
         self.panel_XIV.btn2.Bind(wx.EVT_BUTTON, self.show_panel_XV)
         self.panel_XIV.Hide()
 
@@ -809,7 +772,6 @@ class Program(wx.Frame):
             self.panel_XVII.Hide()
 
     def show_panel_one(self, event):
-        pygame.mixer.music.stop()
         self.panel_one.Show()
         self.panel_two.Hide()
         self.panel_three.Hide()
@@ -827,41 +789,9 @@ class Program(wx.Frame):
         self.panel_XV.Hide()
         self.panel_XVI.Hide()
         self.panel_XVII.Hide()
-        pygame.mixer.init()
-        pygame.mixer.music.load(intro[0])
-        pygame.mixer.music.play()
         self.Layout()
 
     def show_panel_two(self, event):
-        pygame.mixer.music.stop()
-        self.panel_two.Show()
-        self.panel_one.Hide()
-        self.panel_three.Hide()
-        self.panel_four.Hide()
-        self.panel_five.Hide()
-        self.panel_six.Hide()
-        self.panel_seven.Hide()
-        self.panel_eight.Hide()
-        self.panel_nine.Hide()
-        self.panel_X.Hide()
-        self.panel_XI.Hide()
-        self.panel_XII.Hide()
-        self.panel_XIII.Hide()
-        self.panel_XIV.Hide()
-        self.panel_XV.Hide()
-        self.panel_XVI.Hide()
-        self.panel_XVII.Hide()
-        self.panel_four.t2.Clear()
-        self.panel_four.t3.Clear()
-        self.panel_four.t4.Clear()
-        self.panel_three.t2.Clear()
-        self.panel_three.t3.Clear()
-        pygame.mixer.init()
-        pygame.mixer.music.load(sign_up[0])
-        pygame.mixer.music.play()
-        self.Layout()
-
-    def show_panel_two1(self, event):
         self.panel_two.Show()
         self.panel_one.Hide()
         self.panel_three.Hide()
@@ -948,7 +878,6 @@ class Program(wx.Frame):
                     wx.MessageBox('Passwords Do Not Match', 'Info',
                           wx.OK | wx.ICON_EXCLAMATION)
                 else:
-                    pygame.mixer.music.stop()
                     self.panel_five.Show()
                     self.panel_two.Hide()
                     self.panel_one.Hide()
@@ -971,10 +900,6 @@ class Program(wx.Frame):
                     self.panel_four.t4.Clear()
                     self.panel_three.t2.Clear()
                     self.panel_three.t3.Clear()
-                    pygame.mixer.init()
-                    pygame.mixer.music.load(main_menu[0])
-                    pygame.mixer.music.queue(main_menu[1])
-                    pygame.mixer.music.play()
                     self.Layout()
 
     def show_panel_five1(self, event):
@@ -999,7 +924,6 @@ class Program(wx.Frame):
                #     wx.MessageBox('Passwords Do Not Match', 'Info',
                #               wx.OK | wx.ICON_EXCLAMATION)
                # else:
-                pygame.mixer.music.stop()
                 self.panel_five.Show()
                 self.panel_two.Hide()
                 self.panel_one.Hide()
@@ -1022,43 +946,9 @@ class Program(wx.Frame):
                 self.panel_four.t4.Clear()
                 self.panel_three.t2.Clear()
                 self.panel_three.t3.Clear()
-                pygame.mixer.init()
-                pygame.mixer.music.load(main_menu[0])
-                pygame.mixer.music.queue(main_menu[1])
-                pygame.mixer.music.play()
                 self.Layout()
         
     def show_panel_five2(self, event):
-        self.panel_five.Show()
-        pygame.mixer.music.stop()
-        self.panel_two.Hide()
-        self.panel_one.Hide()
-        self.panel_three.Hide()
-        self.panel_four.Hide()
-        self.panel_six.Hide()
-        self.panel_seven.Hide()
-        self.panel_eight.Hide()
-        self.panel_nine.Hide()
-        self.panel_X.Hide()
-        self.panel_XI.Hide()
-        self.panel_XII.Hide()
-        self.panel_XIII.Hide()
-        self.panel_XIV.Hide()
-        self.panel_XV.Hide()
-        self.panel_XVI.Hide()
-        self.panel_XVII.Hide()
-        self.panel_four.t2.Clear()
-        self.panel_four.t3.Clear()
-        self.panel_four.t4.Clear()
-        self.panel_three.t2.Clear()
-        self.panel_three.t3.Clear()
-        pygame.mixer.init()
-        pygame.mixer.music.load(main_menu[0])
-        pygame.mixer.music.queue(main_menu[1])
-        pygame.mixer.music.play()
-        self.Layout()
-
-    def show_panel_five3(self, event):
         self.panel_five.Show()
         self.panel_two.Hide()
         self.panel_one.Hide()
@@ -1184,7 +1074,6 @@ class Program(wx.Frame):
         self.Layout()
 
     def show_panel_XI(self, event):
-        pygame.mixer.music.stop()
         self.panel_XI.Show()
         self.panel_two.Hide()
         self.panel_one.Hide()
@@ -1202,13 +1091,9 @@ class Program(wx.Frame):
         self.panel_XV.Hide()
         self.panel_XVI.Hide()
         self.panel_XVII.Hide()
-        pygame.mixer.init()
-        pygame.mixer.music.load(summon[0])
-        pygame.mixer.music.play()
         self.Layout()
 
     def show_panel_XII(self, event):
-        pygame.mixer.music.stop()
         self.panel_XII.Show()
         self.panel_two.Hide()
         self.panel_one.Hide()
@@ -1226,14 +1111,10 @@ class Program(wx.Frame):
         self.panel_XV.Hide()
         self.panel_XVI.Hide()
         self.panel_XVII.Hide()
-        pygame.mixer.init()
-        pygame.mixer.music.load(craft[0])
-        pygame.mixer.music.play()
         self.Layout()
 
 
     def show_panel_XIII(self, event):
-        pygame.mixer.music.stop()
         self.panel_XIII.Show()
         self.panel_two.Hide()
         self.panel_one.Hide()
@@ -1251,9 +1132,6 @@ class Program(wx.Frame):
         self.panel_XV.Hide()
         self.panel_XVI.Hide()
         self.panel_XVII.Hide()
-        pygame.mixer.init()
-        pygame.mixer.music.load(main_menu[1])
-        pygame.mixer.music.play()
         self.Layout()
 
     def show_panel_XIV(self, event):
@@ -1277,7 +1155,6 @@ class Program(wx.Frame):
         self.Layout()
 
     def show_panel_XV(self, event):
-        pygame.mixer.music.stop()
         self.panel_XV.Show()
         self.panel_two.Hide()
         self.panel_one.Hide()
@@ -1295,11 +1172,6 @@ class Program(wx.Frame):
         self.panel_XIV.Hide()
         self.panel_XVI.Hide()
         self.panel_XVII.Hide()
-        pygame.mixer.init()
-        shuffle(story)
-        pygame.mixer.music.load(story[0])
-        pygame.mixer.music.load(story[1])
-        pygame.mixer.music.play()
         self.Layout()
 
     def show_panel_XVI(self, event):
