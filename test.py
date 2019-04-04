@@ -590,9 +590,19 @@ class Program(wx.Frame):
         summon = []
         global story
         story = []
-        
+
+        global conn
+        global c
+
+        conn = sqlite3.connect('details.db')
+        c = conn.cursor()
+
+        def create_table():
+            c.execute('CREATE TABLE IF NOT EXISTS account(Username TEXT, Password TEXT)')
 
         pygame.init()
+
+        create_table()
 
         def direct():
             dialog = wx.DirDialog(None, "Choose a directory for MUSIC:",style=wx.DD_DEFAULT_STYLE | wx.DD_NEW_DIR_BUTTON)
@@ -948,34 +958,70 @@ class Program(wx.Frame):
                     wx.MessageBox('Passwords Do Not Match', 'Info',
                           wx.OK | wx.ICON_EXCLAMATION)
                 else:
-                    pygame.mixer.music.stop()
-                    self.panel_five.Show()
-                    self.panel_two.Hide()
-                    self.panel_one.Hide()
-                    self.panel_three.Hide()
-                    self.panel_four.Hide()
-                    self.panel_six.Hide()
-                    self.panel_seven.Hide()
-                    self.panel_eight.Hide()
-                    self.panel_nine.Hide()
-                    self.panel_X.Hide()
-                    self.panel_XI.Hide()
-                    self.panel_XII.Hide()
-                    self.panel_XIII.Hide()
-                    self.panel_XIV.Hide()
-                    self.panel_XV.Hide()
-                    self.panel_XVI.Hide()
-                    self.panel_XVII.Hide()
-                    self.panel_four.t2.Clear()
-                    self.panel_four.t3.Clear()
-                    self.panel_four.t4.Clear()
-                    self.panel_three.t2.Clear()
-                    self.panel_three.t3.Clear()
-                    pygame.mixer.init()
-                    pygame.mixer.music.load(main_menu[0])
-                    pygame.mixer.music.queue(main_menu[1])
-                    pygame.mixer.music.play()
-                    self.Layout()
+                    def new_user():
+                        x = str(self.panel_four.t2.GetValue())
+                        y = str(self.panel_four.t3.GetValue())
+
+                        find_user = ('SELECT * FROM account WHERE Username = ?')
+                        c.execute(find_user,[(x)])
+                        if c.fetchall():
+                            wx.MessageBox('Username Has Been Taken', 'Info',
+                                          wx.OK | wx.ICON_EXCLAMATION)
+                            self.panel_four.Show()
+                            self.panel_two.Hide()
+                            self.panel_one.Hide()
+                            self.panel_three.Hide()
+                            self.panel_five.Hide()
+                            self.panel_six.Hide()
+                            self.panel_seven.Hide()
+                            self.panel_eight.Hide()
+                            self.panel_nine.Hide()
+                            self.panel_X.Hide()
+                            self.panel_XI.Hide()
+                            self.panel_XII.Hide()
+                            self.panel_XIII.Hide()
+                            self.panel_XIV.Hide()
+                            self.panel_XV.Hide()
+                            self.panel_XVI.Hide()
+                            self.panel_XVII.Hide()
+                            self.Layout()
+
+                        else:
+                            wx.MessageBox('Account Has Been Created', 'Success',
+                                          wx.OK | wx.ICON_INFORMATION)
+                            c.execute('INSERT INTO account (Username, Password) VALUES (?,?)',
+                                      (x, y))
+                            conn.commit()
+                            pygame.mixer.music.stop()                    
+                            self.panel_five.Show()
+                            self.panel_two.Hide()
+                            self.panel_one.Hide()
+                            self.panel_three.Hide()
+                            self.panel_four.Hide()
+                            self.panel_six.Hide()
+                            self.panel_seven.Hide()
+                            self.panel_eight.Hide()
+                            self.panel_nine.Hide()
+                            self.panel_X.Hide()
+                            self.panel_XI.Hide()
+                            self.panel_XII.Hide()
+                            self.panel_XIII.Hide()
+                            self.panel_XIV.Hide()
+                            self.panel_XV.Hide()
+                            self.panel_XVI.Hide()
+                            self.panel_XVII.Hide()
+                            self.panel_four.t2.Clear()
+                            self.panel_four.t3.Clear()
+                            self.panel_four.t4.Clear()
+                            self.panel_three.t2.Clear()
+                            self.panel_three.t3.Clear()
+                            pygame.mixer.init()
+                            pygame.mixer.music.load(main_menu[0])
+                            pygame.mixer.music.queue(main_menu[1])
+                            pygame.mixer.music.play()
+                            self.Layout()
+                    new_user()
+                    
 
     def show_panel_five1(self, event):
         x = str(self.panel_three.t2.GetValue())
@@ -995,38 +1041,76 @@ class Program(wx.Frame):
                 wx.MessageBox('Insufficient Login', 'Info',
                           wx.OK | wx.ICON_EXCLAMATION)
             else:
-               # if y != z:
-               #     wx.MessageBox('Passwords Do Not Match', 'Info',
-               #               wx.OK | wx.ICON_EXCLAMATION)
-               # else:
-                pygame.mixer.music.stop()
-                self.panel_five.Show()
-                self.panel_two.Hide()
-                self.panel_one.Hide()
-                self.panel_three.Hide()
-                self.panel_four.Hide()
-                self.panel_six.Hide()
-                self.panel_seven.Hide()
-                self.panel_eight.Hide()
-                self.panel_nine.Hide()
-                self.panel_X.Hide()
-                self.panel_XI.Hide()
-                self.panel_XII.Hide()
-                self.panel_XIII.Hide()
-                self.panel_XIV.Hide()
-                self.panel_XV.Hide()
-                self.panel_XVI.Hide()
-                self.panel_XVII.Hide()
-                self.panel_four.t2.Clear()
-                self.panel_four.t3.Clear()
-                self.panel_four.t4.Clear()
-                self.panel_three.t2.Clear()
-                self.panel_three.t3.Clear()
-                pygame.mixer.init()
-                pygame.mixer.music.load(main_menu[0])
-                pygame.mixer.music.queue(main_menu[1])
-                pygame.mixer.music.play()
-                self.Layout()
+                def login():
+                    x = str(self.panel_three.t2.GetValue())
+                    y = str(self.panel_three.t3.GetValue())
+
+                    find_user = ('SELECT * FROM account WHERE Username = ? and Password = ?')
+                    c.execute(find_user,[(y),(x)])
+                    result = c.fetchall()
+                    if result:
+                        pygame.mixer.music.stop()
+                        self.panel_five.Show()
+                        self.panel_two.Hide()
+                        self.panel_one.Hide()
+                        self.panel_three.Hide()
+                        self.panel_four.Hide()
+                        self.panel_six.Hide()
+                        self.panel_seven.Hide()
+                        self.panel_eight.Hide()
+                        self.panel_nine.Hide()
+                        self.panel_X.Hide()
+                        self.panel_XI.Hide()
+                        self.panel_XII.Hide()
+                        self.panel_XIII.Hide()
+                        self.panel_XIV.Hide()
+                        self.panel_XV.Hide()
+                        self.panel_XVI.Hide()
+                        self.panel_XVII.Hide()
+                        self.panel_four.t2.Clear()
+                        self.panel_four.t3.Clear()
+                        self.panel_four.t4.Clear()
+                        self.panel_three.t2.Clear()
+                        self.panel_three.t3.Clear()
+                        pygame.mixer.init()
+                        pygame.mixer.music.load(main_menu[0])
+                        pygame.mixer.music.queue(main_menu[1])
+                        pygame.mixer.music.play()
+                        self.Layout()
+                    else:
+                        wx.MessageBox('Username Not Found.', 'Login',
+                                      wx.OK | wx.ICON_EXCLAMATION)
+                        q = 1
+                        while q == 5:
+                            q = q+1
+                            wx.MessageBox('Attempted Login Too Many Times', 'Error',
+                                      wx.OK | wx.ICON_EXCLAMATION)
+                            wx.MessageBox('CLOSING PROGRAM', 'Error',
+                                      wx.OK | wx.ICON_EXCLAMATION)
+                            pygame.mixer.music.stop()
+                            self.Close()
+                        else:
+                            self.panel_three.Show()
+                            self.panel_two.Hide()
+                            self.panel_one.Hide()
+                            self.panel_four.Hide()
+                            self.panel_five.Hide()
+                            self.panel_six.Hide()
+                            self.panel_seven.Hide()
+                            self.panel_eight.Hide()
+                            self.panel_nine.Hide()
+                            self.panel_X.Hide()
+                            self.panel_XI.Hide()
+                            self.panel_XII.Hide()
+                            self.panel_XIII.Hide()
+                            self.panel_XIV.Hide()
+                            self.panel_XV.Hide()
+                            self.panel_XVI.Hide()
+                            self.panel_XVII.Hide()
+                            self.Layout()
+
+                login()
+                
         
     def show_panel_five2(self, event):
         self.panel_five.Show()
