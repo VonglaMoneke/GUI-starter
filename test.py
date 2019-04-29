@@ -666,14 +666,6 @@ class Program(wx.Frame):
         self.panel_four.btn2.Bind(wx.EVT_BUTTON, self.show_panel_five)
         self.panel_four.Hide()
 
-        
-
-        self.panel_six = Tech(self)
-        sizer.Add(self.panel_six, 1, wx.EXPAND)
-        self.panel_six.btn.Bind(wx.EVT_BUTTON, self.show_panel_one)
-        self.panel_six.btn2.Bind(wx.EVT_BUTTON, self.show_panel_five2)
-        self.panel_six.Hide()
-
         self.panel_five = MainMenu(self)
         sizer.Add(self.panel_five, 1, wx.EXPAND)
         self.panel_five.btn.Bind(wx.EVT_BUTTON, self.Message)
@@ -683,6 +675,12 @@ class Program(wx.Frame):
         self.panel_five.btn4.Bind(wx.EVT_BUTTON, self.show_panel_XIV)
         self.panel_five.btn5.Bind(wx.EVT_BUTTON, self.show_panel_XIII)
         self.panel_five.Hide()
+        
+        self.panel_six = Tech(self)
+        sizer.Add(self.panel_six, 1, wx.EXPAND)
+        self.panel_six.btn.Bind(wx.EVT_BUTTON, self.show_panel_one)
+        self.panel_six.btn2.Bind(wx.EVT_BUTTON, self.show_panel_five3)
+        self.panel_six.Hide()
 
         self.panel_seven = GameModes(self)
         sizer.Add(self.panel_seven, 1, wx.EXPAND)
@@ -969,25 +967,6 @@ class Program(wx.Frame):
                         if c.fetchall():
                             wx.MessageBox('Username Has Been Taken', 'Info',
                                           wx.OK | wx.ICON_EXCLAMATION)
-                            self.panel_four.Show()
-                            self.panel_two.Hide()
-                            self.panel_one.Hide()
-                            self.panel_three.Hide()
-                            self.panel_five.Hide()
-                            self.panel_six.Hide()
-                            self.panel_seven.Hide()
-                            self.panel_eight.Hide()
-                            self.panel_nine.Hide()
-                            self.panel_X.Hide()
-                            self.panel_XI.Hide()
-                            self.panel_XII.Hide()
-                            self.panel_XIII.Hide()
-                            self.panel_XIV.Hide()
-                            self.panel_XV.Hide()
-                            self.panel_XVI.Hide()
-                            self.panel_XVII.Hide()
-                            self.Layout()
-
                         else:
                             wx.MessageBox('Account Has Been Created', 'Success',
                                           wx.OK | wx.ICON_INFORMATION)
@@ -1079,36 +1058,15 @@ class Program(wx.Frame):
                         pygame.mixer.music.play()
                         self.Layout()
                     else:
-                        wx.MessageBox('Username Not Found.', 'Login',
-                                      wx.OK | wx.ICON_EXCLAMATION)
-                        q = 1
-                        while q == 5:
-                            q = q+1
-                            wx.MessageBox('Attempted Login Too Many Times', 'Error',
-                                      wx.OK | wx.ICON_EXCLAMATION)
-                            wx.MessageBox('CLOSING PROGRAM', 'Error',
-                                      wx.OK | wx.ICON_EXCLAMATION)
-                            pygame.mixer.music.stop()
-                            self.Close()
-                        else:
-                            self.panel_three.Show()
-                            self.panel_two.Hide()
-                            self.panel_one.Hide()
-                            self.panel_four.Hide()
-                            self.panel_five.Hide()
-                            self.panel_six.Hide()
-                            self.panel_seven.Hide()
-                            self.panel_eight.Hide()
-                            self.panel_nine.Hide()
-                            self.panel_X.Hide()
-                            self.panel_XI.Hide()
-                            self.panel_XII.Hide()
-                            self.panel_XIII.Hide()
-                            self.panel_XIV.Hide()
-                            self.panel_XV.Hide()
-                            self.panel_XVI.Hide()
-                            self.panel_XVII.Hide()
-                            self.Layout()
+                          user_find = ('SELECT * FROM account WHERE Username = ?')
+                          c.execute(user_find, [(y)])
+                          res = c.fetchall()
+                          if res:
+                              wx.MessageBox('Incorrect Password', 'Login',
+                                            wx.OK | wx.ICON_EXCLAMATION)
+                          else:
+                              wx.MessageBox('Username Not Found.', 'Login',
+                                            wx.OK | wx.ICON_EXCLAMATION)
 
                 login()
                 
