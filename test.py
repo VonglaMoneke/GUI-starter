@@ -134,16 +134,14 @@ class Register(wx.Panel):                              # this is the panel for t
         wx.StaticText(self, -1, 'Enter Username:', (195, 220), (120, 80)).SetFont(font_1)
         wx.StaticText(self, -1, 'Enter Password:', (200, 270), (120, 80)).SetFont(font_1)
         wx.StaticText(self, -1, 'Re-Enter Password:', (162, 310), (120, 80)).SetFont(font_1)
-        
-		
-         
+           
         
         self.t2 = wx.TextCtrl(self, pos = (380, 220), size = (180, 35), style=wx.TE_PROCESS_ENTER)
         self.t2.SetFont(font_2)
-        self.t3 = wx.TextCtrl(self, pos = (380, 270), size = (180, 35), style=wx.TE_PASSWORD | wx.TE_PROCESS_ENTER) # the wx.TE_PROCESS_ENTER means that something will
-        self.t3.SetFont(font_2)                                                                                     # happen when you press the enter button
-        self.t4 = wx.TextCtrl(self, pos = (380, 310), size = (180, 35), style=wx.TE_PASSWORD | wx.TE_PROCESS_ENTER)
-        self.t4.SetFont(font_2)
+        self.t3 = wx.TextCtrl(self, pos = (380, 270), size = (180, 35), style=wx.TE_PASSWORD | wx.TE_PROCESS_ENTER) # the wx.TE_PROCESS_ENTER means 
+        self.t3.SetFont(font_2)                                                                                     #that something will                               
+        self.t4 = wx.TextCtrl(self, pos = (380, 310), size = (180, 35), style=wx.TE_PASSWORD | wx.TE_PROCESS_ENTER) # happen when you press 
+        self.t4.SetFont(font_2)                                                                                     #the enter button
         self.t2.SetMaxLength(12)
         self.t3.SetMaxLength(18)
         self.t4.SetMaxLength(18)
@@ -642,7 +640,7 @@ class Program(wx.Frame):
         story = [story[i] for i in myorder]
 
         pygame.mixer.init()
-        pygame.mixer.music.load(matches[0])
+        pygame.mixer.music.load(intro[0])
         pygame.mixer.music.play()
 
         self.panel_one = Front(self)
@@ -668,6 +666,14 @@ class Program(wx.Frame):
         self.panel_four.btn2.Bind(wx.EVT_BUTTON, self.show_panel_five)
         self.panel_four.Hide()
 
+        
+
+        self.panel_six = Tech(self)
+        sizer.Add(self.panel_six, 1, wx.EXPAND)
+        self.panel_six.btn.Bind(wx.EVT_BUTTON, self.show_panel_one)
+        self.panel_six.btn2.Bind(wx.EVT_BUTTON, self.show_panel_five2)
+        self.panel_six.Hide()
+
         self.panel_five = MainMenu(self)
         sizer.Add(self.panel_five, 1, wx.EXPAND)
         self.panel_five.btn.Bind(wx.EVT_BUTTON, self.Message)
@@ -677,12 +683,6 @@ class Program(wx.Frame):
         self.panel_five.btn4.Bind(wx.EVT_BUTTON, self.show_panel_XIV)
         self.panel_five.btn5.Bind(wx.EVT_BUTTON, self.show_panel_XIII)
         self.panel_five.Hide()
-
-        self.panel_six = Tech(self)
-        sizer.Add(self.panel_six, 1, wx.EXPAND)
-        self.panel_six.btn.Bind(wx.EVT_BUTTON, self.show_panel_one)
-        self.panel_six.btn2.Bind(wx.EVT_BUTTON, self.show_panel_five2)
-        self.panel_six.Hide()
 
         self.panel_seven = GameModes(self)
         sizer.Add(self.panel_seven, 1, wx.EXPAND)
@@ -776,17 +776,13 @@ class Program(wx.Frame):
         self.panel_four.t2.Clear()
 
     def Message(self, event):
-        ans = wx.MessageDialog(self, 'Are You Sure You Want To Log Out?', 'Log Out',
-                      wx.YES_NO | wx.ICON_EXCLAMATION)
-        ret = ans.ShowModal()
-        ans.Destroy()
-        if ret == wx.ID_YES:
-            self.panel_five.Show()
+        def show_panel_six(self, event):
+            self.panel_six.Show()
             self.panel_two.Hide()
             self.panel_one.Hide()
             self.panel_three.Hide()
             self.panel_four.Hide()
-            self.panel_six.Hide()
+            self.panel_five.Hide()
             self.panel_seven.Hide()
             self.panel_eight.Hide()
             self.panel_nine.Hide()
@@ -798,7 +794,13 @@ class Program(wx.Frame):
             self.panel_XV.Hide()
             self.panel_XVI.Hide()
             self.panel_XVII.Hide()
-            self.panel_five.btn.Bind(wx.EVT_BUTTON, self.show_panel_six)
+            self.Layout()
+        ans = wx.MessageDialog(self, 'Are You Sure You Want To Log Out?', 'Log Out',
+                      wx.YES_NO | wx.ICON_EXCLAMATION)
+        ret = ans.ShowModal()
+        ans.Destroy()
+        if ret == wx.ID_YES:
+            self.show_panel_six(event)
         else:
             self.panel_five.Show()
             self.panel_two.Hide()
@@ -938,9 +940,9 @@ class Program(wx.Frame):
 
     def show_panel_five(self, event):
         x = str(self.panel_four.t2.GetValue())
-        mixed = any(letter.islower() for letter in x) and any(letter.isupper() for letter in x) and x.isalnum()
+        mixed = any(letter.islower() for letter in x) and any(letter.isupper() for letter in x) and any(letter.isdigit() for letter in x)
         y = str(self.panel_four.t3.GetValue())
-        mixed1 = any(letter.islower() for letter in y) and any(letter.isupper() for letter in y) and y.isalnum()
+        mixed1 = any(letter.islower() for letter in y) and any(letter.isupper() for letter in y) and any(letter.isdigit() for letter in y)
         z = str(self.panel_four.t4.GetValue())
 
         if len(x) == 0 or len(y) == 0 or len(z) == 0:
@@ -1025,19 +1027,18 @@ class Program(wx.Frame):
 
     def show_panel_five1(self, event):
         x = str(self.panel_three.t2.GetValue())
-        mixed = any(letter.islower() for letter in x) and any(letter.isupper() for letter in x) and x.isalnum()
+        mixed = any(letter.islower() for letter in x) and (any(letter.isupper() for letter in x)) and (any(letter.isdigit() for letter in x))
         y = str(self.panel_three.t3.GetValue())
-        mixed1 = any(letter.islower() for letter in y) and any(letter.isupper() for letter in y) and y.isalnum()
-        #z = str(self.panel_four.t4.GetValue())
+        mixed1 = any(letter.islower() for letter in y) and any(letter.isupper() for letter in y) and (any(letter.isdigit() for letter in y))
 
-        if len(x) == 0 or len(y) == 0: #or len(z) == 0:
+        if len(x) == 0 or len(y) == 0:
             wx.MessageBox('Something Needs To Be Entered In These Fields', 'Info',
                           wx.OK | wx.ICON_EXCLAMATION)
-        elif len(x) < 3 or len(y) < 5:
+        elif len(x) < 5 or len(y) < 3:
             wx.MessageBox('Insufficient Login', 'Info',
                           wx.OK | wx.ICON_EXCLAMATION)
         else:
-            if not mixed or not mixed1:
+            if mixed == False or mixed1 == False:
                 wx.MessageBox('Insufficient Login', 'Info',
                           wx.OK | wx.ICON_EXCLAMATION)
             else:
