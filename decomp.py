@@ -1,5 +1,6 @@
 import wx
 import wx.adv
+import sqlite3
 
 class Front(wx.Panel):            #each page in the interface is a seperate class for easier implementation
 
@@ -128,21 +129,18 @@ class Register(wx.Panel):                              # this is the panel for t
         wx.StaticText(self, -1, 'Enter Username:', (195, 220), (120, 80)).SetFont(font_1)
         wx.StaticText(self, -1, 'Enter Password:', (200, 270), (120, 80)).SetFont(font_1)
         wx.StaticText(self, -1, 'Re-Enter Password:', (162, 310), (120, 80)).SetFont(font_1)
-        
-		
-         
+           
         
         self.t2 = wx.TextCtrl(self, pos = (380, 220), size = (180, 35), style=wx.TE_PROCESS_ENTER)
         self.t2.SetFont(font_2)
-        self.t3 = wx.TextCtrl(self, pos = (380, 270), size = (180, 35), style=wx.TE_PASSWORD | wx.TE_PROCESS_ENTER) # the wx.TE_PROCESS_ENTER means that something will
-        self.t3.SetFont(font_2)                                                                                     # happen when you press the enter button
-        self.t4 = wx.TextCtrl(self, pos = (380, 310), size = (180, 35), style=wx.TE_PASSWORD | wx.TE_PROCESS_ENTER)
-        self.t4.SetFont(font_2)
+        self.t3 = wx.TextCtrl(self, pos = (380, 270), size = (180, 35), style=wx.TE_PASSWORD | wx.TE_PROCESS_ENTER) # the wx.TE_PROCESS_ENTER means 
+        self.t3.SetFont(font_2)                                                                                     #that something will                               
+        self.t4 = wx.TextCtrl(self, pos = (380, 310), size = (180, 35), style=wx.TE_PASSWORD | wx.TE_PROCESS_ENTER) # happen when you press 
+        self.t4.SetFont(font_2)                                                                                     #the enter button
         self.t2.SetMaxLength(12)
         self.t3.SetMaxLength(18)
         self.t4.SetMaxLength(18)
-        
-		
+        		
         
         self.t2.Bind(wx.EVT_TEXT_MAXLEN,self.OnMaxLen)
         self.t3.Bind(wx.EVT_TEXT_MAXLEN,self.OnMaxLen)
@@ -159,10 +157,10 @@ class Register(wx.Panel):                              # this is the panel for t
         self.btn2.Bind(wx.EVT_BUTTON,self.Enter)        # I binded the continue button to do the same thing as when you press the enter button
 
     def Enter(self, event):
-        x = str(self.t2.GetValue())         # this gets whatever has been entered and makes it a string
-        y = str(self.t3.GetValue())
-        z = str(self.t4.GetValue())
-        if len(x) < 2 or len(y) < 5:          # as it string now the length can be checked, this is the way to validate the username and the password
+        x = self.t2.GetValue()        # this gets whatever has been entered and makes it a string
+        y = self.t3.GetValue()
+        z = self.t4.GetValue()
+        if len(x) < 2 or len(y) < 5:          
             wx.MessageBox('Too Short', 'Info',                  # brings up a dialog box to say that whatever was entered is too short.
                           wx.OK | wx.ICON_EXCLAMATION)
         else:
@@ -176,7 +174,39 @@ class Register(wx.Panel):                              # this is the panel for t
         
         wx.MessageBox('Max Length Reached', 'Info',
             wx.OK | wx.ICON_EXCLAMATION)
+        
+class MainMenu(wx.Panel):           # this is the panel for the main menu
 
+    def __init__(self, parent):
+
+        wx.Panel.__init__(self, parent)    #this initialises the main menu panel
+        txt = 'Main Menu'                 #this is the title
+        
+        font = wx.Font(42, wx.DEFAULT, wx.ITALIC, wx.BOLD) #sets the font for the text
+        
+        wx.StaticText(self, -1, txt, (225, 60)).SetFont(font)
+        txt1 = '''Game
+Modes'''
+        txt2 = 'Summon'                               #these are the text that will be on the buttons
+        txt3 = 'Crafting'
+        txt4 = '''Rules/
+Help'''
+        txt5 = 'Options'
+        
+        font_2 = wx.Font(15, wx.DEFAULT, wx.NORMAL, wx.LIGHT)
+        
+        self.btn1 = wx.Button(self, -1, txt1, (160, 205), (140, 75))     #this sets the buttons and their positions on the pages 
+        self.btn1.SetFont(font_2)
+        self.btn2 = wx.Button(self, -1, txt2, (490, 205), (140, 75))
+        self.btn2.SetFont(font_2)
+        self.btn3 = wx.Button(self, -1, txt3, (325, 265), (140, 75))
+        self.btn3.SetFont(font_2)
+        self.btn4 = wx.Button(self, -1, txt4, (160, 325), (140, 75))
+        self.btn4.SetFont(font_2)
+        self.btn5 = wx.Button(self, -1, txt5, (490, 325), (140, 75))
+        self.btn5.SetFont(font_2)
+
+        self.btn = wx.Button(self, -1, 'LOG OUT', (50, 480)) # this is the log out button it is very similar to the return button
 
 class Program(wx.Frame):
     def __init__(self):
@@ -186,6 +216,18 @@ class Program(wx.Frame):
         self.SetSize((600,600))
         self.SetSizer(sizer)
         self.Centre()
+
+        global conn
+        global c
+        conn = sqlite3.connect('details.db')
+        c = conn.cursor()
+        
+
+        def create_table():
+            c.execute('CREATE TABLE IF NOT EXISTS account(Username TEXT, Password TEXT)')
+
+        create_table()
+        
         menu = wx.MenuBar()
 
         about = wx.Menu()
@@ -207,35 +249,166 @@ class Program(wx.Frame):
         self.panel_two = Sign(self)
         sizer.Add(self.panel_two, 1, wx.EXPAND)
         self.panel_two.btn2.Bind(wx.EVT_BUTTON, self.show_panel_one)
-##        self.panel_two.btn.Bind(wx.EVT_BUTTON, self.show_panel_four)
+        self.panel_two.btn.Bind(wx.EVT_BUTTON, self.show_panel_four)
         self.panel_two.btn1.Bind(wx.EVT_BUTTON, self.show_panel_three)
         self.panel_two.Hide()
 
         self.panel_three = Login(self)
         sizer.Add(self.panel_three, 1, wx.EXPAND)
         self.panel_three.btn.Bind(wx.EVT_BUTTON, self.show_panel_two)
-##        self.panel_three.btn2.Bind(wx.EVT_BUTTON, self.show_panel_five1)
+        self.panel_three.btn2.Bind(wx.EVT_BUTTON, self.show_panel_five)
         self.panel_three.Hide()
+
+        self.panel_four = Register(self)
+        sizer.Add(self.panel_four, 1, wx.EXPAND)
+        self.panel_four.btn.Bind(wx.EVT_BUTTON, self.show_panel_two)
+        self.panel_four.btn2.Bind(wx.EVT_BUTTON, self.show_panel_five)
+        self.panel_four.Hide()
+
+        self.panel_five = MainMenu(self)
+        sizer.Add(self.panel_five, 1, wx.EXPAND)
+        self.panel_five.btn.Bind(wx.EVT_BUTTON, self.Message)
+        self.panel_five.Hide()
+
         
         self.SetSize((800, 600))
+
+    def Message(self, event):
+        ans = wx.MessageDialog(self, 'Are You Sure You Want To Log Out?', 'Log Out',
+                      wx.YES_NO | wx.ICON_EXCLAMATION)
+        ret = ans.ShowModal()
+        ans.Destroy()
+        if ret == wx.ID_YES:
+            self.panel_one.Show()
+            self.panel_two.Hide()
+            self.panel_three.Hide()
+            self.panel_four.Hide()
+            self.panel_five.Hide()
+        else:
+            self.panel_five.Show()
+            self.panel_two.Hide()
+            self.panel_one.Hide()
+            self.panel_three.Hide()
+            self.panel_four.Hide()
         
 
     def show_panel_one(self, event):
         self.panel_one.Show()
         self.panel_two.Hide()
         self.panel_three.Hide()
+        self.panel_four.Hide()
+        self.panel_five.Hide()
         self.Layout()
 
     def show_panel_two(self, event):
         self.panel_two.Show()
         self.panel_one.Hide()
         self.panel_three.Hide()
+        self.panel_four.Hide()
+        self.panel_five.Hide()
         self.Layout()
     def show_panel_three(self, event):
         self.panel_three.Show()
         self.panel_one.Hide()
         self.panel_two.Hide()
+        self.panel_four.Hide()
+        self.panel_five.Hide()
         self.Layout()
+
+    def show_panel_four(self, event):
+        self.panel_four.Show()
+        self.panel_one.Hide()
+        self.panel_two.Hide()
+        self.panel_three.Hide()
+        self.panel_five.Hide()
+        self.Layout()
+
+    def show_panel_five(self, event):
+        x = str(self.panel_four.t2.GetValue())
+        y = str(self.panel_four.t3.GetValue())
+        mixed = any(letter.islower() for letter in x) and any(letter.isupper() for letter in x) and any(letter.isdigit() for letter in x)
+        mixed1 = any(letter.islower() for letter in y) and any(letter.isupper() for letter in y) and any(letter.isdigit() for letter in y)
+        z = str(self.panel_four.t4.GetValue())
+
+        if len(x) == 0 or len(y) == 0 or len(z) == 0:
+            wx.MessageBox('Something Needs To Be Entered In These Fields', 'Info',
+                          wx.OK | wx.ICON_EXCLAMATION)
+        elif len(x) < 3 or len(y) < 5:
+            wx.MessageBox('Too Short', 'Info',
+                          wx.OK | wx.ICON_EXCLAMATION)
+        else:
+            if not mixed or not mixed1:
+                wx.MessageBox('Insufficient Login', 'Info',
+                          wx.OK | wx.ICON_EXCLAMATION)
+            else:
+                if y != z:
+                    wx.MessageBox('Passwords Do Not Match', 'Info',
+                          wx.OK | wx.ICON_EXCLAMATION)
+                else:
+                    def new_user():
+                        x = str(self.panel_four.t2.GetValue())
+                        y = str(self.panel_four.t3.GetValue())
+
+                        find_user = ('SELECT * FROM account WHERE Username = ?')
+                        c.execute(find_user,[(x)])
+                        if c.fetchall():
+                            wx.MessageBox('Username Has Been Taken', 'Info',
+                                          wx.OK | wx.ICON_EXCLAMATION)
+                            self.panel_four.Show()
+                            self.panel_two.Hide()
+                            self.panel_one.Hide()
+                            self.panel_three.Hide()
+                            self.panel_five.Hide()
+                            self.panel_six.Hide()
+                            self.panel_seven.Hide()
+                            self.panel_eight.Hide()
+                            self.panel_nine.Hide()
+                            self.panel_X.Hide()
+                            self.panel_XI.Hide()
+                            self.panel_XII.Hide()
+                            self.panel_XIII.Hide()
+                            self.panel_XIV.Hide()
+                            self.panel_XV.Hide()
+                            self.panel_XVI.Hide()
+                            self.panel_XVII.Hide()
+                            self.Layout()
+
+                        else:
+                            wx.MessageBox('Account Has Been Created', 'Success',
+                                          wx.OK | wx.ICON_INFORMATION)
+                            c.execute('INSERT INTO account (Username, Password) VALUES (?,?)',
+                                      (x, y))
+                            conn.commit()
+                            pygame.mixer.music.stop()                    
+                            self.panel_five.Show()
+                            self.panel_two.Hide()
+                            self.panel_one.Hide()
+                            self.panel_three.Hide()
+                            self.panel_four.Hide()
+                            self.panel_six.Hide()
+                            self.panel_seven.Hide()
+                            self.panel_eight.Hide()
+                            self.panel_nine.Hide()
+                            self.panel_X.Hide()
+                            self.panel_XI.Hide()
+                            self.panel_XII.Hide()
+                            self.panel_XIII.Hide()
+                            self.panel_XIV.Hide()
+                            self.panel_XV.Hide()
+                            self.panel_XVI.Hide()
+                            self.panel_XVII.Hide()
+                            self.panel_four.t2.Clear()
+                            self.panel_four.t3.Clear()
+                            self.panel_four.t4.Clear()
+                            self.panel_three.t2.Clear()
+                            self.panel_three.t3.Clear()
+                            pygame.mixer.init()
+                            pygame.mixer.music.load(main_menu[0])
+                            pygame.mixer.music.queue(main_menu[1])
+                            pygame.mixer.music.play()
+                            self.Layout()
+                    new_user()
+    
         
     def OnAbout(self, e):
 
