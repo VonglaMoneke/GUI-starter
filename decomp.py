@@ -262,7 +262,7 @@ class Program(wx.Frame):
         self.panel_three = Login(self)
         sizer.Add(self.panel_three, 1, wx.EXPAND)
         self.panel_three.btn.Bind(wx.EVT_BUTTON, self.show_panel_two)
-        self.panel_three.btn2.Bind(wx.EVT_BUTTON, self.show_panel_five)
+        self.panel_three.btn2.Bind(wx.EVT_BUTTON, self.show_panel_five1)
         self.panel_three.Hide()
 
         self.panel_four = Register(self)
@@ -377,15 +377,14 @@ class Program(wx.Frame):
 
     def show_panel_five1(self, event):
         x = str(self.panel_three.t2.GetValue())
-        mixed = any(letter.islower() for letter in x) and any(letter.isupper() for letter in x) and x.isalnum()
+        mixed = any(letter.islower() for letter in x) and any(letter.isupper() for letter in x) and any(letter.isdigit() for letter in x)
         y = str(self.panel_three.t3.GetValue())
-        mixed1 = any(letter.islower() for letter in y) and any(letter.isupper() for letter in y) and y.isalnum()
-        z = str(self.panel_four.t4.GetValue())
+        mixed1 = any(letter.islower() for letter in y) and any(letter.isupper() for letter in y) and any(letter.isdigit() for letter in y)
 
-        if len(x) == 0 or len(y) == 0: #or len(z) == 0:
+        if len(x) == 0 or len(y) == 0:
             wx.MessageBox('Something Needs To Be Entered In These Fields', 'Info',
                           wx.OK | wx.ICON_EXCLAMATION)
-        elif len(x) < 3 or len(y) < 5:
+        elif len(x) < 5 or len(y) < 3:
             wx.MessageBox('Insufficient Login', 'Info',
                           wx.OK | wx.ICON_EXCLAMATION)
         else:
@@ -401,37 +400,23 @@ class Program(wx.Frame):
                     c.execute(find_user,[(y),(x)])
                     result = c.fetchall()
                     if result:
-                        pygame.mixer.music.stop()
                         self.panel_five.Show()
                         self.panel_two.Hide()
                         self.panel_one.Hide()
                         self.panel_three.Hide()
                         self.panel_four.Hide()
-                        self.panel_six.Hide()
-                        self.panel_seven.Hide()
-                        self.panel_eight.Hide()
-                        self.panel_nine.Hide()
-                        self.panel_X.Hide()
-                        self.panel_XI.Hide()
-                        self.panel_XII.Hide()
-                        self.panel_XIII.Hide()
-                        self.panel_XIV.Hide()
-                        self.panel_XV.Hide()
-                        self.panel_XVI.Hide()
-                        self.panel_XVII.Hide()
-                        self.panel_four.t2.Clear()
-                        self.panel_four.t3.Clear()
-                        self.panel_four.t4.Clear()
-                        self.panel_three.t2.Clear()
-                        self.panel_three.t3.Clear()
-                        pygame.mixer.init()
-                        pygame.mixer.music.load(main_menu[0])
-                        pygame.mixer.music.queue(main_menu[1])
-                        pygame.mixer.music.play()
                         self.Layout()
                     else:
-                        wx.MessageBox('Username Not Found.', 'Login',
-                                      wx.OK | wx.ICON_EXCLAMATION)
+                        user_find = ('SELECT * FROM account WHERE Username = ?')
+                        c.execute(user_find, [(y)])
+                        res = c.fetchall()
+                        if res:
+                            wx.MessageBox('Incorrect Password', 'Login',
+                                          wx.OK | wx.ICON_EXCLAMATION)
+                        else:
+                            wx.MessageBox('Username Not Found.', 'Login',
+                                          wx.OK | wx.ICON_EXCLAMATION)
+                            
                         q = 1
                         while q == 5:
                             q = q+1
@@ -441,25 +426,6 @@ class Program(wx.Frame):
                                       wx.OK | wx.ICON_EXCLAMATION)
                             pygame.mixer.music.stop()
                             self.Close()
-                        else:
-                            self.panel_three.Show()
-                            self.panel_two.Hide()
-                            self.panel_one.Hide()
-                            self.panel_four.Hide()
-                            self.panel_five.Hide()
-                            self.panel_six.Hide()
-                            self.panel_seven.Hide()
-                            self.panel_eight.Hide()
-                            self.panel_nine.Hide()
-                            self.panel_X.Hide()
-                            self.panel_XI.Hide()
-                            self.panel_XII.Hide()
-                            self.panel_XIII.Hide()
-                            self.panel_XIV.Hide()
-                            self.panel_XV.Hide()
-                            self.panel_XVI.Hide()
-                            self.panel_XVII.Hide()
-                            self.Layout()
 
                 login()
 
