@@ -208,6 +208,25 @@ Help'''
 
         self.btn = wx.Button(self, -1, 'LOG OUT', (50, 480)) # this is the log out button it is very similar to the return button
 
+class Tech(wx.Panel):  # this is the page is the page that is inbetween the main menu
+    def __init__(self, parent): #and the intro page, when you log out
+        wx.Panel.__init__(self, parent)
+        txt = 'Thanks For Playing'
+        txt1 = 'さようなら'
+        txt2 = 'Sayōnara'
+        font = wx.Font(42, wx.DEFAULT, wx.ITALIC, wx.BOLD)
+        wx.StaticText(self, -1, txt, (175, 120)).SetFont(font)
+        font_1 = wx.Font(28, wx.DEFAULT, wx.NORMAL, wx.NORMAL)
+        wx.StaticText(self, -1, txt1, (325, 340)).SetFont(font_1)
+        font_2 = wx.Font(23, wx.DEFAULT, wx.NORMAL, wx.NORMAL)
+        wx.StaticText(self, -1, txt2, (325, 380)).SetFont(font_2)
+        
+        txt3 = ''' Main Menu
+Return'''
+        self.btn = wx.Button(self, -1, 'LOG OUT', (335, 480))
+        self.btn2 = wx.Button(self, -1, txt3, (530, 465), (90, 50))  # this button should take 
+                                                                    #you back to the main menu
+
 class Program(wx.Frame):
     def __init__(self):
         wx.Frame.__init__(self, None, wx.ID_ANY, 'V.O.I.D')
@@ -276,26 +295,37 @@ class Program(wx.Frame):
         self.panel_five.btn.Bind(wx.EVT_BUTTON, self.Message)
         self.panel_five.Hide()
 
+        self.panel_six = Tech(self)
+        sizer.Add(self.panel_six, 1, wx.EXPAND)
+        self.panel_six.btn.Bind(wx.EVT_BUTTON, self.show_panel_one)
+        self.panel_six.btn2.Bind(wx.EVT_BUTTON, self.show_panel_five2)
+        self.panel_six.Hide()
+
         
         self.SetSize((800, 600))
 
     def Message(self, event):
+        def show_panel_six(self, event):
+            self.panel_six.Show()
+            self.panel_two.Hide()
+            self.panel_one.Hide()
+            self.panel_three.Hide()
+            self.panel_four.Hide()
+            self.panel_five.Hide()
+            self.Layout()
         ans = wx.MessageDialog(self, 'Are You Sure You Want To Log Out?', 'Log Out',
                       wx.YES_NO | wx.ICON_EXCLAMATION)
         ret = ans.ShowModal()
         ans.Destroy()
         if ret == wx.ID_YES:
-            self.panel_one.Show()
-            self.panel_two.Hide()
-            self.panel_three.Hide()
-            self.panel_four.Hide()
-            self.panel_five.Hide()
+            show_panel_six(self,event)
         else:
             self.panel_five.Show()
             self.panel_two.Hide()
             self.panel_one.Hide()
             self.panel_three.Hide()
             self.panel_four.Hide()
+            self.panel_six.Hide()
         
 
     def show_panel_one(self, event):
@@ -304,6 +334,7 @@ class Program(wx.Frame):
         self.panel_three.Hide()
         self.panel_four.Hide()
         self.panel_five.Hide()
+        self.panel_six.Hide()
         self.Layout()
 
     def show_panel_two(self, event):
@@ -312,6 +343,7 @@ class Program(wx.Frame):
         self.panel_three.Hide()
         self.panel_four.Hide()
         self.panel_five.Hide()
+        self.panel_six.Hide()
         self.Layout()
     def show_panel_three(self, event):
         self.panel_three.Show()
@@ -319,6 +351,7 @@ class Program(wx.Frame):
         self.panel_two.Hide()
         self.panel_four.Hide()
         self.panel_five.Hide()
+        self.panel_six.Hide()
         self.Layout()
 
     def show_panel_four(self, event):
@@ -327,6 +360,7 @@ class Program(wx.Frame):
         self.panel_two.Hide()
         self.panel_three.Hide()
         self.panel_five.Hide()
+        self.panel_six.Hide()
         self.Layout()
 
     def show_panel_five(self, event):
@@ -372,6 +406,7 @@ class Program(wx.Frame):
                             self.panel_one.Hide()
                             self.panel_three.Hide()
                             self.panel_four.Hide()
+                            self.panel_six.Hide()
                             self.Layout()
                     new_user()
 
@@ -405,6 +440,7 @@ class Program(wx.Frame):
                         self.panel_one.Hide()
                         self.panel_three.Hide()
                         self.panel_four.Hide()
+                        self.panel_six.Hide()
                         self.Layout()
                     else:
                         user_find = ('SELECT * FROM account WHERE Username = ?')
@@ -416,16 +452,6 @@ class Program(wx.Frame):
                         else:
                             wx.MessageBox('Username Not Found.', 'Login',
                                           wx.OK | wx.ICON_EXCLAMATION)
-                            
-                        q = 1
-                        while q == 5:
-                            q = q+1
-                            wx.MessageBox('Attempted Login Too Many Times', 'Error',
-                                      wx.OK | wx.ICON_EXCLAMATION)
-                            wx.MessageBox('CLOSING PROGRAM', 'Error',
-                                      wx.OK | wx.ICON_EXCLAMATION)
-                            pygame.mixer.music.stop()
-                            self.Close()
 
                 login()
 
@@ -435,7 +461,10 @@ class Program(wx.Frame):
         self.panel_one.Hide()
         self.panel_three.Hide()
         self.panel_four.Hide()
+        self.panel_six.Hide()
         self.Layout()
+
+    
     
     def OnAbout(self, e):
 
@@ -477,4 +506,4 @@ if __name__ == "__main__":
     frame.Show()
     app.MainLoop()
 
-#
+

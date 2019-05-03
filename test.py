@@ -215,8 +215,8 @@ Help'''
         self.btn = wx.Button(self, -1, 'LOG OUT', (50, 480)) # this is the log out button it is very similar to the return button
         
 
-class Tech(wx.Panel):  # this is the page is the page that is inbetween the main menu and the intro page, when you log out
-    def __init__(self, parent):
+class Tech(wx.Panel):  # this is the page is the page that is inbetween the main menu
+    def __init__(self, parent): #and the intro page, when you log out
         wx.Panel.__init__(self, parent)
         txt = 'Thanks For Playing'
         txt1 = 'さようなら'
@@ -231,8 +231,8 @@ class Tech(wx.Panel):  # this is the page is the page that is inbetween the main
         txt3 = ''' Main Menu
 Return'''
         self.btn = wx.Button(self, -1, 'LOG OUT', (335, 480))
-        self.btn2 = wx.Button(self, -1, txt3, (530, 465), (90, 50))      # this button should take you back to the main menu
-
+        self.btn2 = wx.Button(self, -1, txt3, (530, 465), (90, 50))  # this button should take 
+                                                                    #you back to the main menu
 class GameModes(wx.Panel):            
     
     def __init__(self, parent):
@@ -1126,25 +1126,6 @@ class Program(wx.Frame):
         self.panel_three.t3.Clear()
         self.Layout()
         
-    def show_panel_six(self, event):
-        self.panel_six.Show()
-        self.panel_two.Hide()
-        self.panel_one.Hide()
-        self.panel_three.Hide()
-        self.panel_four.Hide()
-        self.panel_five.Hide()
-        self.panel_seven.Hide()
-        self.panel_eight.Hide()
-        self.panel_nine.Hide()
-        self.panel_X.Hide()
-        self.panel_XI.Hide()
-        self.panel_XII.Hide()
-        self.panel_XIII.Hide()
-        self.panel_XIV.Hide()
-        self.panel_XV.Hide()
-        self.panel_XVI.Hide()
-        self.panel_XVII.Hide()
-        self.Layout()
 
     def show_panel_seven(self, event):
         self.panel_seven.Show()
