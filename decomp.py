@@ -225,7 +225,254 @@ class Tech(wx.Panel):  # this is the page is the page that is inbetween the main
 Return'''
         self.btn = wx.Button(self, -1, 'LOG OUT', (335, 480))
         self.btn2 = wx.Button(self, -1, txt3, (530, 465), (90, 50))  # this button should take 
-                                                                    #you back to the main menu
+
+                                                              #you back to the main menu
+
+class GameModes(wx.Panel):            
+    
+    def __init__(self, parent):
+        
+        wx.Panel.__init__(self, parent)
+        txt = 'Game Modes'
+        
+        font = wx.Font(42, wx.DEFAULT, wx.ITALIC, wx.BOLD)
+        
+        wx.StaticText(self, -1, txt, (200, 60)).SetFont(font)
+        txt1 = '''Single
+Player'''
+        txt2 = '''Multi
+Player'''
+        font_2 = wx.Font(17, wx.DEFAULT, wx.NORMAL, wx.LIGHT)
+        
+        self.btn1 = wx.Button(self, -1, txt1, (230, 205), (110, 225))
+        self.btn1.SetFont(font_2)
+        self.btn2 = wx.Button(self, -1, txt2, (390, 205), (110, 225))
+        self.btn2.SetFont(font_2)
+
+        self.btn = wx.Button(self, -1, 'Return', (50, 480))
+
+class SinglePlayer(wx.Panel):
+
+    def __init__(self, parent):
+        
+        wx.Panel.__init__(self, parent)
+        txt = 'Single Player'
+        
+        font = wx.Font(42, wx.DEFAULT, wx.ITALIC, wx.BOLD)
+        wx.StaticText(self, -1, txt, (200, 60)).SetFont(font)
+        txt1 = '''Story
+Mode'''
+        txt2 = '''Player
+vs
+AI'''
+        font_2 = wx.Font(15, wx.DEFAULT, wx.NORMAL, wx.LIGHT)
+        
+        self.btn1 = wx.Button(self, -1, txt1, (230, 205), (110, 205))
+        self.btn1.SetFont(font_2)
+        self.btn2 = wx.Button(self, -1, txt2, (390, 205), (110, 205))
+        self.btn2.SetFont(font_2)
+
+        self.cb1 = wx.CheckBox(self, label = 'Easy',pos = (250,420), size = (80,60))   # this creates 3 checkboxes on the screen  
+        self.cb2 = wx.CheckBox(self, label = 'Medium',pos = (340,420), size = (120,60)) #these are for the 3 difficulties  
+        self.cb3 = wx.CheckBox(self, label = 'Hard',pos = (430,420), size = (80,60))
+
+        self.cb1.Bind(wx.EVT_CHECKBOX,self.onChecked)      #these binds the checkboxes to different events
+        self.cb2.Bind(wx.EVT_CHECKBOX,self.onChecked1)
+        self.cb3.Bind(wx.EVT_CHECKBOX,self.onChecked2)
+
+        font_3 = wx.Font(11, wx.DEFAULT, wx.NORMAL, wx.BOLD)
+        self.cb1.SetFont(font_3)
+        self.cb2.SetFont(font_3)
+        self.cb3.SetFont(font_3)
+
+        self.btn = wx.Button(self, -1, 'Return', (50, 480))
+
+    def onChecked(self, event):    # all of these three functions are used to make sure that only one checkbox can be checked at one time
+        cb = event.GetEventObject()     # this gets gets the checkbox in question
+        q = cb.IsChecked()            # this function checks if the checkbox has been cheked
+        if q == True:
+            self.cb2.SetValue(False)   # this sets the other two checkboxes to be false so they aren't checked
+            self.cb3.SetValue(False)
+    def onChecked1(self, event):
+        cb = event.GetEventObject()
+        q = cb.IsChecked()
+        if q == True:
+            self.cb1.SetValue(False)
+            self.cb3.SetValue(False)
+    def onChecked2(self, event):
+        cb = event.GetEventObject()
+        q = cb.IsChecked()
+        if q == True:
+            self.cb2.SetValue(False)
+            self.cb1.SetValue(False)
+
+class MultiPlayer(wx.Panel):
+    
+    def __init__(self, parent):
+        
+        wx.Panel.__init__(self, parent)
+        txt = 'Multi Player'
+        
+        font = wx.Font(42, wx.DEFAULT, wx.ITALIC, wx.BOLD)
+        
+        wx.StaticText(self, -1, txt, (240, 60)).SetFont(font)
+        txt1 = '''Player-2-Player'''
+        txt2 = '''Leaderboard'''
+        
+        font_2 = wx.Font(19, wx.DEFAULT, wx.NORMAL, wx.LIGHT)
+        
+        self.btn1 = wx.Button(self, -1, txt1, (245, 235), (270, 65))
+        self.btn1.SetFont(font_2)
+        self.btn2 = wx.Button(self, -1, txt2, (245, 325), (270, 65))
+        self.btn2.SetFont(font_2)
+
+        self.btn = wx.Button(self, -1, 'Return', (50, 480))
+
+class Player2Player(wx.Panel):
+    
+    def __init__(self, parent):
+        
+        wx.Panel.__init__(self, parent)
+        txt = 'Player 2 Player'
+        
+        font = wx.Font(42, wx.DEFAULT, wx.ITALIC, wx.BOLD)
+        
+        wx.StaticText(self, -1, txt, (190, 60)).SetFont(font)
+        txt1 = '''Online'''
+        txt2 = '''Friends'''
+        
+        font_2 = wx.Font(19, wx.DEFAULT, wx.NORMAL, wx.LIGHT)
+        
+        self.btn1 = wx.Button(self, -1, txt1, (255, 235), (250, 65))
+        self.btn1.SetFont(font_2)
+        self.btn2 = wx.Button(self, -1, txt2, (255, 325), (250, 65))
+        self.btn2.SetFont(font_2)
+
+        self.btn = wx.Button(self, -1, 'Return', (50, 480))
+        
+class Summon(wx.Panel):
+
+    def __init__(self, parent):
+        
+        wx.Panel.__init__(self, parent)
+        txt = 'Summon'
+        
+        font = wx.Font(42, wx.DEFAULT, wx.ITALIC, wx.BOLD)
+        
+        wx.StaticText(self, -1, txt, (235, 60)).SetFont(font)
+        txt1 = '''Disc'''
+        txt2 = '''Card'''
+        font_2 = wx.Font(15, wx.DEFAULT, wx.NORMAL, wx.LIGHT)
+        
+        self.btn1 = wx.Button(self, -1, txt1, (230, 245), (110, 75))
+        self.btn1.SetFont(font_2)
+        self.btn2 = wx.Button(self, -1, txt2, (390, 245), (110, 75))
+        self.btn2.SetFont(font_2)
+
+        self.cb1 = wx.CheckBox(self, label = 'Single',pos = (280,370), size = (80,60))  # adds the checkboxes to the page
+        self.cb2 = wx.CheckBox(self, label = 'Multi',pos = (420,370), size = (80,60))
+
+        self.cb1.Bind(wx.EVT_CHECKBOX,self.onChecked)
+        self.cb2.Bind(wx.EVT_CHECKBOX,self.onChecked1)
+
+        font_3 = wx.Font(11, wx.DEFAULT, wx.NORMAL, wx.BOLD)
+        self.cb1.SetFont(font_3)
+        self.cb2.SetFont(font_3)
+
+        self.btn = wx.Button(self, -1, 'Return', (50, 480))
+
+    def onChecked(self, event):      # only one check box at a time
+        cb = event.GetEventObject()
+        q = cb.IsChecked()
+        if q == True:
+            self.cb2.SetValue(False)    #sets the other checkbox to false
+    def onChecked1(self, event):
+        cb = event.GetEventObject()
+        q = cb.IsChecked()
+        if q == True:
+            self.cb1.SetValue(False)
+
+class Craft(wx.Panel):
+
+    def __init__(self, parent):
+        
+        wx.Panel.__init__(self, parent)
+        txt = 'Craft'
+        
+        font = wx.Font(46, wx.DEFAULT, wx.ITALIC, wx.BOLD)
+        
+        wx.StaticText(self, -1, txt, (285, 60)).SetFont(font)
+        txt1 = '''Deck'''
+        txt2 = '''Team'''
+        font_2 = wx.Font(15, wx.DEFAULT, wx.NORMAL, wx.LIGHT)
+        
+        self.btn1 = wx.Button(self, -1, txt1, (230, 245), (110, 75))
+        self.btn1.SetFont(font_2)
+        self.btn2 = wx.Button(self, -1, txt2, (390, 245), (110, 75))
+        self.btn2.SetFont(font_2)
+
+        self.btn = wx.Button(self, -1, 'Return', (50, 480))
+
+class Options(wx.Panel):
+    
+    def __init__(self, parent):
+        
+        wx.Panel.__init__(self, parent)
+        txt = 'Options'
+        
+        font = wx.Font(42, wx.DEFAULT, wx.ITALIC, wx.BOLD)
+        
+        wx.StaticText(self, -1, txt, (260, 60)).SetFont(font)
+        txt1 = '''Resolution'''
+        txt2 = '''Sound'''
+        txt3 = '''Colour Options'''
+        
+        font_2 = wx.Font(19, wx.DEFAULT, wx.NORMAL, wx.LIGHT)
+        
+        self.btn1 = wx.Button(self, -1, txt1, (245, 195), (270, 65))
+        self.btn1.SetFont(font_2)
+        self.btn2 = wx.Button(self, -1, txt2, (245, 285), (270, 65))
+        self.btn2.SetFont(font_2)
+        self.btn2 = wx.Button(self, -1, txt3, (245, 375), (270, 65))
+        self.btn2.SetFont(font_2)
+
+        self.btn = wx.Button(self, -1, 'Return', (50, 480))
+
+class RulesHelp(wx.Panel):
+
+    def __init__(self, parent):
+
+        wx.Panel.__init__(self, parent)
+        txt = 'Rules/Help'
+        
+        font = wx.Font(42, wx.DEFAULT, wx.ITALIC, wx.BOLD)
+        
+        wx.StaticText(self, -1, txt, (245, 60)).SetFont(font)
+        txt1 = '''Warnings'''
+        txt2 = '''Extra
+Info'''
+        txt3 = 'Controls'
+        txt4 = 'Achievements'
+        txt5 = '''Resource
+System'''
+        txt6 = '''Rating
+System'''
+        font_2 = wx.Font(15, wx.DEFAULT, wx.NORMAL, wx.LIGHT)
+        
+        self.btn1 = wx.Button(self, -1, txt1, (150, 205), (140, 75))
+        self.btn1.SetFont(font_2)
+        self.btn2 = wx.Button(self, -1, txt2, (315, 205), (140, 75))
+        self.btn2.SetFont(font_2)
+        self.btn3 = wx.Button(self, -1, txt3, (480, 205), (140, 75))
+        self.btn3.SetFont(font_2)
+        self.btn4 = wx.Button(self, -1, txt4, (150, 345), (140, 75))
+        self.btn4.SetFont(font_2)
+        self.btn5 = wx.Button(self, -1, txt5, (315, 345), (140, 75))
+        self.btn5.SetFont(font_2)
+        self.btn6 = wx.Button(self, -1, txt6, (480, 345), (140, 75))
+        self.btn6.SetFont(font_2)
+
+        self.btn = wx.Button(self, -1, 'Return', (50, 480))
 
 class Program(wx.Frame):
     def __init__(self):
@@ -301,6 +548,67 @@ class Program(wx.Frame):
         self.panel_six.btn2.Bind(wx.EVT_BUTTON, self.show_panel_five2)
         self.panel_six.Hide()
 
+        self.panel_seven = GameModes(self)
+        sizer.Add(self.panel_seven, 1, wx.EXPAND)
+        self.panel_seven.btn.Bind(wx.EVT_BUTTON, self.show_panel_five2)
+        self.panel_seven.btn1.Bind(wx.EVT_BUTTON, self.show_panel_eight)
+        self.panel_seven.btn2.Bind(wx.EVT_BUTTON, self.show_panel_nine)
+        self.panel_seven.Hide()
+
+        self.panel_eight = SinglePlayer(self)
+        sizer.Add(self.panel_eight, 1, wx.EXPAND)
+        self.panel_eight.btn.Bind(wx.EVT_BUTTON, self.show_panel_seven)
+        self.panel_eight.Hide()
+
+        self.panel_nine = MultiPlayer(self)
+        sizer.Add(self.panel_nine, 1, wx.EXPAND)
+        self.panel_nine.btn.Bind(wx.EVT_BUTTON, self.show_panel_seven)
+        self.panel_nine.btn1.Bind(wx.EVT_BUTTON, self.show_panel_X)
+        self.panel_nine.Hide()
+
+        self.panel_X = Player2Player(self)
+        sizer.Add(self.panel_X, 1, wx.EXPAND)
+        self.panel_X.btn.Bind(wx.EVT_BUTTON, self.show_panel_nine)
+        self.panel_X.Hide()
+
+        self.panel_XI = Summon(self)
+        sizer.Add(self.panel_XI, 1, wx.EXPAND)
+        self.panel_XI.btn.Bind(wx.EVT_BUTTON, self.show_panel_five2)
+        self.panel_XI.Hide()
+
+        self.panel_XII = Craft(self)
+        sizer.Add(self.panel_XII, 1, wx.EXPAND)
+        self.panel_XII.btn.Bind(wx.EVT_BUTTON, self.show_panel_five2)
+        self.panel_XII.Hide()
+
+        self.panel_XIII = Options(self)
+        sizer.Add(self.panel_XIII, 1, wx.EXPAND)
+        self.panel_XIII.btn.Bind(wx.EVT_BUTTON, self.show_panel_five2)
+        self.panel_XIII.Hide()
+
+        self.panel_XIV = RulesHelp(self)
+        sizer.Add(self.panel_XIV, 1, wx.EXPAND)
+        self.panel_XIV.btn.Bind(wx.EVT_BUTTON, self.show_panel_five2)
+        self.panel_XIV.btn2.Bind(wx.EVT_BUTTON, self.show_panel_XV)
+        self.panel_XIV.Hide()
+
+        self.panel_XV = ExtraInfo(self)
+        sizer.Add(self.panel_XV, 1, wx.EXPAND)
+        self.panel_XV.btn.Bind(wx.EVT_BUTTON, self.show_panel_XIV)
+        self.panel_XV.btn1.Bind(wx.EVT_BUTTON, self.show_panel_XVII)
+        self.panel_XV.btn3.Bind(wx.EVT_BUTTON, self.show_panel_XVI)
+        self.panel_XV.Hide()
+
+        self.panel_XVI = PersonalInfo(self)
+        sizer.Add(self.panel_XVI, 1, wx.EXPAND)
+        self.panel_XVI.btn.Bind(wx.EVT_BUTTON, self.show_panel_XV)
+        self.panel_XVI.Hide()
+
+        self.panel_XVII = HallOfFame(self)
+        sizer.Add(self.panel_XVII, 1, wx.EXPAND)
+        self.panel_XVII.btn.Bind(wx.EVT_BUTTON, self.show_panel_XV)
+        self.panel_XVII.Hide()
+
         
         self.SetSize((800, 600))
 
@@ -312,6 +620,8 @@ class Program(wx.Frame):
             self.panel_three.Hide()
             self.panel_four.Hide()
             self.panel_five.Hide()
+            self.panel_seven.Hide()
+            self.panel_eight.Hide()
             self.Layout()
         ans = wx.MessageDialog(self, 'Are You Sure You Want To Log Out?', 'Log Out',
                       wx.YES_NO | wx.ICON_EXCLAMATION)
@@ -326,6 +636,8 @@ class Program(wx.Frame):
             self.panel_three.Hide()
             self.panel_four.Hide()
             self.panel_six.Hide()
+            self.panel_seven.Hide()
+            self.panel_eight.Hide()
         
 
     def show_panel_one(self, event):
@@ -335,6 +647,8 @@ class Program(wx.Frame):
         self.panel_four.Hide()
         self.panel_five.Hide()
         self.panel_six.Hide()
+        self.panel_seven.Hide()
+        self.panel_eight.Hide()
         self.Layout()
 
     def show_panel_two(self, event):
@@ -344,7 +658,10 @@ class Program(wx.Frame):
         self.panel_four.Hide()
         self.panel_five.Hide()
         self.panel_six.Hide()
+        self.panel_seven.Hide()
+        self.panel_eight.Hide()
         self.Layout()
+        
     def show_panel_three(self, event):
         self.panel_three.Show()
         self.panel_one.Hide()
@@ -352,6 +669,8 @@ class Program(wx.Frame):
         self.panel_four.Hide()
         self.panel_five.Hide()
         self.panel_six.Hide()
+        self.panel_seven.Hide()
+        self.panel_eight.Hide()
         self.Layout()
 
     def show_panel_four(self, event):
@@ -361,6 +680,8 @@ class Program(wx.Frame):
         self.panel_three.Hide()
         self.panel_five.Hide()
         self.panel_six.Hide()
+        self.panel_seven.Hide()
+        self.panel_eight.Hide()
         self.Layout()
 
     def show_panel_five(self, event):
@@ -407,6 +728,8 @@ class Program(wx.Frame):
                             self.panel_three.Hide()
                             self.panel_four.Hide()
                             self.panel_six.Hide()
+                            self.panel_seven.Hide()
+                            self.panel_eight.Hide()
                             self.Layout()
                     new_user()
 
@@ -441,6 +764,8 @@ class Program(wx.Frame):
                         self.panel_three.Hide()
                         self.panel_four.Hide()
                         self.panel_six.Hide()
+                        self.panel_seven.Hide()
+                        self.panel_eight.Hide()
                         self.Layout()
                     else:
                         user_find = ('SELECT * FROM account WHERE Username = ?')
@@ -462,6 +787,90 @@ class Program(wx.Frame):
         self.panel_three.Hide()
         self.panel_four.Hide()
         self.panel_six.Hide()
+        self.panel_seven.Hide()
+        self.panel_eight.Hide()
+        self.Layout()
+
+    def show_panel_seven(self, event):
+        self.panel_seven.Show()
+        self.panel_two.Hide()
+        self.panel_one.Hide()
+        self.panel_three.Hide()
+        self.panel_four.Hide()
+        self.panel_five.Hide()
+        self.panel_six.Hide()
+        self.panel_eight.Hide()
+        self.Layout()
+
+    def show_panel_eight(self, event):
+        self.panel_eight.Show()
+        self.panel_two.Hide()
+        self.panel_one.Hide()
+        self.panel_three.Hide()
+        self.panel_four.Hide()
+        self.panel_five.Hide()
+        self.panel_six.Hide()
+        self.panel_seven.Hide()
+        self.Layout()
+
+    def show_panel_nine(self, event):
+        self.panel_nine.Show()
+        self.panel_two.Hide()
+        self.panel_one.Hide()
+        self.panel_three.Hide()
+        self.panel_four.Hide()
+        self.panel_five.Hide()
+        self.panel_six.Hide()
+        self.panel_seven.Hide()
+        self.panel_eight.Hide()
+        self.panel_X.Hide()
+        self.panel_XI.Hide()
+        self.panel_XII.Hide()
+        self.Layout()
+
+    def show_panel_X(self, event):
+        self.panel_X.Show()
+        self.panel_two.Hide()
+        self.panel_one.Hide()
+        self.panel_three.Hide()
+        self.panel_four.Hide()
+        self.panel_five.Hide()
+        self.panel_six.Hide()
+        self.panel_seven.Hide()
+        self.panel_eight.Hide()
+        self.panel_nine.Hide()
+        self.panel_XI.Hide()
+        self.panel_XII.Hide()
+        self.Layout()
+
+    def show_panel_XI(self, event):
+        self.panel_XI.Show()
+        self.panel_two.Hide()
+        self.panel_one.Hide()
+        self.panel_three.Hide()
+        self.panel_four.Hide()
+        self.panel_five.Hide()
+        self.panel_six.Hide()
+        self.panel_seven.Hide()
+        self.panel_eight.Hide()
+        self.panel_nine.Hide()
+        self.panel_X.Hide()
+        self.panel_XII.Hide()
+        self.Layout()
+
+    def show_panel_XII(self, event):
+        self.panel_XII.Show()
+        self.panel_two.Hide()
+        self.panel_one.Hide()
+        self.panel_three.Hide()
+        self.panel_four.Hide()
+        self.panel_five.Hide()
+        self.panel_six.Hide()
+        self.panel_seven.Hide()
+        self.panel_eight.Hide()
+        self.panel_nine.Hide()
+        self.panel_X.Hide()
+        self.panel_XI.Hide()
         self.Layout()
 
     
