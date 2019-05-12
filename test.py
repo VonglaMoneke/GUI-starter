@@ -6,6 +6,10 @@ import time
 import random
 import zipfile
 import os
+import locale
+locale.setlocale(locale.LC_ALL, 'C')
+
+
 
 class Front(wx.Panel):            #each page in the interface is a seperate class for easier implementation
 
@@ -215,8 +219,8 @@ Help'''
         self.btn = wx.Button(self, -1, 'LOG OUT', (50, 480)) # this is the log out button it is very similar to the return button
         
 
-class Tech(wx.Panel):  # this is the page is the page that is inbetween the main menu
-    def __init__(self, parent): #and the intro page, when you log out
+class Tech(wx.Panel):  # this is the page is the page that is inbetween the main menu and the intro page, when you log out
+    def __init__(self, parent):
         wx.Panel.__init__(self, parent)
         txt = 'Thanks For Playing'
         txt1 = 'さようなら'
@@ -231,8 +235,8 @@ class Tech(wx.Panel):  # this is the page is the page that is inbetween the main
         txt3 = ''' Main Menu
 Return'''
         self.btn = wx.Button(self, -1, 'LOG OUT', (335, 480))
-        self.btn2 = wx.Button(self, -1, txt3, (530, 465), (90, 50))  # this button should take 
-                                                                    #you back to the main menu
+        self.btn2 = wx.Button(self, -1, txt3, (530, 465), (90, 50))      # this button should take you back to the main menu
+
 class GameModes(wx.Panel):            
     
     def __init__(self, parent):
@@ -560,8 +564,38 @@ Info'''
 
         self.btn = wx.Button(self, -1, 'Return', (50, 480))
 
+class CharacterInfo(wx.Panel):
+    
+    def __init__(self, parent):
+        
+        wx.Panel.__init__(self, parent)
+        txt = 'Character Info'
+        
+        font = wx.Font(42, wx.DEFAULT, wx.ITALIC, wx.BOLD)
+        
+        wx.StaticText(self, -1, txt, (210, 60)).SetFont(font)
+        txt1 = 'N'
+        txt2 = 'S'
+        txt3 = 'N1'
+        font_2 = wx.Font(18, wx.DEFAULT, wx.NORMAL, wx.LIGHT)
+        
+        self.btn1 = wx.Button(self, -1, txt1, (200, 195), (25, 25))
+        self.btn1.SetFont(font_2)
+        self.btn2 = wx.Button(self, -1, txt2, (235, 195), (25, 25))
+        self.btn2.SetFont(font_2)
+        self.btn3 = wx.Button(self, -1, txt3, (270, 195), (25, 25))
+        self.btn3.SetFont(font_2)
 
+        self.btn = wx.Button(self, -1, 'Return', (50, 480))
 
+class Naruto(wx.Panel):
+    
+    def __init__(self, parent):
+        
+        wx.Panel.__init__(self, parent)
+        # pick a .jpg file you have in the working folder
+        image = 'Naruto_Game.png'
+        self.png = wx.StaticBitmap(self, -1, wx.Bitmap(image, wx.BITMAP_TYPE_ANY))
         
 class Program(wx.Frame):
 
@@ -741,7 +775,18 @@ class Program(wx.Frame):
         self.panel_XVII = HallOfFame(self)
         sizer.Add(self.panel_XVII, 1, wx.EXPAND)
         self.panel_XVII.btn.Bind(wx.EVT_BUTTON, self.show_panel_XV)
+        self.panel_XVII.btn2.Bind(wx.EVT_BUTTON, self.show_panel_XVIII)
         self.panel_XVII.Hide()
+
+        self.panel_XVIII = CharacterInfo(self)
+        sizer.Add(self.panel_XVIII, 1, wx.EXPAND)
+        self.panel_XVIII.btn.Bind(wx.EVT_BUTTON, self.show_panel_XVII)
+        self.panel_XVIII.btn1.Bind(wx.EVT_BUTTON, self.show_panel_XIX)
+        self.panel_XVIII.Hide()
+
+        self.panel_XIX = Naruto(self)
+        sizer.Add(self.panel_XIX, 1, wx.EXPAND)
+        self.panel_XIX.Hide()
 
 
 
@@ -792,6 +837,8 @@ class Program(wx.Frame):
             self.panel_XV.Hide()
             self.panel_XVI.Hide()
             self.panel_XVII.Hide()
+            self.panel_XVIII.Hide()
+            self.panel_XIX.Hide()
             self.Layout()
         ans = wx.MessageDialog(self, 'Are You Sure You Want To Log Out?', 'Log Out',
                       wx.YES_NO | wx.ICON_EXCLAMATION)
@@ -817,6 +864,8 @@ class Program(wx.Frame):
             self.panel_XV.Hide()
             self.panel_XVI.Hide()
             self.panel_XVII.Hide()
+            self.panel_XVIII.Hide()
+            self.panel_XIX.Hide()
 
     def show_panel_one(self, event):
         pygame.mixer.music.stop()
@@ -837,6 +886,8 @@ class Program(wx.Frame):
         self.panel_XV.Hide()
         self.panel_XVI.Hide()
         self.panel_XVII.Hide()
+        self.panel_XVIII.Hide()
+        self.panel_XIX.Hide()
         pygame.mixer.init()
         pygame.mixer.music.load(intro[0])
         pygame.mixer.music.play()
@@ -861,6 +912,8 @@ class Program(wx.Frame):
         self.panel_XV.Hide()
         self.panel_XVI.Hide()
         self.panel_XVII.Hide()
+        self.panel_XVIII.Hide()
+        self.panel_XIX.Hide()
         self.panel_four.t2.Clear()
         self.panel_four.t3.Clear()
         self.panel_four.t4.Clear()
@@ -889,6 +942,8 @@ class Program(wx.Frame):
         self.panel_XV.Hide()
         self.panel_XVI.Hide()
         self.panel_XVII.Hide()
+        self.panel_XVIII.Hide()
+        self.panel_XIX.Hide()
         self.panel_four.t2.Clear()
         self.panel_four.t3.Clear()
         self.panel_four.t4.Clear()
@@ -914,6 +969,8 @@ class Program(wx.Frame):
         self.panel_XV.Hide()
         self.panel_XVI.Hide()
         self.panel_XVII.Hide()
+        self.panel_XVIII.Hide()
+        self.panel_XIX.Hide()
         self.Layout()
 
     def show_panel_four(self, event):
@@ -934,6 +991,8 @@ class Program(wx.Frame):
         self.panel_XV.Hide()
         self.panel_XVI.Hide()
         self.panel_XVII.Hide()
+        self.panel_XVIII.Hide()
+        self.panel_XIX.Hide()
         self.Layout()
 
     def show_panel_five(self, event):
@@ -991,6 +1050,8 @@ class Program(wx.Frame):
                             self.panel_XV.Hide()
                             self.panel_XVI.Hide()
                             self.panel_XVII.Hide()
+                            self.panel_XVIII.Hide()
+                            self.panel_XIX.Hide()
                             self.panel_four.t2.Clear()
                             self.panel_four.t3.Clear()
                             self.panel_four.t4.Clear()
@@ -1047,6 +1108,8 @@ class Program(wx.Frame):
                         self.panel_XV.Hide()
                         self.panel_XVI.Hide()
                         self.panel_XVII.Hide()
+                        self.panel_XVIII.Hide()
+                        self.panel_XIX.Hide()
                         self.panel_four.t2.Clear()
                         self.panel_four.t3.Clear()
                         self.panel_four.t4.Clear()
@@ -1090,6 +1153,8 @@ class Program(wx.Frame):
         self.panel_XV.Hide()
         self.panel_XVI.Hide()
         self.panel_XVII.Hide()
+        self.panel_XVIII.Hide()
+        self.panel_XIX.Hide()
         self.panel_four.t2.Clear()
         self.panel_four.t3.Clear()
         self.panel_four.t4.Clear()
@@ -1119,6 +1184,8 @@ class Program(wx.Frame):
         self.panel_XV.Hide()
         self.panel_XVI.Hide()
         self.panel_XVII.Hide()
+        self.panel_XVIII.Hide()
+        self.panel_XIX.Hide()
         self.panel_four.t2.Clear()
         self.panel_four.t3.Clear()
         self.panel_four.t4.Clear()
@@ -1126,6 +1193,27 @@ class Program(wx.Frame):
         self.panel_three.t3.Clear()
         self.Layout()
         
+    def show_panel_six(self, event):
+        self.panel_six.Show()
+        self.panel_two.Hide()
+        self.panel_one.Hide()
+        self.panel_three.Hide()
+        self.panel_four.Hide()
+        self.panel_five.Hide()
+        self.panel_seven.Hide()
+        self.panel_eight.Hide()
+        self.panel_nine.Hide()
+        self.panel_X.Hide()
+        self.panel_XI.Hide()
+        self.panel_XII.Hide()
+        self.panel_XIII.Hide()
+        self.panel_XIV.Hide()
+        self.panel_XV.Hide()
+        self.panel_XVI.Hide()
+        self.panel_XVII.Hide()
+        self.panel_XVIII.Hide()
+        self.panel_XIX.Hide()
+        self.Layout()
 
     def show_panel_seven(self, event):
         self.panel_seven.Show()
@@ -1145,6 +1233,8 @@ class Program(wx.Frame):
         self.panel_XV.Hide()
         self.panel_XVI.Hide()
         self.panel_XVII.Hide()
+        self.panel_XVIII.Hide()
+        self.panel_XIX.Hide()
         self.Layout()
 
     def show_panel_eight(self, event):
@@ -1165,6 +1255,8 @@ class Program(wx.Frame):
         self.panel_XV.Hide()
         self.panel_XVI.Hide()
         self.panel_XVII.Hide()
+        self.panel_XVIII.Hide()
+        self.panel_XIX.Hide()
         self.Layout()
 
     def show_panel_nine(self, event):
@@ -1185,6 +1277,8 @@ class Program(wx.Frame):
         self.panel_XV.Hide()
         self.panel_XVI.Hide()
         self.panel_XVII.Hide()
+        self.panel_XVIII.Hide()
+        self.panel_XIX.Hide()
         self.Layout()
 
     def show_panel_X(self, event):
@@ -1205,6 +1299,8 @@ class Program(wx.Frame):
         self.panel_XV.Hide()
         self.panel_XVI.Hide()
         self.panel_XVII.Hide()
+        self.panel_XVIII.Hide()
+        self.panel_XIX.Hide()
         self.Layout()
 
     def show_panel_XI(self, event):
@@ -1226,6 +1322,8 @@ class Program(wx.Frame):
         self.panel_XV.Hide()
         self.panel_XVI.Hide()
         self.panel_XVII.Hide()
+        self.panel_XVIII.Hide()
+        self.panel_XIX.Hide()
         pygame.mixer.init()
         pygame.mixer.music.load(summon[0])
         pygame.mixer.music.play()
@@ -1250,6 +1348,8 @@ class Program(wx.Frame):
         self.panel_XV.Hide()
         self.panel_XVI.Hide()
         self.panel_XVII.Hide()
+        self.panel_XVIII.Hide()
+        self.panel_XIX.Hide()
         pygame.mixer.init()
         pygame.mixer.music.load(craft[0])
         pygame.mixer.music.play()
@@ -1275,6 +1375,8 @@ class Program(wx.Frame):
         self.panel_XV.Hide()
         self.panel_XVI.Hide()
         self.panel_XVII.Hide()
+        self.panel_XVIII.Hide()
+        self.panel_XIX.Hide()
         pygame.mixer.init()
         pygame.mixer.music.load(main_menu[1])
         pygame.mixer.music.play()
@@ -1298,6 +1400,8 @@ class Program(wx.Frame):
         self.panel_XV.Hide()
         self.panel_XVI.Hide()
         self.panel_XVII.Hide()
+        self.panel_XVIII.Hide()
+        self.panel_XIX.Hide()
         self.Layout()
 
     def show_panel_XV(self, event):
@@ -1319,8 +1423,10 @@ class Program(wx.Frame):
         self.panel_XIV.Hide()
         self.panel_XVI.Hide()
         self.panel_XVII.Hide()
+        self.panel_XVIII.Hide()
+        self.panel_XIX.Hide()
         pygame.mixer.init()
-        shuffle(story)
+        random.shuffle(story)
         pygame.mixer.music.load(story[0])
         pygame.mixer.music.load(story[1])
         pygame.mixer.music.play()
@@ -1344,6 +1450,8 @@ class Program(wx.Frame):
         self.panel_XIV.Hide()
         self.panel_XV.Hide()
         self.panel_XVII.Hide()
+        self.panel_XVIII.Hide()
+        self.panel_XIX.Hide()
         self.Layout()
 
     def show_panel_XVII(self, event):
@@ -1364,6 +1472,52 @@ class Program(wx.Frame):
         self.panel_XIV.Hide()
         self.panel_XV.Hide()
         self.panel_XVI.Hide()
+        self.panel_XVIII.Hide()
+        self.panel_XIX.Hide()
+        self.Layout()
+
+    def show_panel_XVIII(self, event):
+        self.panel_XVIII.Show()
+        self.panel_two.Hide()
+        self.panel_one.Hide()
+        self.panel_three.Hide()
+        self.panel_four.Hide()
+        self.panel_five.Hide()
+        self.panel_six.Hide()
+        self.panel_seven.Hide()
+        self.panel_eight.Hide()
+        self.panel_nine.Hide()
+        self.panel_X.Hide()
+        self.panel_XI.Hide()
+        self.panel_XII.Hide()
+        self.panel_XIII.Hide()
+        self.panel_XIV.Hide()
+        self.panel_XV.Hide()
+        self.panel_XVI.Hide()
+        self.panel_XVII.Hide()
+        self.panel_XIX.Hide()
+        self.Layout()
+
+    def show_panel_XIX(self, event):
+        self.panel_XIX.Show()
+        self.panel_two.Hide()
+        self.panel_one.Hide()
+        self.panel_three.Hide()
+        self.panel_four.Hide()
+        self.panel_five.Hide()
+        self.panel_six.Hide()
+        self.panel_seven.Hide()
+        self.panel_eight.Hide()
+        self.panel_nine.Hide()
+        self.panel_X.Hide()
+        self.panel_XI.Hide()
+        self.panel_XII.Hide()
+        self.panel_XIII.Hide()
+        self.panel_XIV.Hide()
+        self.panel_XV.Hide()
+        self.panel_XVI.Hide()
+        self.panel_XVII.Hide()
+        self.panel_XVIII.Hide()
         self.Layout()
         
     def OnAbout(self, e):
