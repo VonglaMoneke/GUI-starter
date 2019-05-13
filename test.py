@@ -384,6 +384,9 @@ class Summon(wx.Panel):
         self.cb1.Bind(wx.EVT_CHECKBOX,self.onChecked)
         self.cb2.Bind(wx.EVT_CHECKBOX,self.onChecked1)
 
+        self.btn1.Bind(wx.EVT_BUTTON,self.DiscSummon)
+        self.btn2.Bind(wx.EVT_BUTTON,self.CardSummon)
+
         font_3 = wx.Font(11, wx.DEFAULT, wx.NORMAL, wx.BOLD)
         self.cb1.SetFont(font_3)
         self.cb2.SetFont(font_3)
@@ -400,6 +403,20 @@ class Summon(wx.Panel):
         q = cb.IsChecked()
         if q == True:
             self.cb1.SetValue(False)
+    def DiscSummon(self,event):
+        if self.cb1.IsChecked():
+            print('Single')
+        elif self.cb2.IsChecked():
+            print('Multi')
+        else:
+            print('Choose an option Single or Multi')
+    def CardSummon(self,event):
+        if self.cb1.IsChecked():
+            print('Single')
+        elif self.cb2.IsChecked():
+            print('Multi')
+        else:
+            print('Choose an option Single or Multi')
 
 class Craft(wx.Panel):
 
@@ -577,14 +594,20 @@ class CharacterInfo(wx.Panel):
         txt1 = 'N'
         txt2 = 'S'
         txt3 = 'N1'
+        txt4 = 'E'
+        txt5 = 'B'
         font_2 = wx.Font(18, wx.DEFAULT, wx.NORMAL, wx.LIGHT)
         
-        self.btn1 = wx.Button(self, -1, txt1, (200, 195), (25, 25))
+        self.btn1 = wx.Button(self, -1, txt1, (200, 195), (35, 35))
         self.btn1.SetFont(font_2)
-        self.btn2 = wx.Button(self, -1, txt2, (235, 195), (25, 25))
+        self.btn2 = wx.Button(self, -1, txt2, (245, 195), (35, 35))
         self.btn2.SetFont(font_2)
-        self.btn3 = wx.Button(self, -1, txt3, (270, 195), (25, 25))
+        self.btn3 = wx.Button(self, -1, txt3, (290, 195), (35, 35))
         self.btn3.SetFont(font_2)
+        self.btn4 = wx.Button(self, -1, txt4, (335, 195), (35, 35))
+        self.btn4.SetFont(font_2)
+        self.btn5 = wx.Button(self, -1, txt5, (380, 195), (35, 35))
+        self.btn5.SetFont(font_2)
 
         self.btn = wx.Button(self, -1, 'Return', (50, 480))
 
@@ -593,10 +616,92 @@ class Naruto(wx.Panel):
     def __init__(self, parent):
         
         wx.Panel.__init__(self, parent)
-        # pick a .jpg file you have in the working folder
         image = 'Naruto_Game.png'
         self.png = wx.StaticBitmap(self, -1, wx.Bitmap(image, wx.BITMAP_TYPE_ANY))
+        self.btn = wx.Button(self, -1, 'Return', (700, 480))
+        self.btn2 = wx.Button(self, -1, 'Next Page', (700, 280))
+        self.btn3 = wx.Button(self, -1, 'i', (700, 130))
+
+        self.btn3.Bind(wx.EVT_BUTTON,self.info)
+
+    def info(self,event):
+        wx.MessageBox("These images used are from the atual anime/game that they are from so they will be copyrighted (but I'm using these in the fair use clause)", 'Info',
+                      wx.OK | wx.ICON_EXCLAMATION)
+
+class Sasuke(wx.Panel):
+    
+    def __init__(self, parent):
         
+        wx.Panel.__init__(self, parent)
+        image = 'Sasuke_Game.png'
+        self.png = wx.StaticBitmap(self, -1, wx.Bitmap(image, wx.BITMAP_TYPE_ANY))
+        self.btn = wx.Button(self, -1, 'Return', (700, 480))
+        self.btn2 = wx.Button(self, -1, 'Next Page', (700, 280))
+        self.btn3 = wx.Button(self, -1, 'Previous Page', (700, 180))
+        self.btn4 = wx.Button(self, -1, 'i', (700, 130))
+
+        self.btn4.Bind(wx.EVT_BUTTON,self.info)
+
+    def info(self,event):
+        wx.MessageBox("These images used are from the atual anime/game that they are from so they will be copyrighted (but I'm using these in the fair use clause)", 'Info',
+                      wx.OK | wx.ICON_EXCLAMATION)
+
+class Natsu(wx.Panel):
+    
+    def __init__(self, parent):
+        
+        wx.Panel.__init__(self, parent)
+        image = 'Natsu_Game.png'
+        self.png = wx.StaticBitmap(self, -1, wx.Bitmap(image, wx.BITMAP_TYPE_ANY))
+        self.btn = wx.Button(self, -1, 'Return', (700, 480))
+        self.btn2 = wx.Button(self, -1, 'Next Page', (700, 280))
+        self.btn3 = wx.Button(self, -1, 'Previous Page', (700, 180))
+        self.btn4 = wx.Button(self, -1, 'i', (700, 130))
+
+        self.btn4.Bind(wx.EVT_BUTTON,self.info)
+
+    def info(self,event):
+        wx.MessageBox("These images used are from the atual anime/game that they are from so they will be copyrighted (but I'm using these in the fair use clause)", 'Info',
+                      wx.OK | wx.ICON_EXCLAMATION)
+
+class Erza(wx.Panel):
+    
+    def __init__(self, parent):
+        
+        wx.Panel.__init__(self, parent)
+        image = 'Erza_Game.png'
+        self.png = wx.StaticBitmap(self, -1, wx.Bitmap(image, wx.BITMAP_TYPE_ANY))
+        self.btn = wx.Button(self, -1, 'Return', (700, 480))
+        self.btn2 = wx.Button(self, -1, 'Next Page', (700, 280))
+        self.btn3 = wx.Button(self, -1, 'Previous Page', (700, 180))
+        self.btn4 = wx.Button(self, -1, 'i', (700, 130))
+
+        self.btn4.Bind(wx.EVT_BUTTON,self.info)
+
+    def info(self,event):
+        wx.MessageBox("These images used are from the atual anime/game that they are from so they will be copyrighted (but I'm using these in the fair use clause)", 'Info',
+                      wx.OK | wx.ICON_EXCLAMATION)
+
+class Bayo(wx.Panel):
+    
+    def __init__(self, parent):
+        
+        wx.Panel.__init__(self, parent)
+        image = 'Bayo_Game.png'
+        self.png = wx.StaticBitmap(self, -1, wx.Bitmap(image, wx.BITMAP_TYPE_ANY))
+        self.btn = wx.Button(self, -1, 'Return', (700, 480))
+        self.btn2 = wx.Button(self, -1, 'Next Page', (700, 280))
+        self.btn3 = wx.Button(self, -1, 'Previous Page', (700, 180))
+        self.btn4 = wx.Button(self, -1, 'i', (700, 130))
+
+        self.btn4.Bind(wx.EVT_BUTTON,self.info)
+
+    def info(self,event):
+        wx.MessageBox("These images used are from the atual anime/game that they are from so they will be copyrighted (but I'm using these in the fair use clause)", 'Info',
+                      wx.OK | wx.ICON_EXCLAMATION)
+
+
+
 class Program(wx.Frame):
 
     def __init__(self):
@@ -782,11 +887,45 @@ class Program(wx.Frame):
         sizer.Add(self.panel_XVIII, 1, wx.EXPAND)
         self.panel_XVIII.btn.Bind(wx.EVT_BUTTON, self.show_panel_XVII)
         self.panel_XVIII.btn1.Bind(wx.EVT_BUTTON, self.show_panel_XIX)
+        self.panel_XVIII.btn2.Bind(wx.EVT_BUTTON, self.show_panel_XX)
+        self.panel_XVIII.btn3.Bind(wx.EVT_BUTTON, self.show_panel_XXI)
+        self.panel_XVIII.btn4.Bind(wx.EVT_BUTTON, self.show_panel_XXII)
+        self.panel_XVIII.btn5.Bind(wx.EVT_BUTTON, self.show_panel_XXIII)
         self.panel_XVIII.Hide()
 
         self.panel_XIX = Naruto(self)
         sizer.Add(self.panel_XIX, 1, wx.EXPAND)
+        self.panel_XIX.btn.Bind(wx.EVT_BUTTON, self.show_panel_XVIII)
+        self.panel_XIX.btn2.Bind(wx.EVT_BUTTON, self.show_panel_XX)
         self.panel_XIX.Hide()
+
+        self.panel_XX = Sasuke(self)
+        sizer.Add(self.panel_XX, 1, wx.EXPAND)
+        self.panel_XX.btn.Bind(wx.EVT_BUTTON, self.show_panel_XVIII)
+        self.panel_XX.btn2.Bind(wx.EVT_BUTTON, self.show_panel_XXI)
+        self.panel_XX.btn3.Bind(wx.EVT_BUTTON, self.show_panel_XIX)
+        self.panel_XX.Hide()
+
+        self.panel_XXI = Natsu(self)
+        sizer.Add(self.panel_XXI, 1, wx.EXPAND)
+        self.panel_XXI.btn.Bind(wx.EVT_BUTTON, self.show_panel_XVIII)
+        self.panel_XXI.btn2.Bind(wx.EVT_BUTTON, self.show_panel_XXII)
+        self.panel_XXI.btn3.Bind(wx.EVT_BUTTON, self.show_panel_XX)
+        self.panel_XXI.Hide()
+
+        self.panel_XXII = Erza(self)
+        sizer.Add(self.panel_XXII, 1, wx.EXPAND)
+        self.panel_XXII.btn.Bind(wx.EVT_BUTTON, self.show_panel_XVIII)
+        self.panel_XXII.btn2.Bind(wx.EVT_BUTTON, self.show_panel_XXIII)
+        self.panel_XXII.btn3.Bind(wx.EVT_BUTTON, self.show_panel_XXI)
+        self.panel_XXII.Hide()
+
+        self.panel_XXIII = Bayo(self)
+        sizer.Add(self.panel_XXIII, 1, wx.EXPAND)
+        self.panel_XXIII.btn.Bind(wx.EVT_BUTTON, self.show_panel_XVIII)
+        #self.panel_XXIII.btn2.Bind(wx.EVT_BUTTON, self.show_panel_XXIV)
+        self.panel_XXIII.btn3.Bind(wx.EVT_BUTTON, self.show_panel_XXII)
+        self.panel_XXIII.Hide()
 
 
 
@@ -839,6 +978,10 @@ class Program(wx.Frame):
             self.panel_XVII.Hide()
             self.panel_XVIII.Hide()
             self.panel_XIX.Hide()
+            self.panel_XX.Hide()
+            self.panel_XXI.Hide()
+            self.panel_XXII.Hide()
+            self.panel_XXIII.Hide()
             self.Layout()
         ans = wx.MessageDialog(self, 'Are You Sure You Want To Log Out?', 'Log Out',
                       wx.YES_NO | wx.ICON_EXCLAMATION)
@@ -866,6 +1009,10 @@ class Program(wx.Frame):
             self.panel_XVII.Hide()
             self.panel_XVIII.Hide()
             self.panel_XIX.Hide()
+            self.panel_XX.Hide()
+            self.panel_XXI.Hide()
+            self.panel_XXII.Hide()
+            self.panel_XXIII.Hide()
 
     def show_panel_one(self, event):
         pygame.mixer.music.stop()
@@ -888,6 +1035,10 @@ class Program(wx.Frame):
         self.panel_XVII.Hide()
         self.panel_XVIII.Hide()
         self.panel_XIX.Hide()
+        self.panel_XX.Hide()
+        self.panel_XXI.Hide()
+        self.panel_XXII.Hide()
+        self.panel_XXIII.Hide()
         pygame.mixer.init()
         pygame.mixer.music.load(intro[0])
         pygame.mixer.music.play()
@@ -914,6 +1065,10 @@ class Program(wx.Frame):
         self.panel_XVII.Hide()
         self.panel_XVIII.Hide()
         self.panel_XIX.Hide()
+        self.panel_XX.Hide()
+        self.panel_XXI.Hide()
+        self.panel_XXII.Hide()
+        self.panel_XXIII.Hide()
         self.panel_four.t2.Clear()
         self.panel_four.t3.Clear()
         self.panel_four.t4.Clear()
@@ -944,6 +1099,10 @@ class Program(wx.Frame):
         self.panel_XVII.Hide()
         self.panel_XVIII.Hide()
         self.panel_XIX.Hide()
+        self.panel_XX.Hide()
+        self.panel_XXI.Hide()
+        self.panel_XXII.Hide()
+        self.panel_XXIII.Hide()
         self.panel_four.t2.Clear()
         self.panel_four.t3.Clear()
         self.panel_four.t4.Clear()
@@ -971,6 +1130,10 @@ class Program(wx.Frame):
         self.panel_XVII.Hide()
         self.panel_XVIII.Hide()
         self.panel_XIX.Hide()
+        self.panel_XX.Hide()
+        self.panel_XXI.Hide()
+        self.panel_XXII.Hide()
+        self.panel_XXIII.Hide()
         self.Layout()
 
     def show_panel_four(self, event):
@@ -993,6 +1156,10 @@ class Program(wx.Frame):
         self.panel_XVII.Hide()
         self.panel_XVIII.Hide()
         self.panel_XIX.Hide()
+        self.panel_XX.Hide()
+        self.panel_XXI.Hide()
+        self.panel_XXII.Hide()
+        self.panel_XXIII.Hide()
         self.Layout()
 
     def show_panel_five(self, event):
@@ -1052,6 +1219,10 @@ class Program(wx.Frame):
                             self.panel_XVII.Hide()
                             self.panel_XVIII.Hide()
                             self.panel_XIX.Hide()
+                            self.panel_XX.Hide()
+                            self.panel_XXI.Hide()
+                            self.panel_XXII.Hide()
+                            self.panel_XXIII.Hide()
                             self.panel_four.t2.Clear()
                             self.panel_four.t3.Clear()
                             self.panel_four.t4.Clear()
@@ -1110,6 +1281,10 @@ class Program(wx.Frame):
                         self.panel_XVII.Hide()
                         self.panel_XVIII.Hide()
                         self.panel_XIX.Hide()
+                        self.panel_XX.Hide()
+                        self.panel_XXI.Hide()
+                        self.panel_XXII.Hide()
+                        self.panel_XXIII.Hide()
                         self.panel_four.t2.Clear()
                         self.panel_four.t3.Clear()
                         self.panel_four.t4.Clear()
@@ -1155,6 +1330,10 @@ class Program(wx.Frame):
         self.panel_XVII.Hide()
         self.panel_XVIII.Hide()
         self.panel_XIX.Hide()
+        self.panel_XX.Hide()
+        self.panel_XXI.Hide()
+        self.panel_XXII.Hide()
+        self.panel_XXIII.Hide()
         self.panel_four.t2.Clear()
         self.panel_four.t3.Clear()
         self.panel_four.t4.Clear()
@@ -1186,6 +1365,10 @@ class Program(wx.Frame):
         self.panel_XVII.Hide()
         self.panel_XVIII.Hide()
         self.panel_XIX.Hide()
+        self.panel_XX.Hide()
+        self.panel_XXI.Hide()
+        self.panel_XXII.Hide()
+        self.panel_XXIII.Hide()
         self.panel_four.t2.Clear()
         self.panel_four.t3.Clear()
         self.panel_four.t4.Clear()
@@ -1213,6 +1396,10 @@ class Program(wx.Frame):
         self.panel_XVII.Hide()
         self.panel_XVIII.Hide()
         self.panel_XIX.Hide()
+        self.panel_XX.Hide()
+        self.panel_XXI.Hide()
+        self.panel_XXII.Hide()
+        self.panel_XXIII.Hide()
         self.Layout()
 
     def show_panel_seven(self, event):
@@ -1235,6 +1422,10 @@ class Program(wx.Frame):
         self.panel_XVII.Hide()
         self.panel_XVIII.Hide()
         self.panel_XIX.Hide()
+        self.panel_XX.Hide()
+        self.panel_XXI.Hide()
+        self.panel_XXII.Hide()
+        self.panel_XXIII.Hide()
         self.Layout()
 
     def show_panel_eight(self, event):
@@ -1256,7 +1447,11 @@ class Program(wx.Frame):
         self.panel_XVI.Hide()
         self.panel_XVII.Hide()
         self.panel_XVIII.Hide()
-        self.panel_XIX.Hide()
+        self.panel_XIX.Hide()#
+        self.panel_XX.Hide()
+        self.panel_XXI.Hide()
+        self.panel_XXII.Hide()
+        self.panel_XXIII.Hide()
         self.Layout()
 
     def show_panel_nine(self, event):
@@ -1279,6 +1474,10 @@ class Program(wx.Frame):
         self.panel_XVII.Hide()
         self.panel_XVIII.Hide()
         self.panel_XIX.Hide()
+        self.panel_XX.Hide()
+        self.panel_XXI.Hide()
+        self.panel_XXII.Hide()
+        self.panel_XXIII.Hide()
         self.Layout()
 
     def show_panel_X(self, event):
@@ -1301,6 +1500,10 @@ class Program(wx.Frame):
         self.panel_XVII.Hide()
         self.panel_XVIII.Hide()
         self.panel_XIX.Hide()
+        self.panel_XX.Hide()
+        self.panel_XXI.Hide()
+        self.panel_XXII.Hide()
+        self.panel_XXIII.Hide()
         self.Layout()
 
     def show_panel_XI(self, event):
@@ -1324,6 +1527,10 @@ class Program(wx.Frame):
         self.panel_XVII.Hide()
         self.panel_XVIII.Hide()
         self.panel_XIX.Hide()
+        self.panel_XX.Hide()
+        self.panel_XXI.Hide()
+        self.panel_XXII.Hide()
+        self.panel_XXIII.Hide()
         pygame.mixer.init()
         pygame.mixer.music.load(summon[0])
         pygame.mixer.music.play()
@@ -1350,6 +1557,10 @@ class Program(wx.Frame):
         self.panel_XVII.Hide()
         self.panel_XVIII.Hide()
         self.panel_XIX.Hide()
+        self.panel_XX.Hide()
+        self.panel_XXI.Hide()
+        self.panel_XXII.Hide()
+        self.panel_XXIII.Hide()
         pygame.mixer.init()
         pygame.mixer.music.load(craft[0])
         pygame.mixer.music.play()
@@ -1377,6 +1588,10 @@ class Program(wx.Frame):
         self.panel_XVII.Hide()
         self.panel_XVIII.Hide()
         self.panel_XIX.Hide()
+        self.panel_XX.Hide()
+        self.panel_XXI.Hide()
+        self.panel_XXII.Hide()
+        self.panel_XXIII.Hide()
         pygame.mixer.init()
         pygame.mixer.music.load(main_menu[1])
         pygame.mixer.music.play()
@@ -1402,6 +1617,10 @@ class Program(wx.Frame):
         self.panel_XVII.Hide()
         self.panel_XVIII.Hide()
         self.panel_XIX.Hide()
+        self.panel_XX.Hide()
+        self.panel_XXI.Hide()
+        self.panel_XXII.Hide()
+        self.panel_XXIII.Hide()
         self.Layout()
 
     def show_panel_XV(self, event):
@@ -1425,6 +1644,10 @@ class Program(wx.Frame):
         self.panel_XVII.Hide()
         self.panel_XVIII.Hide()
         self.panel_XIX.Hide()
+        self.panel_XX.Hide()
+        self.panel_XXI.Hide()
+        self.panel_XXII.Hide()
+        self.panel_XXIII.Hide()
         pygame.mixer.init()
         random.shuffle(story)
         pygame.mixer.music.load(story[0])
@@ -1452,6 +1675,10 @@ class Program(wx.Frame):
         self.panel_XVII.Hide()
         self.panel_XVIII.Hide()
         self.panel_XIX.Hide()
+        self.panel_XX.Hide()
+        self.panel_XXI.Hide()
+        self.panel_XXII.Hide()
+        self.panel_XXIII.Hide()
         self.Layout()
 
     def show_panel_XVII(self, event):
@@ -1474,6 +1701,10 @@ class Program(wx.Frame):
         self.panel_XVI.Hide()
         self.panel_XVIII.Hide()
         self.panel_XIX.Hide()
+        self.panel_XX.Hide()
+        self.panel_XXI.Hide()
+        self.panel_XXII.Hide()
+        self.panel_XXIII.Hide()
         self.Layout()
 
     def show_panel_XVIII(self, event):
@@ -1496,6 +1727,10 @@ class Program(wx.Frame):
         self.panel_XVI.Hide()
         self.panel_XVII.Hide()
         self.panel_XIX.Hide()
+        self.panel_XX.Hide()
+        self.panel_XXI.Hide()
+        self.panel_XXII.Hide()
+        self.panel_XXIII.Hide()
         self.Layout()
 
     def show_panel_XIX(self, event):
@@ -1518,6 +1753,115 @@ class Program(wx.Frame):
         self.panel_XVI.Hide()
         self.panel_XVII.Hide()
         self.panel_XVIII.Hide()
+        self.panel_XX.Hide()
+        self.panel_XXI.Hide()
+        self.panel_XXII.Hide()
+        self.panel_XXIII.Hide()
+        self.Layout()
+
+
+    def show_panel_XX(self, event):
+        self.panel_XX.Show()
+        self.panel_two.Hide()
+        self.panel_one.Hide()
+        self.panel_three.Hide()
+        self.panel_four.Hide()
+        self.panel_five.Hide()
+        self.panel_six.Hide()
+        self.panel_seven.Hide()
+        self.panel_eight.Hide()
+        self.panel_nine.Hide()
+        self.panel_X.Hide()
+        self.panel_XI.Hide()
+        self.panel_XII.Hide()
+        self.panel_XIII.Hide()
+        self.panel_XIV.Hide()
+        self.panel_XV.Hide()
+        self.panel_XVI.Hide()
+        self.panel_XVII.Hide()
+        self.panel_XVIII.Hide()
+        self.panel_XIX.Hide()
+        self.panel_XXI.Hide()
+        self.panel_XXII.Hide()
+        self.panel_XXIII.Hide()
+        self.Layout()
+
+    def show_panel_XXI(self, event):
+        self.panel_XXI.Show()
+        self.panel_two.Hide()
+        self.panel_one.Hide()
+        self.panel_three.Hide()
+        self.panel_four.Hide()
+        self.panel_five.Hide()
+        self.panel_six.Hide()
+        self.panel_seven.Hide()
+        self.panel_eight.Hide()
+        self.panel_nine.Hide()
+        self.panel_X.Hide()
+        self.panel_XI.Hide()
+        self.panel_XII.Hide()
+        self.panel_XIII.Hide()
+        self.panel_XIV.Hide()
+        self.panel_XV.Hide()
+        self.panel_XVI.Hide()
+        self.panel_XVII.Hide()
+        self.panel_XVIII.Hide()
+        self.panel_XIX.Hide()
+        self.panel_XX.Hide()
+        self.panel_XXII.Hide()
+        self.panel_XXIII.Hide()
+        self.Layout()
+
+    def show_panel_XXII(self, event):
+        self.panel_XXII.Show()
+        self.panel_two.Hide()
+        self.panel_one.Hide()
+        self.panel_three.Hide()
+        self.panel_four.Hide()
+        self.panel_five.Hide()
+        self.panel_six.Hide()
+        self.panel_seven.Hide()
+        self.panel_eight.Hide()
+        self.panel_nine.Hide()
+        self.panel_X.Hide()
+        self.panel_XI.Hide()
+        self.panel_XII.Hide()
+        self.panel_XIII.Hide()
+        self.panel_XIV.Hide()
+        self.panel_XV.Hide()
+        self.panel_XVI.Hide()
+        self.panel_XVII.Hide()
+        self.panel_XVIII.Hide()
+        self.panel_XIX.Hide()
+        self.panel_XX.Hide()
+        self.panel_XXI.Hide()
+        self.panel_XXIII.Hide()
+        self.Layout()
+
+    def show_panel_XXIII(self, event):
+        self.panel_XXIII.Show()
+        self.panel_two.Hide()
+        self.panel_one.Hide()
+        self.panel_three.Hide()
+        self.panel_four.Hide()
+        self.panel_five.Hide()
+        self.panel_six.Hide()
+        self.panel_seven.Hide()
+        self.panel_eight.Hide()
+        self.panel_nine.Hide()
+        self.panel_X.Hide()
+        self.panel_XI.Hide()
+        self.panel_XII.Hide()
+        self.panel_XIII.Hide()
+        self.panel_XIV.Hide()
+        self.panel_XV.Hide()
+        self.panel_XVI.Hide()
+        self.panel_XVII.Hide()
+        self.panel_XVIII.Hide()
+        self.panel_XIX.Hide()
+        self.panel_XX.Hide()
+        self.panel_XXI.Hide()
+        self.panel_XXII.Hide()
         self.Layout()
         
     def OnAbout(self, e):
