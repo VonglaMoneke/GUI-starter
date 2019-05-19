@@ -372,13 +372,18 @@ class Player2Player(wx.Panel):
 class Summon(wx.Panel):
 
     def __init__(self, parent):
+        global credit
         
         wx.Panel.__init__(self, parent)
         txt = 'Summon'
+        txt2 = 'Credits:' + str(credit)
         
         font = wx.Font(42, wx.DEFAULT, wx.ITALIC, wx.BOLD)
+        font2 = wx.Font(20, wx.DEFAULT, wx.ITALIC, wx.LIGHT)
         
         wx.StaticText(self, -1, txt, (235, 60)).SetFont(font)
+        self.text = wx.StaticText(self, -1, txt2, (620, 10))
+        self.text.SetFont(font2)
         txt1 = '''Disc'''
         txt2 = '''Card'''
         font_2 = wx.Font(15, wx.DEFAULT, wx.NORMAL, wx.LIGHT)
@@ -401,6 +406,15 @@ class Summon(wx.Panel):
         self.cb2.SetFont(font_3)
 
         self.btn = wx.Button(self, -1, 'Return', (50, 480))
+        self.btn4 = wx.Button(self, -1, 'i', (700, 130), (25,25))
+
+        self.btn4.Bind(wx.EVT_BUTTON,self.info)
+
+    def info(self,event):
+        wx.MessageBox('''This is the Summoning System For the VOID where you can receive Characters and Ability Cards.
+The price to Single summon is 100 Credits.
+The price to Multi Summon is 290 Credits , for 3 items (a small discount).''', 'Summon Info',
+                      wx.OK | wx.ICON_QUESTION)
         
 
     def onChecked(self, event):      # only one check box at a time
@@ -467,24 +481,24 @@ class SingleDisc(wx.Panel):
         if self.count == TASK_RANGE:
 
             self.timer.Stop()
-            x = random.randrange(0,4)
+            x = random.randrange(0,5)
             if chars[x] in owned_char:
-                credit = credit+50
+                credit = credit+25
                 char = str(chars[x])
                 credit1 = str(credit)
                 lb = 'Already owned ' + char
                 lb2 = 'You have been compensated'
-                lb_ = '50 credits'
+                lb_ = '25 credits'
                 lb3 = 'New total is ' + credit1
 
                 total = lb + '\n' + lb2 + '\n' + lb_ + '\n' + lb3
                 self.text.SetLabel(total)
-                return credit
+                
 
             else:
                 char = str(chars[x])
                 owned_char.append(chars[x])
-                owned1 = ' '.join(owned_char)
+                owned1 = ', '.join(owned_char)
                 tx = 'New Character added ' + char
                 tx2= 'You Own ' + owned1
                 total1 = tx + '\n' + tx2
@@ -546,16 +560,16 @@ class MultiDisc(wx.Panel):
         if self.count == TASK_RANGE1:
 
             self.timer.Stop()
-            x = random.randrange(0,4)
-            y = random.randrange(0,4)
-            z = random.randrange(0,4)
+            x = random.randrange(0,5)
+            y = random.randrange(0,5)
+            z = random.randrange(0,5)
             if chars[x] in owned_char:
-                credit = credit+50
+                credit = credit+25
                 char = str(chars[x])
                 credit1 = str(credit)
                 lb = 'Already owned ' + char
                 lb2 = 'You have been compensated'
-                lb_ = '50 credits'
+                lb_ = '25 credits'
                 lb3 = 'New total is ' + credit1
                 
 
@@ -565,55 +579,55 @@ class MultiDisc(wx.Panel):
             else:
                 char0 = str(chars[x])
                 owned_char.append(chars[x])
-                owned1 = ' '.join(owned_char)
+                owned1 = ', '.join(owned_char)
                 tx = 'New Character added ' + char0
                 tx2= 'You Own ' + owned1
                 total1 = tx + '\n' + tx2
                 self.text.SetLabel(total1)
                 
             if chars[y] in owned_char:
-                credit = credit+50
+                credit = credit+25
                 char1 = str(chars[y])
                 credit1 = str(credit)
                 lb = 'Already owned ' + char1
                 lb2 = 'You have been compensated'
-                lb_ = '50 credits'
+                lb_ = '25 credits'
                 lb3 = 'New total is ' + credit1
                 
 
                 total2 = lb + '\n' + lb2 + '\n' + lb_ + '\n' + lb3
-                wx.StaticText(self, -1, total2, (345, 370))
+                self.text1 = wx.StaticText(self, -1, total2, (345, 370))
 
             else:
                 char2 = str(chars[y])
                 owned_char.append(chars[y])
-                owned1 = ' '.join(owned_char)
+                owned1 = ', '.join(owned_char)
                 tx = 'New Character added ' + char2
                 tx2= 'You Own ' + owned1
                 total3 = tx + '\n' + tx2
-                wx.StaticText(self, -1, total3, (345, 370))
+                self.text1 = wx.StaticText(self, -1, total3, (345, 370))
 
             if chars[z] in owned_char:
-                credit = credit+50
+                credit = credit+25
                 char3 = str(chars[z])
                 credit1 = str(credit)
                 lb = 'Already owned ' + char3
                 lb2 = 'You have been compensated'
-                lb_ = '50 credits'
+                lb_ = '25 credits'
                 lb3 = 'New total is ' + credit1
                 
 
                 total = lb + '\n' + lb2 + '\n' + lb_ + '\n' + lb3
-                wx.StaticText(self, -1, total, (515, 370))
+                self.text2 = wx.StaticText(self, -1, total, (515, 370))
 
             else:
                 char4 = str(chars[z])
                 owned_char.append(chars[z])
-                owned1 = ' '.join(owned_char)
+                owned1 = ', '.join(owned_char)
                 tx = 'New Character added ' + char4
                 tx2= 'You Own ' + owned1
                 total1 = tx + '\n' + tx2
-                wx.StaticText(self, -1, total1, (515, 370))
+                self.text2 = wx.StaticText(self, -1, total1, (515, 370))
 
         
 class SingleCard(wx.Panel):
@@ -671,12 +685,12 @@ class SingleCard(wx.Panel):
             self.timer.Stop()
             x = random.randrange(0,4)
             if cards[x] in owned_cards:
-                credit = credit+50
+                credit = credit+25
                 card = str(cards[x])
                 credit1 = str(credit)
                 lb = 'Already owned ' + card
                 lb2 = 'You have been compensated'
-                lb_ = '50 credits'
+                lb_ = '25 credits'
                 lb3 = 'New total is ' + credit1
 
                 total = lb + '\n' + lb2 + '\n' + lb_ + '\n' + lb3
@@ -685,7 +699,7 @@ class SingleCard(wx.Panel):
             else:
                 card = str(cards[x])
                 owned_cards.append(cards[x])
-                owned1 = ' '.join(owned_cards)
+                owned1 = ', '.join(owned_cards)
                 tx = 'New Character added ' + card
                 tx2= 'You Own ' + owned1
                 total1 = tx + '\n' + tx2
@@ -749,12 +763,12 @@ class MultiCard(wx.Panel):
             y = random.randrange(0,4)
             z = random.randrange(0,4)
             if cards[x] in owned_cards:
-                credit = credit+50
+                credit = credit+25
                 card = str(cards[x])
                 credit1 = str(credit)
                 lb = 'Already owned ' + card
                 lb2 = 'You have been compensated'
-                lb_ = '50 credits'
+                lb_ = '25 credits'
                 lb3 = 'New total is ' + credit1
                 
 
@@ -764,55 +778,55 @@ class MultiCard(wx.Panel):
             else:
                 card0 = str(cards[x])
                 owned_cards.append(cards[x])
-                owned1 = ' '.join(owned_cards)
+                owned1 = ', '.join(owned_cards)
                 tx = 'New Ability Card received ' + card0
                 tx2= 'You Own ' + owned1
                 total1 = tx + '\n' + tx2
                 self.text.SetLabel(total1)
                 
             if cards[y] in owned_cards:
-                credit = credit+50
+                credit = credit+25
                 card1 = str(cards[y])
                 credit1 = str(credit)
                 lb = 'Already owned ' + card1
                 lb2 = 'You have been compensated'
-                lb_ = '50 credits'
+                lb_ = '25 credits'
                 lb3 = 'New total is ' + credit1
                 
 
                 total2 = lb + '\n' + lb2 + '\n' + lb_ + '\n' + lb3
-                wx.StaticText(self, -1, total2, (345, 370))
+                self.text1 = wx.StaticText(self, -1, total2, (345, 370))
 
             else:
                 card2 = str(cards[y])
                 owned_cards.append(cards[y])
-                owned1 = ' '.join(owned_cards)
+                owned1 = ', '.join(owned_cards)
                 tx = 'New Ability Card received ' + card2
                 tx2= 'You Own ' + owned1
                 total3 = tx + '\n' + tx2
-                wx.StaticText(self, -1, total3, (345, 370))
+                self.text1 = wx.StaticText(self, -1, total3, (345, 370))
 
             if cards[z] in owned_cards:
-                credit = credit+50
+                credit = credit+25
                 card3 = str(cards[z])
                 credit1 = str(credit)
                 lb = 'Already owned ' + card3
                 lb2 = 'You have been compensated'
-                lb_ = '50 credits'
+                lb_ = '25 credits'
                 lb3 = 'New total is ' + credit1
                 
 
                 total = lb + '\n' + lb2 + '\n' + lb_ + '\n' + lb3
-                wx.StaticText(self, -1, total, (545, 370))
+                self.text2 = wx.StaticText(self, -1, total, (545, 370))
 
             else:
                 card4 = str(cards[z])
                 owned_cards.append(cards[z])
-                owned1 = ' '.join(owned_cards)
+                owned1 = ', '.join(owned_cards)
                 tx = 'New Ability Card received ' + card4
                 tx2= 'You Own ' + owned1
                 total1 = tx + '\n' + tx2
-                wx.StaticText(self, -1, total1, (545, 370))
+                self.text2 = wx.StaticText(self, -1, total1, (545, 370))
 
 class Craft(wx.Panel):
 
@@ -1069,7 +1083,7 @@ class Naruto(wx.Panel):
         self.png = wx.StaticBitmap(self, -1, wx.Bitmap(image, wx.BITMAP_TYPE_ANY))
         self.btn = wx.Button(self, -1, 'Return', (700, 480))
         self.btn2 = wx.Button(self, -1, 'Next Page', (700, 280))
-        self.btn3 = wx.Button(self, -1, 'i', (700, 130))
+        self.btn3 = wx.Button(self, -1, 'i', (700, 130), (25,25))
 
         self.btn3.Bind(wx.EVT_BUTTON,self.info)
 
@@ -1087,7 +1101,7 @@ class Sasuke(wx.Panel):
         self.btn = wx.Button(self, -1, 'Return', (700, 480))
         self.btn2 = wx.Button(self, -1, 'Next Page', (700, 280))
         self.btn3 = wx.Button(self, -1, 'Previous Page', (700, 180))
-        self.btn4 = wx.Button(self, -1, 'i', (700, 130))
+        self.btn4 = wx.Button(self, -1, 'i', (700, 130), (25,25))
 
         self.btn4.Bind(wx.EVT_BUTTON,self.info)
 
@@ -1105,7 +1119,7 @@ class Natsu(wx.Panel):
         self.btn = wx.Button(self, -1, 'Return', (700, 480))
         self.btn2 = wx.Button(self, -1, 'Next Page', (700, 280))
         self.btn3 = wx.Button(self, -1, 'Previous Page', (700, 180))
-        self.btn4 = wx.Button(self, -1, 'i', (700, 130))
+        self.btn4 = wx.Button(self, -1, 'i', (700, 130), (25,25))
 
         self.btn4.Bind(wx.EVT_BUTTON,self.info)
 
@@ -1123,7 +1137,7 @@ class Erza(wx.Panel):
         self.btn = wx.Button(self, -1, 'Return', (700, 480))
         self.btn2 = wx.Button(self, -1, 'Next Page', (700, 280))
         self.btn3 = wx.Button(self, -1, 'Previous Page', (700, 180))
-        self.btn4 = wx.Button(self, -1, 'i', (700, 130))
+        self.btn4 = wx.Button(self, -1, 'i', (700, 130), (25,25))
 
         self.btn4.Bind(wx.EVT_BUTTON,self.info)
 
@@ -1141,7 +1155,7 @@ class Bayo(wx.Panel):
         self.btn = wx.Button(self, -1, 'Return', (700, 480))
         self.btn2 = wx.Button(self, -1, 'Next Page', (700, 280))
         self.btn3 = wx.Button(self, -1, 'Previous Page', (700, 180))
-        self.btn4 = wx.Button(self, -1, 'i', (700, 130))
+        self.btn4 = wx.Button(self, -1, 'i', (700, 130), (25,25))
 
         self.btn4.Bind(wx.EVT_BUTTON,self.info)
 
@@ -1302,22 +1316,22 @@ class Program(wx.Frame):
 
         self.panel_1 = SingleDisc(self)
         sizer.Add(self.panel_1, 1, wx.EXPAND)
-        self.panel_1.btn.Bind(wx.EVT_BUTTON, self.show_panel_XI)
+        self.panel_1.btn.Bind(wx.EVT_BUTTON, self.show_panel_XI1)
         self.panel_1.Hide()
 
         self.panel_2 = MultiDisc(self)
         sizer.Add(self.panel_2, 1, wx.EXPAND)
-        self.panel_2.btn.Bind(wx.EVT_BUTTON, self.show_panel_XI)
+        self.panel_2.btn.Bind(wx.EVT_BUTTON, self.show_panel_XI2)
         self.panel_2.Hide()
 
         self.panel_3 = SingleCard(self)
         sizer.Add(self.panel_3, 1, wx.EXPAND)
-        self.panel_3.btn.Bind(wx.EVT_BUTTON, self.show_panel_XI)
+        self.panel_3.btn.Bind(wx.EVT_BUTTON, self.show_panel_XI1)
         self.panel_3.Hide()
 
         self.panel_4 = MultiCard(self)
         sizer.Add(self.panel_4, 1, wx.EXPAND)
-        self.panel_4.btn.Bind(wx.EVT_BUTTON, self.show_panel_XI)
+        self.panel_4.btn.Bind(wx.EVT_BUTTON, self.show_panel_XI3)
         self.panel_4.Hide()
 
         self.panel_XII = Craft(self)
@@ -1514,6 +1528,7 @@ class Program(wx.Frame):
             
 
     def DiscSummon(self,event):
+        global credit
         def show_panel_single_discsummon(self, event):
             self.panel_1.Show()
             self.panel_two.Hide()
@@ -1581,18 +1596,29 @@ class Program(wx.Frame):
             ret = ans.ShowModal()
             ans.Destroy()
             if ret == wx.ID_YES:
-                show_panel_single_discsummon(self,event)
+                if credit < 100:
+                    wx.MessageBox('Insufficient Funds', 'Credit Too Low',
+                                  wx.OK | wx.ICON_EXCLAMATION)
+                else:
+                    credit = credit - 100
+                    show_panel_single_discsummon(self,event)
         elif self.panel_XI.cb2.IsChecked():
             ans = wx.MessageDialog(self, 'Are You Sure You Want To Multi Disc Summon?', 'Summon',
                                    wx.YES_NO | wx.ICON_EXCLAMATION)
             ret = ans.ShowModal()
             ans.Destroy()
             if ret == wx.ID_YES:
-                show_panel_multi_discsummon(self,event)
+                if credit < 290:
+                    wx.MessageBox('Insufficient Funds', 'Credit Too Low',
+                                  wx.OK | wx.ICON_EXCLAMATION)
+                else:
+                    credit = credit - 290
+                    show_panel_multi_discsummon(self,event)
         else:
             wx.MessageBox('Single or Multi Have To Be Checked Before Summoning', 'Error',   
                           wx.OK | wx.ICON_ERROR)
     def CardSummon(self,event):
+        global credit
         def show_panel_single_cardsummon(self, event):
             self.panel_3.Show()
             self.panel_two.Hide()
@@ -1659,14 +1685,24 @@ class Program(wx.Frame):
             ret = ans.ShowModal()
             ans.Destroy()
             if ret == wx.ID_YES:
-                show_panel_single_cardsummon(self,event)
+                if credit < 100:
+                    wx.MessageBox('Insufficient Funds', 'Credit Too Low',
+                                  wx.OK | wx.ICON_EXCLAMATION)
+                else:
+                    credit = credit - 100
+                    show_panel_single_cardsummon(self,event)
         elif self.panel_XI.cb2.IsChecked():
             ans = wx.MessageDialog(self, 'Are You Sure You Want To Multi Card Summon?', 'Summon',
                                    wx.YES_NO | wx.ICON_EXCLAMATION)
             ret = ans.ShowModal()
             ans.Destroy()
             if ret == wx.ID_YES:
-                show_panel_multi_cardsummon(self,event)
+                if credit < 290:
+                    wx.MessageBox('Insufficient Funds', 'Credit Too Low',
+                                  wx.OK | wx.ICON_EXCLAMATION)
+                else:
+                    credit = credit - 290
+                    show_panel_multi_cardsummon(self,event)
         else:
             wx.MessageBox('Single or Multi Have To Be Checked Before Summoning', 'Error',   
                           wx.OK | wx.ICON_ERROR)
@@ -2250,7 +2286,10 @@ class Program(wx.Frame):
         self.Layout()
 
     def show_panel_XI(self, event):
+        global credit
         pygame.mixer.music.stop()
+        txt2 = 'Credits:' + str(credit)
+        self.panel_XI.text.SetLabel(txt2)
         self.panel_XI.Show()
         self.panel_two.Hide()
         self.panel_one.Hide()
@@ -2283,6 +2322,175 @@ class Program(wx.Frame):
         pygame.mixer.init()
         pygame.mixer.music.load(summon[0])
         pygame.mixer.music.play()
+        self.Layout()
+
+    def show_panel_XI1(self, event):
+        global credit
+        global owned_char
+        global owned_cards
+        txt2 = 'Credits:' + str(credit)
+        self.panel_XI.text.SetLabel(txt2)
+        self.panel_XI.Show()
+        self.panel_two.Hide()
+        self.panel_one.Hide()
+        self.panel_three.Hide()
+        self.panel_four.Hide()
+        self.panel_five.Hide()
+        self.panel_six.Hide()
+        self.panel_seven.Hide()
+        self.panel_eight.Hide()
+        self.panel_nine.Hide()
+        self.panel_X.Hide()
+        self.panel_XII.Hide()
+        self.panel_XIII.Hide()
+        self.panel_XIV.Hide()
+        self.panel_XV.Hide()
+        self.panel_XVI.Hide()
+        self.panel_XVII.Hide()
+        self.panel_XVIII.Hide()
+        self.panel_XIX.Hide()
+        self.panel_XX.Hide()
+        self.panel_XXI.Hide()
+        self.panel_XXII.Hide()
+        self.panel_XXIII.Hide()
+        self.panel_XXIV.Hide()
+        self.panel_XXV.Hide()
+        self.panel_1.Hide()
+        self.panel_2.Hide()
+        self.panel_3.Hide()
+        self.panel_4.Hide()
+        owned = ', '.join(owned_char)
+        owned1 = ', '.join(owned_cards)
+        tx= 'Characters Owned: ' + owned
+        tx2= 'Ability Cards Owned: ' + owned1
+        tx3= 'Total Credit: ' + str(credit)
+        total4 = tx + '\n' + tx2 + '\n' + tx3
+        self.panel_1.text.SetLabel(total4)
+        self.panel_2.text.SetLabel(total4)
+        self.panel_3.text.SetLabel(total4)
+        self.panel_4.text.SetLabel(total4)
+        self.panel_1.gauge.SetValue(0)
+        self.panel_2.gauge.SetValue(0)
+        self.panel_3.gauge.SetValue(0)
+        self.panel_4.gauge.SetValue(0)
+        self.panel_1.count = 0
+        self.panel_2.count = 0
+        self.panel_3.count = 0
+        self.panel_4.count = 0
+        self.Layout()
+
+    def show_panel_XI2(self, event):
+        global credit
+        global owned_char
+        global owned_cards
+        txt2 = 'Credits:' + str(credit)
+        self.panel_XI.text.SetLabel(txt2)
+        self.panel_XI.Show()
+        self.panel_two.Hide()
+        self.panel_one.Hide()
+        self.panel_three.Hide()
+        self.panel_four.Hide()
+        self.panel_five.Hide()
+        self.panel_six.Hide()
+        self.panel_seven.Hide()
+        self.panel_eight.Hide()
+        self.panel_nine.Hide()
+        self.panel_X.Hide()
+        self.panel_XII.Hide()
+        self.panel_XIII.Hide()
+        self.panel_XIV.Hide()
+        self.panel_XV.Hide()
+        self.panel_XVI.Hide()
+        self.panel_XVII.Hide()
+        self.panel_XVIII.Hide()
+        self.panel_XIX.Hide()
+        self.panel_XX.Hide()
+        self.panel_XXI.Hide()
+        self.panel_XXII.Hide()
+        self.panel_XXIII.Hide()
+        self.panel_XXIV.Hide()
+        self.panel_XXV.Hide()
+        self.panel_1.Hide()
+        self.panel_2.Hide()
+        self.panel_3.Hide()
+        self.panel_4.Hide()
+        owned = ', '.join(owned_char)
+        owned1 = ', '.join(owned_cards)
+        tx= 'Characters Owned: ' + owned
+        tx2= 'Ability Cards Owned: ' + owned1
+        tx3= 'Total Credit: ' + str(credit)
+        total4 = tx + '\n' + tx2 + '\n' + tx3
+        self.panel_1.text.SetLabel(total4)
+        self.panel_2.text.SetLabel(total4)
+        self.panel_3.text.SetLabel(total4)
+        self.panel_4.text.SetLabel(total4)
+        self.panel_1.gauge.SetValue(0)
+        self.panel_2.gauge.SetValue(0)
+        self.panel_3.gauge.SetValue(0)
+        self.panel_4.gauge.SetValue(0)
+        self.panel_1.count = 0
+        self.panel_2.count = 0
+        self.panel_3.count = 0
+        self.panel_4.count = 0
+        self.panel_2.text1.Hide()
+        self.panel_2.text2.Hide()        
+        self.Layout()
+
+    def show_panel_XI3(self, event):
+        global credit
+        global owned_char
+        global owned_cards
+        txt2 = 'Credits:' + str(credit)
+        self.panel_XI.text.SetLabel(txt2)
+        self.panel_XI.Show()
+        self.panel_two.Hide()
+        self.panel_one.Hide()
+        self.panel_three.Hide()
+        self.panel_four.Hide()
+        self.panel_five.Hide()
+        self.panel_six.Hide()
+        self.panel_seven.Hide()
+        self.panel_eight.Hide()
+        self.panel_nine.Hide()
+        self.panel_X.Hide()
+        self.panel_XII.Hide()
+        self.panel_XIII.Hide()
+        self.panel_XIV.Hide()
+        self.panel_XV.Hide()
+        self.panel_XVI.Hide()
+        self.panel_XVII.Hide()
+        self.panel_XVIII.Hide()
+        self.panel_XIX.Hide()
+        self.panel_XX.Hide()
+        self.panel_XXI.Hide()
+        self.panel_XXII.Hide()
+        self.panel_XXIII.Hide()
+        self.panel_XXIV.Hide()
+        self.panel_XXV.Hide()
+        self.panel_1.Hide()
+        self.panel_2.Hide()
+        self.panel_3.Hide()
+        self.panel_4.Hide()
+        owned = ', '.join(owned_char)
+        owned1 = ', '.join(owned_cards)
+        tx= 'Characters Owned: ' + owned
+        tx2= 'Ability Cards Owned: ' + owned1
+        tx3= 'Total Credit: ' + str(credit)
+        total4 = tx + '\n' + tx2 + '\n' + tx3
+        self.panel_1.text.SetLabel(total4)
+        self.panel_2.text.SetLabel(total4)
+        self.panel_3.text.SetLabel(total4)
+        self.panel_4.text.SetLabel(total4)
+        self.panel_1.gauge.SetValue(0)
+        self.panel_2.gauge.SetValue(0)
+        self.panel_3.gauge.SetValue(0)
+        self.panel_4.gauge.SetValue(0)
+        self.panel_1.count = 0
+        self.panel_2.count = 0
+        self.panel_3.count = 0
+        self.panel_4.count = 0
+        self.panel_4.text1.Hide()
+        self.panel_4.text2.Hide()
         self.Layout()
 
     def show_panel_XII(self, event):
