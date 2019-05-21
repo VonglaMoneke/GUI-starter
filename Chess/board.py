@@ -21,14 +21,14 @@ class Board:
         self.board[0][6] = Knight(0,6, 'b')
         self.board[0][7] = Rook(0,7, 'b')
         
-        self.board[1][0] = Pawn(1,0, 'b')
+        '''self.board[1][0] = Pawn(1,0, 'b')
         self.board[1][1] = Pawn(1,1, 'b')
         self.board[1][2] = Pawn(1,2, 'b')
         self.board[1][3] = Pawn(1,3, 'b')
         self.board[1][4] = Pawn(1,4, 'b')
         self.board[1][5] = Pawn(1,5, 'b')
         self.board[1][6] = Pawn(1,6, 'b')
-        self.board[1][7] = Pawn(1,7, 'b')
+        self.board[1][7] = Pawn(1,7, 'b')'''
 
         self.board[7][0] = Rook(7,0, 'w')
         self.board[7][1] = Knight(7,1, 'w')
@@ -39,20 +39,20 @@ class Board:
         self.board[7][6] = Knight(7,6, 'w')
         self.board[7][7] = Rook(7,7, 'w')
         
-        self.board[6][0] = Pawn(6,0, 'w')
+        '''self.board[6][0] = Pawn(6,0, 'w')
         self.board[6][1] = Pawn(6,1, 'w')
         self.board[6][2] = Pawn(6,2, 'w')
         self.board[6][3] = Pawn(6,3, 'w')
         self.board[6][4] = Pawn(6,4, 'w')
         self.board[6][5] = Pawn(6,5, 'w')
         self.board[6][6] = Pawn(6,6, 'w')
-        self.board[6][7] = Pawn(6,7, 'w')
+        self.board[6][7] = Pawn(6,7, 'w')'''
 
-    def update_moves(self, board):
+    def update_moves(self):
         for i in range(self.rows):
             for j in range (self.cols):
                 if self.board[i][j] != 0:
-                    self.board[i][j].update_valid_moves(board)
+                    self.board[i][j].update_valid_moves(self.board)
 
     def draw(self, win):
         for i in range(self.rows):
@@ -68,13 +68,21 @@ class Board:
                     if self.board[i][j].selected:
                         prev = (i,j)
 
-        if self.board[row][col] != 0:
-            self.reset_selected()
-            self.board[row][col].selected = True
-        else:
+        if self.board[row][col] == 0:
             moves = self.board[prev[0]][prev[1]].move_list
             if (col,row) in moves:
                 self.move(prev, (row,col))
+            self.reset_selected()
+        else:
+            if self.board[prev[0]][prev[1]].colour != self.board[row][col].colour:
+                moves = self.board[prev[0]][prev[1]].move_list
+                if (col,row) in moves:
+                    self.move(prev, (row,col))
+                self.board[row][col].selected = True
+                self.reset_selected()
+            else:
+                self.reset_selected()
+                self.board[row][col].selected = True
 
     def reset_selected(self):
         for i in range(self.rows):
@@ -83,10 +91,11 @@ class Board:
                     self.board[i][j].selected = False
 
     def move(self, start, end):
-        removed = self.board[end[1]][end[0]]
-        self.board[end[1]][end[0]] = self.board[start[1]][start[0]]
-        self.board[start[1]][start[0]] = 0
-        return removed
+        nBoard = self.board[:]
+        nBoard[start[0]][start[1]].change_pos((end[0], end[1]))
+        nBoard[end[0]][end[1]] = nBoard[start[0]][start[1]]
+        nBoard[start[0]][start[1]] = 0
+        self.board = nBoard
 
 
 

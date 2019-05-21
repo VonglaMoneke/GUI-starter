@@ -72,6 +72,9 @@ class piece:
 
         win.blit(drawThis, (x,y))
 
+    def change_pos(self, pos):
+        self.row = pos[0]
+        self.col = pos[1]
 
 class Bishop(piece):
     img = 0
@@ -384,6 +387,9 @@ class Rook(piece):
             p = board[x][j]
             if p == 0:
                 moves.append((j, x))
+            elif p.colour != self.colour:
+                moves.append((j, x))
+                break
             else:
                 break
 
@@ -392,6 +398,9 @@ class Rook(piece):
             p = board[x][j]
             if p == 0:
                 moves.append((j, x))
+            elif p.colour != self.colour:
+                moves.append((j, x))
+                break
             else:
                 break
 
@@ -400,6 +409,9 @@ class Rook(piece):
             p = board[i][x]
             if p == 0:
                 moves.append((x, i))
+            elif p.colour != self.colour:
+                moves.append((x, i))
+                break
             else:
                 break
 
@@ -408,6 +420,9 @@ class Rook(piece):
             p = board[i][x]
             if p == 0:
                 moves.append((x, i))
+            elif p.colour != self.colour:
+                moves.append((x, i))
+                break
             else:
                 break
 
