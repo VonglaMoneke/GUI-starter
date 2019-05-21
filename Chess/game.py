@@ -9,14 +9,30 @@ rect = (113,113,525,525)
 
 
 def redraw_gamewindow():
-    global win
-    b = Bishop(1,1,'w')
+    global win, bo
+    
     win.blit(board, (0,0))
-    b.draw(win)
+    bo.draw(win)
     pygame.display.update()
 
+def click(pos):
+    '''
+    :return: pos(x,y) in range 0-7 0-7
+    '''
+    x = pos[0]
+    y = pos[1]
+
+    if rect[0] < x < rect[0] + rect[2]:
+        if rect[1] < y < rect[1] + rect[3]:
+            divX = x - rect[0]
+            divY = y - rect[1]
+            i = int(divX / (rect[2]/8))
+            j = int(divY / (rect[3]/8))
+            return(i, j)
+
 def main():
-    board = Board(8,8)
+    global bo
+    bo = Board(8,8)
     clock = pygame.time.Clock()
     run = True
     while run:
@@ -27,14 +43,17 @@ def main():
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 run = False
-                quit()
                 pygame.quit()
 
             if event.type == pygame.MOUSEMOTION:
                 pass
 
             if event.type == pygame.MOUSEBUTTONDOWN:
-                pass
+                pos = pygame.mouse.get_pos()
+                bo.update_moves(bo.board)
+                i, j = click(pos)
+                bo.select(i,j)
+            
 width = 750
 height = 750
 win = pygame.display.set_mode((width,height))
