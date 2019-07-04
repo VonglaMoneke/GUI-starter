@@ -2,6 +2,7 @@ import pygame
 from pygame.locals import *
 from random import randint
 from random import shuffle
+from sys import exit
 import os
 
 #starting pygame and music for pygame
@@ -81,6 +82,112 @@ x0 = 45
 y0 = 460
 x1 = 145
 x2 = 245
+
+
+# generating the null image for the battle field
+pixel = 'img/null.png'
+#Bool variable that checks if there is a card in the active zone
+own_active_zone = False
+#Bool variable that checks if there is a card in the opponents active zone
+op_active_zone = False
+#damage variable
+dmg = 0
+#attack and defense mode bool variables to see if the card placed is in attack or defense mode
+attack_mode = False
+defense_mode = False
+
+#Printing the controls in the python shell (subject to change)
+print('''Press the A key to place the first card of your hand on the field in Attack Mode
+Press the Z key to place the first card of your hand on the field in Defense Mode
+
+Press the S key to place the second card of your hand on the field in Attack Mode
+Press the X key to place the second card of your hand on the field in Defense Mode
+
+Press the D key to place the third card of your hand on the field in Attack Mode
+Press the C key to place the third card of your hand on the field in Defense Mode
+
+Press the ALT key to change the card in the field with one from your hand
+Press the SPACE key to activate the turn with the selected card
+''')
+
+#Main Loop
+while True:
+    for event in pygame.event.get():
+        if event.type == QUIT:
+            pygame.mixer.music.stop()
+            pygame.quit()
+            exit()
+            
+    #setting the card in the active zone
+    card_in_battle = pygame.image.load(pixel).convert_alpha()
+    #detecting the keys that are pressed
+    key = pygame.key.get_pressed()
+
+    if key[K_a]:
+        if own_active_zone == False:
+            #the first card goes to the battle zone
+            pixel = card_sprite0
+            #gen another card
+            random_num = randint(1, 24)
+            card_sprite0 = 'img/chars/Char' + str(random_num) + '.png'
+            load_card0 = pygame.image.load(card_sprite0).convert_alpha()
+            attack_mode = True
+            own_active_zone = True
+            
+    if key[K_s]:
+        if own_active_zone == False:
+            #the second card goes to the battle zone
+            pixel = card_sprite1
+            #gen another card
+            random_num = randint(1, 24)
+            card_sprite1 = 'img/chars/Char' + str(random_num) + '.png'
+            load_card1 = pygame.image.load(card_sprite1).convert_alpha()
+            attack_mode = True
+            own_active_zone = True
+            
+    if key[K_d]:
+        if own_active_zone == False:
+            #the third card goes to the battle zone
+            pixel = card_sprite2
+            #gen another card
+            random_num = randint(1, 24)
+            card_sprite2 = 'img/chars/Char' + str(random_num) + '.png'
+            load_card2 = pygame.image.load(card_sprite2).convert_alpha()
+            attack_mode = True
+            own_active_zone = True
+            
+    if key[K_z]:
+        if own_active_zone == False:
+            #the first card goes to the battle zone
+            pixel = card_sprite0
+            #gen another card
+            random_num = randint(1, 24)
+            card_sprite0 = 'img/chars/Char' + str(random_num) + '.png'
+            load_card0 = pygame.image.load(card_sprite0).convert_alpha()
+            defense_mode = True
+            own_active_zone = True
+            
+    if key[K_x]:
+        if own_active_zone == False:
+            #the second card goes to the battle zone
+            pixel = card_sprite1
+            #gen another card
+            random_num = randint(1, 24)
+            card_sprite1 = 'img/chars/Char' + str(random_num) + '.png'
+            load_card1 = pygame.image.load(card_sprite1).convert_alpha()
+            defense_mode = True
+            own_active_zone = True
+            
+    if key[K_c]:
+        if own_active_zone == False:
+            #the third card goes to the battle zone
+            pixel = card_sprite2
+            #gen another card
+            random_num = randint(1, 24)
+            card_sprite2 = 'img/chars/Char' + str(random_num) + '.png'
+            load_card2 = pygame.image.load(card_sprite2).convert_alpha()
+            defense_mode = True
+            own_active_zone = True
 
 #gen the life point text
 vital1 = font.render(str(life_points), 1, (0, 0, 255))
