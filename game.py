@@ -212,9 +212,10 @@ Press the SPACE key to activate the turn with the selected card
                 load_card2 = pygame.image.load(card_sprite2).convert_alpha()
                 defense_mode = True
                 own_active_zone = True
+                
         if key[K_j]:
             if own_ability_zone == False:
-                #the third card goes to the battle zone
+                #the third card goes to the ability zone
                 a_pixel = a_card_sprite0
                 #gen another card
                 a_card0 = randint(1, 10)
@@ -223,16 +224,16 @@ Press the SPACE key to activate the turn with the selected card
                 own_ability_zone = True
         if key[K_k]:
             if own_ability_zone == False:
-                #the third card goes to the battle zone
+                #the third card goes to the ability zone
                 a_pixel = a_card_sprite1
                 #gen another card
                 a_card1 = randint(1, 10)
                 a_card_sprite1 = 'img/A.C/Card' + str(a_card1) + '.jpg'
                 a_load_card1 = pygame.image.load(a_card_sprite1).convert_alpha()
                 own_ability_zone = True
-        if key[K_j]:
+        if key[K_l]:
             if own_ability_zone == False:
-                #the third card goes to the battle zone
+                #the third card goes to the ability zone
                 a_pixel = a_card_sprite2
                 #gen another card
                 a_card2 = randint(1, 10)
@@ -436,7 +437,7 @@ Press the SPACE key to activate the turn with the selected card
                     op_attack = 2100
                     op_speed = 810
 
-            if a_pixel == 'img/A.C/Card4.jpg':
+            elif a_pixel == 'img/A.C/Card4.jpg':
                 #detecting the stats of the chars
                 if pixel == 'img/chars/Char1.png':
                     attack = 2030*2.5
@@ -607,9 +608,9 @@ Press the SPACE key to activate the turn with the selected card
                 elif op_sprite == 'img/chars/Char24.png':
                     op_attack = 2100
                     op_speed = 810*0.5
-                life_points -= life_points*0.3
+                life_points -= round(life_points*0.3)
 
-            if a_pixel == 'img/A.C/Card10.jpg':
+            elif a_pixel == 'img/A.C/Card10.jpg':
                 #detecting the stats of the chars
                 if pixel == 'img/chars/Char1.png':
                     attack = 2030
@@ -781,7 +782,7 @@ Press the SPACE key to activate the turn with the selected card
                     op_attack = 2100
                     op_speed = 810*0.8
                     
-            if a_pixel == 'img/A.C/Card9.jpg':
+            elif a_pixel == 'img/A.C/Card9.jpg':
                 #detecting the stats of the chars
                 if pixel == 'img/chars/Char1.png':
                     attack = 2030
@@ -953,7 +954,7 @@ Press the SPACE key to activate the turn with the selected card
                     op_attack = 2100*0.6
                     op_speed = 810*0.7
 
-            if a_pixel == 'img/A.C/Card7.jpg':
+            elif a_pixel == 'img/A.C/Card7.jpg':
                 #detecting the stats of the chars
                 if pixel == 'img/chars/Char1.png':
                     attack = 2030*1.3
@@ -1125,7 +1126,7 @@ Press the SPACE key to activate the turn with the selected card
                     op_attack = 2100
                     op_speed = 810
 
-            if a_pixel == 'img/A.C/Card6.jpg':
+            elif a_pixel == 'img/A.C/Card6.jpg':
                 #detecting the stats of the chars
                 if pixel == 'img/chars/Char1.png':
                     attack = 2030
@@ -1196,8 +1197,8 @@ Press the SPACE key to activate the turn with the selected card
                     defense = 1450*2
                     speed = 2190
                 elif pixel == 'img/chars/Char18.png':
-                    attack = 1470*1.5
-                    defense = 1930
+                    attack = 1470
+                    defense = 1930*2
                     speed = 1870
                 elif pixel == 'img/chars/Char19.png':
                     attack = 2350
@@ -1296,7 +1297,181 @@ Press the SPACE key to activate the turn with the selected card
                 elif op_sprite == 'img/chars/Char24.png':
                     op_attack = 2100
                     op_speed = 810
-
+            else:
+                #detecting the stats of the chars
+                if pixel == 'img/chars/Char1.png':
+                    attack = 2030
+                    defense = 1150
+                    speed = 1800
+                elif pixel == 'img/chars/Char2.png':
+                    attack = 1380
+                    defense = 2010
+                    speed = 1980
+                elif pixel == 'img/chars/Char3.png':
+                    attack = 1820
+                    defense = 1430
+                    speed = 2110
+                elif pixel == 'img/chars/Char4.png':
+                    attack = 1340
+                    defense = 2010
+                    speed = 2290
+                elif pixel == 'img/chars/Char5.png':
+                    attack = 2130
+                    defense = 1080
+                    speed = 2330
+                elif pixel == 'img/chars/Char6.png':
+                    attack = 1550
+                    defense = 2140
+                    speed = 2620
+                elif pixel == 'img/chars/Char7.png':
+                    attack = 1750
+                    defense = 1720
+                    speed = 1370
+                elif pixel == 'img/chars/Char8.png':
+                    attack = 1420
+                    defense = 1940
+                    speed = 2030
+                elif pixel == 'img/chars/Char9.png':
+                    attack = 1710
+                    defense = 2250
+                    speed = 1340
+                elif pixel == 'img/chars/Char10.png':
+                    attack = 2260
+                    defense = 1620
+                    speed = 1470
+                elif pixel == 'img/chars/Char11.png':
+                    attack = 1310
+                    defense = 2040
+                    speed = 1920
+                elif pixel == 'img/chars/Char12.png':
+                    attack = 1700
+                    defense = 1530*2
+                    speed = 1280
+                elif pixel == 'img/chars/Char13.png':
+                    attack = 1610
+                    defense = 1400
+                    speed = 1940
+                elif pixel == 'img/chars/Char14.png':
+                    attack = 1900
+                    defense = 1330
+                    speed = 1870
+                elif pixel == 'img/chars/Char15.png':
+                    attack = 1900
+                    defense = 1150
+                    speed = 1890
+                elif pixel == 'img/chars/Char16.png':
+                    attack = 1460
+                    defense = 2520
+                    speed = 2090
+                elif pixel == 'img/chars/Char17.png':
+                    attack = 1690
+                    defense = 1450
+                    speed = 2190
+                elif pixel == 'img/chars/Char18.png':
+                    attack = 1470
+                    defense = 1930
+                    speed = 1870
+                elif pixel == 'img/chars/Char19.png':
+                    attack = 2350
+                    defense = 790
+                    speed = 2000
+                elif pixel == 'img/chars/Char20.png':
+                    attack = 1630
+                    defense = 1950
+                    speed = 2420
+                elif pixel == 'img/chars/Char21.png':
+                    attack = 2390
+                    defense = 550
+                    speed = 2720
+                elif pixel == 'img/chars/Char22.png':
+                    attack = 1690
+                    defense = 1450
+                    speed = 2070
+                elif pixel == 'img/chars/Char23.png':
+                    attack = 1710
+                    defense = 1380
+                    speed = 1870
+                elif pixel == 'img/chars/Char24.png':
+                    attack = 2100
+                    defense = 1920
+                    speed = 810
+                #opponents attack and speed as they cannot go into defense mode
+                if op_sprite == 'img/chars/Char1.png':
+                    op_attack = 2030
+                    op_speed = 1800
+                elif op_sprite == 'img/chars/Char2.png':
+                    op_attack = 1380
+                    op_speed = 1980
+                elif op_sprite == 'img/chars/Char3.png':
+                    op_attack = 1820
+                    op_speed = 2110
+                elif op_sprite == 'img/chars/Char4.png':
+                    op_attack = 1340
+                    op_speed = 2290
+                elif op_sprite == 'img/chars/Char5.png':
+                    op_attack = 2130
+                    op_speed = 2330
+                elif op_sprite == 'img/chars/Char6.png':
+                    op_attack = 1550
+                    op_speed = 2620
+                elif op_sprite == 'img/chars/Char7.png':
+                    op_attack = 1750
+                    op_speed = 1370
+                elif op_sprite == 'img/chars/Char8.png':
+                    op_attack = 1420
+                    op_speed = 2030
+                elif op_sprite == 'img/chars/Char9.png':
+                    op_attack = 1710
+                    op_speed = 1340
+                elif op_sprite == 'img/chars/Char10.png':
+                    op_attack = 2260
+                    op_speed = 1470
+                elif op_sprite == 'img/chars/Char11.png':
+                    op_attack = 1310
+                    op_speed = 1920
+                elif op_sprite == 'img/chars/Char12.png':
+                    op_attack = 1700
+                    op_speed = 1280
+                elif op_sprite == 'img/chars/Char13.png':
+                    op_attack = 1610
+                    op_speed = 1940
+                elif op_sprite == 'img/chars/Char14.png':
+                    op_attack = 1900
+                    op_speed = 1870
+                elif op_sprite == 'img/chars/Char15.png':
+                    op_attack = 1900
+                    op_speed = 1890
+                elif op_sprite == 'img/chars/Char16.png':
+                    op_attack = 1460
+                    op_speed = 2090
+                elif op_sprite == 'img/chars/Char17.png':
+                    op_attack = 1690
+                    op_speed = 2190
+                elif op_sprite == 'img/chars/Char18.png':
+                    op_attack = 1470
+                    op_speed = 1870
+                elif op_sprite == 'img/chars/Char19.png':
+                    op_attack = 2350
+                    op_speed = 2000
+                elif op_sprite == 'img/chars/Char20.png':
+                    op_attack = 1630
+                    op_speed = 2420
+                elif op_sprite == 'img/chars/Char21.png':
+                    op_attack = 2390
+                    op_speed = 2720
+                elif op_sprite == 'img/chars/Char22.png':
+                    op_attack = 1690
+                    op_speed = 2070
+                elif op_sprite == 'img/chars/Char23.png':
+                    op_attack = 1710
+                    op_speed = 1870
+                elif op_sprite == 'img/chars/Char24.png':
+                    op_attack = 2100
+                    op_speed = 810
+                    
+            a_pixel = 'img/pixel.png'
+            own_ability_zone = False
+            
                     
             if a_pixel == 'img/A.C/Card2.jpg':
                 dmg = op_attack
@@ -1402,6 +1577,9 @@ Press the SPACE key to activate the turn with the selected card
         if key[K_TAB]:
             #change the bool value to change the card for battle
             own_active_zone = False
+        if key[K_RSHIFT]:
+            #change the bool value to change the card for ability cards
+            own_ability_zone = False
         if life_points <= 0 and op_life_points > 0:
             #Detecting the computer as the winner and brings up the loss screen
             screen.blit(def_screen, (0,0))
@@ -1437,11 +1615,11 @@ Press the SPACE key to activate the turn with the selected card
         screen.blit(load_card2, (x2, y0))
 
         #display the first ability card
-        screen.blit(a_load_card0, (345, y0))
+        screen.blit(a_load_card0, (345, y0+10))
         #display second ability card
-        screen.blit(a_load_card1, (425, y0))
+        screen.blit(a_load_card1, (425, y0+10))
         #display third ability card
-        screen.blit(a_load_card2, (505, y0))
+        screen.blit(a_load_card2, (505, y0+10))
         
         #displaying card in battle
         screen.blit(card_in_battle, (x1+30, 300))
@@ -1452,9 +1630,9 @@ Press the SPACE key to activate the turn with the selected card
         #displaying enemy card in battle
         screen.blit(op_card, (x1+30, 60))
         #displaying life points
-        screen.blit(vital1, (400, 345))
+        screen.blit(vital1, (400, 245))
         #display opp life points
-        screen.blit(vital2, (400, 295))
+        screen.blit(vital2, (400, 195))
         #updating screen
         
         #FPS is set to 10
